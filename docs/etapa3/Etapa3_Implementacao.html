@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>OficinaPro — Etapa 3: Implementação do Núcleo</title>
+  <style>
+@page { size: A4; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "Inter", "Liberation Sans", Arial, sans-serif;
+  font-size: 10.2pt;
+  line-height: 1.55;
+  color: #1E293B;
+  background: #FFFFFF;
+}
+p { margin: 0 0 7px; }
+strong { color: #0F172A; }
+a { color: #EA580C; text-decoration: none; }
+h1, h2, h3, h4, h5, h6 {
+  color: #1E293B;
+  line-height: 1.25;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+h1 {
+  font-size: 20pt;
+  margin: 0 0 14px;
+  padding-bottom: 5px;
+  border-bottom: 2.5px solid #F97316;
+}
+#sumário + ol {
+  columns: 2;
+  column-gap: 26px;
+  margin: 2px 0 10px;
+  padding-left: 22px;
+  font-size: 9.4pt;
+  line-height: 1.4;
+}
+#sumário + ol li { break-inside: avoid; margin: 0 0 1px; }
+h2 {
+  font-size: 14pt;
+  margin: 18px 0 8px;
+}
+h3 {
+  font-size: 11.6pt;
+  margin: 14px 0 6px;
+}
+h4 {
+  font-size: 10.4pt;
+  margin: 12px 0 5px;
+}
+ul { margin: 4px 0 9px 0; padding-left: 20px; }
+ol { margin: 4px 0 9px 0; padding-left: 26px; }
+li { margin: 2px 0; }
+blockquote {
+  margin: 9px 0 12px;
+  padding: 8px 12px;
+  background: #FFF7ED;
+  border-left: 4px solid #F97316;
+  color: #7C2D12;
+  border-radius: 0 5px 5px 0;
+}
+blockquote p { margin: 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 7px 0 12px;
+  font-size: 8.2pt;
+  line-height: 1.4;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; break-inside: avoid; }
+th {
+  background: #F1F5F9;
+  color: #334155;
+  font-weight: 700;
+  text-align: left;
+  border: 1px solid #CBD5E1;
+  padding: 4px 5px;
+  vertical-align: top;
+}
+td {
+  border: 1px solid #E2E8F0;
+  padding: 4px 5px;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background: #F8FAFC; }
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 8.4pt;
+  background: #F1F5F9;
+  padding: 1px 3px;
+  border-radius: 3px;
+  color: #0F172A;
+}
+pre {
+  background: #0F172A;
+  color: #E2E8F0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 7.7pt;
+  line-height: 1.45;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  page-break-inside: auto;
+  break-inside: auto;
+}
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+figure {
+  margin: 10px 0 14px;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  background: #FFFFFF;
+}
+figcaption {
+  margin-top: 5px;
+  font-size: 8.3pt;
+  color: #64748B;
+  text-align: center;
+}
+.figure-narrow img { width: 55%; }
+.figure-85 img { width: 85%; }
+.figure-90 img { width: 90%; }
+.figure-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 10px 0 14px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.figure-row figure { flex: 1; min-width: 0; margin: 0; }
+.figure-row figure img { width: 100%; }
+.page-break {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  page-break-after: always;
+  break-after: page;
+}
+.closing {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px solid #E2E8F0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+.closing-logo { width: 220px; max-width: 70%; margin-bottom: 8px; }
+.closing p { margin: 2px 0; font-size: 9pt; }
+.muted { color: #64748B; }
+hr { border: 0; border-top: 1px solid #E2E8F0; margin: 14px 0; }
+
+@page { size: A4; margin: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "Inter", "Liberation Sans", Arial, sans-serif;
+  color: #1E293B;
+  background: #FFFFFF;
+}
+.cover {
+  position: relative;
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  padding: 30mm 24mm 24mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 11mm;
+  background: linear-gradient(90deg, #1E293B 0 72%, #F97316 72% 100%);
+}
+.cover::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4mm;
+  background: #F97316;
+}
+.cover-logo { width: 330px; max-width: 82%; margin-bottom: 30px; }
+.cover-kicker {
+  font-size: 10pt;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #F97316;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.cover-title {
+  font-size: 43pt;
+  line-height: 1.05;
+  font-weight: 800;
+  color: #1E293B;
+  margin: 0 0 10px;
+  border: 0;
+  padding: 0;
+}
+.cover-title span { color: #F97316; font-size: 23pt; font-weight: 700; }
+.cover-subtitle {
+  font-size: 24pt;
+  line-height: 1.15;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 18px;
+}
+.cover-lead {
+  font-size: 12pt;
+  line-height: 1.6;
+  color: #475569;
+  max-width: 150mm;
+  margin: 0 0 28px;
+}
+.cover-meta {
+  display: flex;
+  gap: 12mm;
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 12px 0;
+  margin-bottom: 22px;
+}
+.cover-meta div {
+  font-size: 10pt;
+  color: #475569;
+  line-height: 1.5;
+}
+.cover-meta strong {
+  display: block;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748B;
+  margin-bottom: 2px;
+}
+.cover-footer {
+  font-size: 9pt;
+  color: #64748B;
+  margin-top: auto;
+  padding-top: 18px;
+}
+</style>
+</head>
+<body>
+<div class="cover">
+  <img class="cover-logo" src="../../assets/logo-horizontal.png" alt="DevSolo Studio — OficinaPro">
+  <div class="cover-kicker">AVALIAÇÃO G2 • ETAPA 3</div>
+  <h1 class="cover-title">OficinaPro <span>v1.0</span></h1>
+  <div class="cover-subtitle">Implementação do Núcleo</div>
+  <p class="cover-lead">Domínio orientado a objetos, persistência SQLite, serviços de aplicação, relatórios gerenciais, orçamento em PDF e integração com WhatsApp — com 28 testes automatizados.</p>
+  <div class="cover-meta">
+    <div><strong>Equipe</strong><br>DevSolo Studio</div>
+    <div><strong>Integrante</strong><br>Juan Carlos Matos</div>
+    <div><strong>Entrega</strong><br>05/11/2026</div>
+  </div>
+  <div class="cover-footer">Python 3.12+ • SQLite • unittest • Chrome headless • CustomTkinter (Etapa Final)</div>
+</div><div class="page-break"></div><h1 id="sumário">Sumário</h1>
+<ol>
+<li><a href="#1-introdu%C3%A7%C3%A3o">Introdução</a></li>
+<li><a href="#2-vis%C3%A3o-geral-da-solu%C3%A7%C3%A3o">Visão geral da solução</a></li>
+<li><a href="#3-dom%C3%ADnio">Domínio</a></li>
+<li><a href="#4-persist%C3%AAncia">Persistência</a></li>
+<li><a href="#5-servi%C3%A7os-de-aplica%C3%A7%C3%A3o">Serviços de aplicação</a></li>
+<li><a href="#6-gera%C3%A7%C3%A3o-de-pdf">Geração de PDF</a></li>
+<li><a href="#7-interface-cli-e-execu%C3%A7%C3%A3o">Interface CLI e execução</a></li>
+<li><a href="#8-testes-e-qualidade">Testes e qualidade</a></li>
+<li><a href="#9-decis%C3%B5es-e-trade-offs">Decisões e trade-offs</a></li>
+<li><a href="#10-limita%C3%A7%C3%B5es-e-pr%C3%B3ximos-passos">Limitações e próximos passos</a></li>
+<li><a href="#11-conclus%C3%A3o">Conclusão</a></li>
+<li><a href="#12-refer%C3%AAncias">Referências</a></li>
+</ol>
+<h1 id="1-introdução">1. Introdução</h1>
+<h2 id="11-contexto">1.1 Contexto</h2>
+<p>A Etapa 1 definiu o problema e o escopo do OficinaPro. A Etapa 2 consolidou o contrato de modelagem e interface: classes, regras de negócio, diagrama de estados, arquitetura de persistência, design system, wireframes e protótipo navegável. A Etapa 3 transforma esse contrato em <strong>software executável</strong>.</p>
+<p>O núcleo implementado cobre o fluxo completo de uma oficina de bairro:</p>
+<ol>
+<li>cadastrar clientes, veículos e mecânicos;</li>
+<li>abrir uma ordem de serviço;</li>
+<li>adicionar peças e mão de obra;</li>
+<li>calcular subtotais, desconto e total;</li>
+<li>aprovar, iniciar, finalizar ou cancelar a OS;</li>
+<li>gerar um orçamento em PDF;</li>
+<li>compartilhar o orçamento por WhatsApp;</li>
+<li>apurar faturamento, peças, mão de obra e comissões por período;</li>
+<li>realizar backup e restauração do banco.</li>
+</ol>
+<h2 id="12-objetivo-da-etapa-3">1.2 Objetivo da Etapa 3</h2>
+<p>O objetivo é entregar um <strong>núcleo executável, testável e documentado</strong>, preservando as decisões da Etapa 2 e preparando a integração com a interface CustomTkinter da Etapa Final.</p>
+<table>
+<thead>
+<tr>
+<th>Objetivo</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Implementar o domínio</td>
+<td>13 arquivos em <code>domain/</code>, com classes abstratas, entidades, enumeração e validadores</td>
+</tr>
+<tr>
+<td>Implementar persistência</td>
+<td>SQLite com 9 tabelas, chaves estrangeiras, índices e migração versionada</td>
+</tr>
+<tr>
+<td>Implementar casos de uso</td>
+<td>Serviços de OS, orçamento, relatórios, configuração e WhatsApp</td>
+</tr>
+<tr>
+<td>Implementar relatórios</td>
+<td>Faturamento, mão de obra, peças, ticket médio e comissões por mecânico</td>
+</tr>
+<tr>
+<td>Implementar PDF</td>
+<td>Orçamento em A4 com identidade visual do projeto</td>
+</tr>
+<tr>
+<td>Implementar testes</td>
+<td>28 testes automatizados com <code>unittest</code></td>
+</tr>
+<tr>
+<td>Preservar a Etapa 2</td>
+<td>Nenhum arquivo da Etapa 2 foi alterado; a Etapa 3 tem documentação própria</td>
+</tr>
+</tbody></table>
+<h2 id="13-escopo-entregue">1.3 Escopo entregue</h2>
+<ul>
+<li><strong>Domínio:</strong> <code>Pessoa</code>, <code>Cliente</code>, <code>Mecanico</code>, <code>Veiculo</code>, <code>ItemOS</code>, <code>Peca</code>, <code>MaoDeObra</code>, <code>OrdemServico</code>, <code>Oficina</code>, <code>StatusOS</code>, <code>StatusHistorico</code>.</li>
+<li><strong>Persistência:</strong> <code>Database</code>, <code>migrations.py</code>, repositórios de cliente, mecânico, veículo, OS, oficina e configuração, além de <code>seed.py</code> e <code>backup.py</code>.</li>
+<li><strong>Aplicação:</strong> <code>OrdemServicoService</code>, <code>OrcamentoService</code>, <code>RelatorioService</code>, <code>ConfiguracaoService</code> e <code>whatsapp.py</code>.</li>
+<li><strong>Infraestrutura de saída:</strong> geração de PDF via HTML + Chrome headless.</li>
+<li><strong>Entrada:</strong> <code>main.py</code> com painel demonstrativo e comandos de relatório, PDF, WhatsApp e backup.</li>
+<li><strong>Qualidade:</strong> testes de domínio, persistência, serviços, relatórios, backup e PDF.</li>
+</ul>
+<h2 id="14-ficha-do-documento">1.4 Ficha do documento</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Projeto</td>
+<td>OficinaPro v1.0</td>
+</tr>
+<tr>
+<td>Etapa</td>
+<td>Etapa 3 — Implementação do Núcleo</td>
+</tr>
+<tr>
+<td>Equipe</td>
+<td>DevSolo Studio</td>
+</tr>
+<tr>
+<td>Integrante</td>
+<td>Juan Carlos Matos</td>
+</tr>
+<tr>
+<td>Ambiente de desenvolvimento</td>
+<td>Python 3.14.4, SQLite 3, Chrome 156 headless, Linux</td>
+</tr>
+<tr>
+<td>Ambiente previsto para a interface</td>
+<td>Python 3.12+, CustomTkinter 5.x</td>
+</tr>
+<tr>
+<td>Testes</td>
+<td><code>unittest</code> (stdlib), 28 casos</td>
+</tr>
+<tr>
+<td>Entrega</td>
+<td>05/11/2026</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Concluído para submissão</td>
+</tr>
+<tr>
+<td>Documento</td>
+<td><code>docs/etapa3/Etapa3_Implementacao.md</code></td>
+</tr>
+<tr>
+<td>PDF</td>
+<td><code>docs/etapa3/Etapa3_Implementacao.pdf</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Observação sobre o ambiente:</strong> a máquina usada no desenvolvimento não possui <code>pip</code>, <code>tkinter</code>, <code>customtkinter</code>, <code>reportlab</code> nem <code>pytest</code>. Por isso o núcleo usa apenas a biblioteca padrão, os testes usam <code>unittest</code> e o PDF é gerado com Chrome headless. A interface CustomTkinter será implementada e validada na Etapa Final, em ambiente com as dependências instaladas.</p>
+</blockquote>
+<h1 id="2-visão-geral-da-solução">2. Visão geral da solução</h1>
+<h2 id="21-arquitetura-em-camadas">2.1 Arquitetura em camadas</h2>
+<p>A implementação mantém a separação definida na Etapa 2:</p>
+<ul>
+<li><strong>Domínio:</strong> regras puras, sem dependência de SQLite, PDF ou interface.</li>
+<li><strong>Aplicação:</strong> casos de uso que orquestram domínio e repositórios.</li>
+<li><strong>Infraestrutura:</strong> SQLite, mapeamento de linhas, seed, backup, PDF e links.</li>
+<li><strong>Apresentação:</strong> CLI nesta etapa; CustomTkinter na Etapa Final.</li>
+</ul>
+<figure>
+  <img src="../etapa2/diagramas/arquitetura.png" alt="Arquitetura em camadas do OficinaPro">
+  <figcaption>Figura 1 — Arquitetura em camadas, com a apresentação consumindo os serviços de aplicação.</figcaption>
+</figure><p>A dependência aponta sempre para dentro: a infraestrutura conhece o domínio, mas o domínio não conhece a infraestrutura. Os serviços de aplicação recebem repositórios por injeção de dependência, o que facilita testes com banco em memória e permite substituir o gerador de PDF.</p>
+<h2 id="22-estrutura-de-diretórios">2.2 Estrutura de diretórios</h2>
+<pre><code class="language-text">oficinapro/
+├── main.py
+├── pyproject.toml
+├── requirements.txt
+├── requirements-ui.txt
+├── domain/
+│   ├── exceptions.py
+│   ├── validators.py
+│   ├── status_os.py
+│   ├── status_historico.py
+│   ├── pessoa.py
+│   ├── cliente.py
+│   ├── mecanico.py
+│   ├── veiculo.py
+│   ├── item_os.py
+│   ├── peca.py
+│   ├── mao_de_obra.py
+│   ├── ordem_servico.py
+│   └── oficina.py
+├── application/
+│   ├── ordem_servico_service.py
+│   ├── orcamento_service.py
+│   ├── relatorio_service.py
+│   ├── configuracao_service.py
+│   └── whatsapp.py
+├── infrastructure/
+│   ├── database.py
+│   ├── migrations.py
+│   ├── seed.py
+│   ├── backup.py
+│   ├── repositories/
+│   └── pdf/
+├── tests/
+│   ├── test_domain.py
+│   ├── test_repositories.py
+│   └── test_services.py
+├── assets/
+├── docs/
+│   ├── etapa2/
+│   └── etapa3/
+└── orcamentos/
+</code></pre>
+<h2 id="23-fluxo-principal">2.3 Fluxo principal</h2>
+<pre><code class="language-text">Cliente/Veículo/Mecânico
+        │
+        ▼
+OrdemServicoService.criar_ordem()
+        │
+        ▼
+OrdemServico (ORCAMENTO)
+        │  adicionar_peca() / adicionar_mao_de_obra()
+        ▼
+OrcamentoService.gerar_pdf() ──► PDF
+        │
+        ├── WhatsApp (wa.me)
+        ▼
+aprovar() ──► iniciar() ──► finalizar(km_saida)
+        │                         │
+        │                         ▼
+        │                  Veículo.km atualizado
+        ▼
+RelatorioService.resumo() / comissoes_por_mecanico()
+</code></pre>
+<h1 id="3-domínio">3. Domínio</h1>
+<h2 id="31-classes-e-responsabilidades">3.1 Classes e responsabilidades</h2>
+<figure>
+  <img src="../etapa2/diagramas/classes-detalhado.png" alt="Diagrama de classes detalhado do OficinaPro">
+  <figcaption>Figura 2 — Diagrama de classes implementado. A modelagem é a mesma contratada na Etapa 2.</figcaption>
+</figure><table>
+<thead>
+<tr>
+<th>Classe</th>
+<th>Responsabilidade principal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Pessoa</code> (abstrata)</td>
+<td>Nome, telefone, e-mail e validação de contato</td>
+</tr>
+<tr>
+<td><code>Cliente</code></td>
+<td>CPF/CNPJ, endereço, data de nascimento, soft delete e coleção de veículos</td>
+</tr>
+<tr>
+<td><code>Mecanico</code></td>
+<td>Registro, especialidade, taxa de comissão e cálculo de comissão</td>
+</tr>
+<tr>
+<td><code>Veiculo</code></td>
+<td>Placa, marca, modelo, ano, KM e vínculo com cliente</td>
+</tr>
+<tr>
+<td><code>ItemOS</code> (abstrata)</td>
+<td>Contrato de descrição, quantidade, valor unitário e subtotal</td>
+</tr>
+<tr>
+<td><code>Peca</code></td>
+<td>Subtotal por quantidade × valor unitário</td>
+</tr>
+<tr>
+<td><code>MaoDeObra</code></td>
+<td>Subtotal por horas × taxa horária e executor</td>
+</tr>
+<tr>
+<td><code>OrdemServico</code></td>
+<td>Agregado raiz, itens, desconto, total, status e histórico</td>
+</tr>
+<tr>
+<td><code>Oficina</code></td>
+<td>Configuração e emissão de números de OS</td>
+</tr>
+<tr>
+<td><code>StatusOS</code></td>
+<td>Enumeração do ciclo de vida</td>
+</tr>
+<tr>
+<td><code>StatusHistorico</code></td>
+<td>Registro imutável de transição</td>
+</tr>
+</tbody></table>
+<h2 id="32-herança-e-polimorfismo">3.2 Herança e polimorfismo</h2>
+<p>A herança é exercitada em dois eixos, conforme a Etapa 2:</p>
+<pre><code class="language-python"># Pessoa → Cliente / Mecanico
+class Pessoa(ABC):
+    @abstractmethod
+    def tipo(self) -&gt; str: ...
+
+# ItemOS → Peca / MaoDeObra
+class ItemOS(ABC):
+    @abstractmethod
+    def calcular_subtotal(self) -&gt; Decimal: ...
+
+class Peca(ItemOS):
+    def calcular_subtotal(self) -&gt; Decimal:
+        return (self.quantidade * self.valor_unitario).quantize(Decimal(&quot;0.01&quot;))
+
+class MaoDeObra(ItemOS):
+    def calcular_subtotal(self) -&gt; Decimal:
+        return (self.horas * self.taxa_horaria).quantize(Decimal(&quot;0.01&quot;))
+</code></pre>
+<p>A <code>OrdemServico</code> não precisa conhecer o tipo concreto para calcular o total: ela percorre <code>self.__itens</code> e chama <code>calcular_subtotal()</code>. O mesmo vale para <code>subtotal_pecas</code> e <code>subtotal_mao_obra</code>, que usam <code>item.tipo()</code>.</p>
+<h2 id="33-encapsulamento-e-invariantes">3.3 Encapsulamento e invariantes</h2>
+<p>O agregado <code>OrdemServico</code> mantém:</p>
+<ul>
+<li><code>__itens</code>: lista privada de itens;</li>
+<li><code>__subtotal</code>: soma dos itens;</li>
+<li><code>__total</code>: subtotal menos desconto;</li>
+<li><code>_historico</code>: lista de transições;</li>
+<li><code>_status</code>: estado atual.</li>
+</ul>
+<p>Os totais são expostos por propriedades somente leitura. Tentar atribuir <code>ordem.total = ...</code> levanta <code>AttributeError</code>, coberto pelo teste <code>test_encapsulamento_do_total</code>.</p>
+<p>Invariantes implementadas:</p>
+<ul>
+<li>o veículo deve pertencer ao cliente da OS;</li>
+<li>o desconto não pode superar o subtotal;</li>
+<li>a aprovação exige pelo menos um item e total maior que zero;</li>
+<li>itens só podem ser alterados em <code>ORCAMENTO</code>;</li>
+<li>o cancelamento exige motivo com pelo menos três caracteres;</li>
+<li>a quilometragem não pode diminuir;</li>
+<li><code>FINALIZADA</code> e <code>CANCELADA</code> são terminais;</li>
+<li><code>data_finalizacao</code> só existe em OS finalizada; <code>data_cancelamento</code> só existe em OS cancelada.</li>
+</ul>
+<h2 id="34-valores-monetários-com-decimal">3.4 Valores monetários com Decimal</h2>
+<p>A Etapa 2 recomendava <code>Decimal</code> na implementação. A Etapa 3 adota essa recomendação em todos os cálculos financeiros:</p>
+<pre><code class="language-python">_CENTAVOS = Decimal(&quot;0.01&quot;)
+
+def __recalcular_total(self) -&gt; None:
+    subtotal = sum((item.calcular_subtotal() for item in self.__itens), Decimal(&quot;0.00&quot;))
+    subtotal = subtotal.quantize(_CENTAVOS)
+    if self._desconto &gt; subtotal:
+        raise RegraNegocioError(&quot;Desconto não pode ser maior que o subtotal.&quot;)
+    self.__subtotal = subtotal
+    self.__total = (subtotal - self._desconto).quantize(_CENTAVOS)
+</code></pre>
+<p>O arredondamento usa <code>ROUND_HALF_UP</code>, evitando os erros de ponto flutuante que apareceriam com <code>float</code>.</p>
+<h2 id="35-status-e-transições">3.5 Status e transições</h2>
+<figure>
+  <img src="../etapa2/diagramas/estados-os.png" alt="Diagrama de estados da ordem de serviço">
+  <figcaption>Figura 3 — Ciclo de vida da OS implementado no domínio.</figcaption>
+</figure><p>A tabela de transições fica explícita no código:</p>
+<pre><code class="language-python">_TRANSICOES = {
+    StatusOS.ORCAMENTO: {StatusOS.APROVADA, StatusOS.CANCELADA},
+    StatusOS.APROVADA: {StatusOS.EM_EXECUCAO, StatusOS.CANCELADA},
+    StatusOS.EM_EXECUCAO: {StatusOS.FINALIZADA, StatusOS.CANCELADA},
+    StatusOS.FINALIZADA: set(),
+    StatusOS.CANCELADA: set(),
+}
+</code></pre>
+<p>Cada transição registra um <code>StatusHistorico</code> com status anterior, novo status, data/hora, usuário e motivo. O método privado <code>__validar_transicao()</code> impede saltos e retrocessos.</p>
+<h2 id="36-histórico-append-only">3.6 Histórico append-only</h2>
+<p>O histórico é uma lista de objetos imutáveis (<code>@dataclass(frozen=True)</code>). O repositório não apaga registros: ao salvar uma OS já existente, ele conta quantos registros existem no banco e insere apenas os novos.</p>
+<pre><code class="language-python">existentes = conn.execute(
+    &quot;SELECT COUNT(*) FROM status_historico WHERE ordem_servico_id = ?&quot;,
+    (ordem.id,),
+).fetchone()[0]
+for registro in ordem.historico[existentes:]:
+    conn.execute(&quot;INSERT INTO status_historico ...&quot;, (...))
+</code></pre>
+<p>O teste <code>test_historico_append_only</code> salva a mesma OS duas vezes após a aprovação e confirma que existem exatamente dois registros.</p>
+<h1 id="4-persistência">4. Persistência</h1>
+<h2 id="41-sqlite-e-schema">4.1 SQLite e schema</h2>
+<p>O banco é criado automaticamente por <code>infrastructure/migrations.py</code>. A versão do schema é registrada em <code>PRAGMA user_version = 1</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Tabela</th>
+<th>Finalidade</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>oficina</code></td>
+<td>Dados e parâmetros da oficina</td>
+</tr>
+<tr>
+<td><code>cliente</code></td>
+<td>Cadastro de clientes, com soft delete</td>
+</tr>
+<tr>
+<td><code>mecanico</code></td>
+<td>Cadastro de mecânicos e taxa de comissão</td>
+</tr>
+<tr>
+<td><code>veiculo</code></td>
+<td>Veículos vinculados a clientes</td>
+</tr>
+<tr>
+<td><code>ordem_servico</code></td>
+<td>Cabeçalho da OS, status, datas e desconto</td>
+</tr>
+<tr>
+<td><code>item_os</code></td>
+<td>Itens polimórficos (<code>PECA</code> / <code>MAO_DE_OBRA</code>)</td>
+</tr>
+<tr>
+<td><code>status_historico</code></td>
+<td>Trilha append-only de transições</td>
+</tr>
+<tr>
+<td><code>comissao_pagamento</code></td>
+<td>Reservado para registro de pagamentos de comissão</td>
+</tr>
+<tr>
+<td><code>configuracao</code></td>
+<td>Pares chave-valor da aplicação</td>
+</tr>
+</tbody></table>
+<p>Decisões de modelagem:</p>
+<ul>
+<li><strong>Herança em tabela única:</strong> <code>item_os</code> usa a coluna <code>tipo</code> para distinguir peça e mão de obra, mantendo a leitura simples e o histórico em uma única tabela.</li>
+<li><strong>Valores monetários como <code>TEXT</code>:</strong> SQLite não possui <code>DECIMAL</code> nativo; os valores são gravados como texto e convertidos para <code>Decimal</code> no mapeamento.</li>
+<li><strong>Soft delete:</strong> clientes e mecânicos possuem <code>ativo</code>; a exclusão física não é usada.</li>
+<li><strong>Chaves estrangeiras:</strong> <code>PRAGMA foreign_keys = ON</code> é ativado em toda conexão.</li>
+<li><strong>Índices:</strong> cliente/nome, veículo/cliente, OS/status, OS/data de abertura, OS/data de finalização, itens/OS e histórico/OS.</li>
+</ul>
+<h2 id="42-migração-e-integridade">4.2 Migração e integridade</h2>
+<p><code>Database</code> encapsula a conexão, ativa <code>foreign_keys</code>, <code>busy_timeout</code> e tenta <code>journal_mode = WAL</code>. O método <code>migrate()</code> executa o DDL idempotente e grava a versão. Se o banco tiver uma versão superior à suportada, a aplicação falha com mensagem explícita.</p>
+<p>O backup usa <code>VACUUM INTO</code>, que produz uma cópia consistente sem parar a aplicação. A restauração valida <code>PRAGMA integrity_check</code> antes de substituir o arquivo e reabrir a conexão.</p>
+<h2 id="43-repositórios">4.3 Repositórios</h2>
+<table>
+<thead>
+<tr>
+<th>Repositório</th>
+<th>Operações principais</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ClienteRepository</code></td>
+<td>salvar, buscar por id/documento, listar com busca, inativar, reativar, contar</td>
+</tr>
+<tr>
+<td><code>MecanicoRepository</code></td>
+<td>salvar, buscar por id/registro, listar, inativar, contar</td>
+</tr>
+<tr>
+<td><code>VeiculoRepository</code></td>
+<td>salvar, buscar por id/placa, listar por cliente, atualizar KM, contar</td>
+</tr>
+<tr>
+<td><code>OrdemServicoRepository</code></td>
+<td>salvar agregado, buscar por número, listar com filtros, listar finalizadas, contar por status, próximo número</td>
+</tr>
+<tr>
+<td><code>OficinaRepository</code></td>
+<td>salvar e obter configuração da oficina</td>
+</tr>
+<tr>
+<td><code>ConfiguracaoRepository</code></td>
+<td>obter, definir, listar e remover chaves</td>
+</tr>
+</tbody></table>
+<p>O <code>OrdemServicoRepository</code> é o mais complexo: salva cabeçalho, recria itens e acrescenta histórico. A leitura reconstrói o agregado completo, incluindo cliente, veículo, mecânico, itens e histórico.</p>
+<h2 id="44-seed-e-totais-da-etapa-2">4.4 Seed e totais da Etapa 2</h2>
+<p>A seed <code>infrastructure/seed.py</code> cria 6 clientes, 3 mecânicos, 6 veículos e 22 OS. As 18 OS finalizadas reproduzem exatamente os totais da Etapa 2:</p>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th align="right">Valor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Faturamento</td>
+<td align="right">R$ 18.450,00</td>
+</tr>
+<tr>
+<td>Mão de obra</td>
+<td align="right">R$ 6.320,00</td>
+</tr>
+<tr>
+<td>Peças</td>
+<td align="right">R$ 12.130,00</td>
+</tr>
+<tr>
+<td>Comissões</td>
+<td align="right">R$ 743,00</td>
+</tr>
+<tr>
+<td>OS finalizadas</td>
+<td align="right">18</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Mecânico</th>
+<th align="right">OS</th>
+<th align="right">Mão de obra</th>
+<th align="right">Taxa</th>
+<th align="right">Comissão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Marcos Silva</td>
+<td align="right">8</td>
+<td align="right">R$ 3.000,00</td>
+<td align="right">12%</td>
+<td align="right">R$ 360,00</td>
+</tr>
+<tr>
+<td>Rafael Costa</td>
+<td align="right">6</td>
+<td align="right">R$ 2.300,00</td>
+<td align="right">10%</td>
+<td align="right">R$ 230,00</td>
+</tr>
+<tr>
+<td>Diego Almeida</td>
+<td align="right">4</td>
+<td align="right">R$ 1.020,00</td>
+<td align="right">15%</td>
+<td align="right">R$ 153,00</td>
+</tr>
+</tbody></table>
+<p>As quatro OS recentes usadas nos wireframes também estão presentes:</p>
+<table>
+<thead>
+<tr>
+<th>OS</th>
+<th>Cliente</th>
+<th>Veículo</th>
+<th>Status</th>
+<th align="right">Total</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2026-0042</td>
+<td>Ana Paula Ribeiro</td>
+<td>Honda Civic ABC-1D23</td>
+<td>Orçamento</td>
+<td align="right">R$ 1.240,00</td>
+</tr>
+<tr>
+<td>2026-0041</td>
+<td>Carlos Eduardo Lima</td>
+<td>VW Gol XYZ-9K87</td>
+<td>Em execução</td>
+<td align="right">R$ 860,00</td>
+</tr>
+<tr>
+<td>2026-0039</td>
+<td>João Batista</td>
+<td>Toyota Corolla JKL-5M67</td>
+<td>Aprovada</td>
+<td align="right">R$ 2.300,00</td>
+</tr>
+<tr>
+<td>2026-0038</td>
+<td>Mariana Alves</td>
+<td>Chevrolet Onix MNO-8P90</td>
+<td>Cancelada</td>
+<td align="right">R$ 420,00</td>
+</tr>
+<tr>
+<td>2026-0040</td>
+<td>Fernanda Souza</td>
+<td>Fiat Argo QWE-2A34</td>
+<td>Finalizada</td>
+<td align="right">R$ 1.980,00</td>
+</tr>
+<tr>
+<td>2026-0037</td>
+<td>Roberto Nunes</td>
+<td>Ford Ka RST-3V45</td>
+<td>Finalizada</td>
+<td align="right">R$ 980,00</td>
+</tr>
+</tbody></table>
+<h1 id="5-serviços-de-aplicação">5. Serviços de aplicação</h1>
+<h2 id="51-ordemservicoservice">5.1 OrdemServicoService</h2>
+<p>O serviço concentra os casos de uso da OS:</p>
+<ul>
+<li><code>criar_ordem(cliente_id, veiculo_id, mecanico_id, ...)</code>;</li>
+<li><code>adicionar_peca(...)</code> e <code>adicionar_mao_de_obra(...)</code>;</li>
+<li><code>remover_item(...)</code>, <code>aplicar_desconto(...)</code>;</li>
+<li><code>aprovar(...)</code>, <code>iniciar(...)</code>, <code>finalizar(km_saida=...)</code>, <code>cancelar(...)</code>;</li>
+<li><code>listar(...)</code> e <code>obter(...)</code>;</li>
+<li><code>resumo_dashboard()</code>.</li>
+</ul>
+<p>A validação de vínculo cliente/veículo é feita no serviço antes de criar a OS. Ao finalizar, o serviço persiste a quilometragem do veículo e a OS.</p>
+<h2 id="52-orcamentoservice">5.2 OrcamentoService</h2>
+<p>O <code>OrcamentoService</code> integra o repositório de OS, a configuração da oficina e o gerador de PDF:</p>
+<pre><code class="language-python">servico = OrcamentoService(ordens, oficinas)
+servico.gerar_pdf(&quot;2026-0042&quot;, &quot;orcamentos/OS-2026-0042.pdf&quot;)
+servico.link_whatsapp(&quot;2026-0042&quot;)
+</code></pre>
+<h2 id="53-relatorioservice">5.3 RelatorioService</h2>
+<p>O relatório percorre as OS finalizadas do período e calcula:</p>
+<ul>
+<li>quantidade de OS;</li>
+<li>faturamento;</li>
+<li>mão de obra;</li>
+<li>peças;</li>
+<li>ticket médio;</li>
+<li>comissões por mecânico.</li>
+</ul>
+<p>A comissão é calculada <strong>por item de mão de obra</strong>, usando o executor do item (<code>MaoDeObra.mecanico</code>) ou, quando ausente, o mecânico responsável pela OS. Isso permite que uma OS tenha mais de um executor sem distorcer a comissão.</p>
+<p>O serviço também exporta CSV com separador <code>;</code> e codificação UTF-8 com BOM, compatível com Excel em português.</p>
+<h2 id="54-configuracaoservice-e-backup">5.4 ConfiguracaoService e backup</h2>
+<p>O <code>ConfiguracaoService</code> expõe a configuração da oficina, os pares chave-valor e as operações de backup/restauração. O backup padrão é gravado em <code>backups/oficinapro_AAAAMMDD_HHMMSS.db</code>.</p>
+<h2 id="55-whatsapp">5.5 WhatsApp</h2>
+<p>O link é gerado no formato <code>https://wa.me/55DDDNUMERO?text=...</code>. A mensagem inclui:</p>
+<ul>
+<li>primeiro nome do cliente;</li>
+<li>número da OS;</li>
+<li>marca, modelo e placa do veículo;</li>
+<li>quantidade de itens;</li>
+<li>total formatado em reais;</li>
+<li>validade de 7 dias;</li>
+<li>nome e telefone da oficina.</li>
+</ul>
+<h1 id="6-geração-de-pdf">6. Geração de PDF</h1>
+<h2 id="61-decisão-chrome-headless">6.1 Decisão: Chrome headless</h2>
+<p>O ambiente da disciplina não possui ReportLab. Para não bloquear a entrega, o gerador monta um HTML com o layout do orçamento e usa o Chrome/Chromium já instalado:</p>
+<pre><code class="language-text">google-chrome --headless=new --no-sandbox --disable-gpu \
+  --no-pdf-header-footer --print-to-pdf=orcamento.pdf \
+  file:///tmp/.../orcamento.html
+</code></pre>
+<p>A classe <code>PdfGenerator</code> está isolada em <code>infrastructure/pdf/orcamento_pdf.py</code>. Se o ambiente da Etapa Final tiver ReportLab, basta implementar a mesma interface e injetar o novo gerador no <code>OrcamentoService</code>.</p>
+<div class="page-break"></div><h2 id="62-layout-do-orçamento">6.2 Layout do orçamento</h2>
+<figure class="figure-85">
+  <img src="capturas/orcamento.png" alt="Orçamento da OS 2026-0042 em PDF">
+  <figcaption>Figura 4 — Orçamento gerado para a OS 2026-0042, com dados do cliente, veículo, itens, totais, condições e histórico.</figcaption>
+</figure><p>O documento inclui:</p>
+<ul>
+<li>logotipo e dados da oficina;</li>
+<li>número da OS, data de abertura e validade;</li>
+<li>status e responsável técnico;</li>
+<li>cliente, veículo e responsável;</li>
+<li>tabela de itens com tipo, descrição, quantidade/horas, valor unitário e subtotal;</li>
+<li>totais de peças, mão de obra, subtotal, desconto e total;</li>
+<li>observações e condições;</li>
+<li>histórico de status;</li>
+<li>campos de assinatura.</li>
+</ul>
+<h2 id="63-uso">6.3 Uso</h2>
+<pre><code class="language-bash">python3 main.py --pdf 2026-0042
+# PDF gerado: .../orcamentos/OS-2026-0042.pdf
+</code></pre>
+<h1 id="7-interface-cli-e-execução">7. Interface CLI e execução</h1>
+<h2 id="71-comandos">7.1 Comandos</h2>
+<table>
+<thead>
+<tr>
+<th>Comando</th>
+<th>Efeito</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>python3 main.py</code></td>
+<td>Cria/abre o banco, carrega a seed se necessário e exibe o painel</td>
+</tr>
+<tr>
+<td><code>python3 main.py --reset</code></td>
+<td>Recria a base demonstrativa</td>
+</tr>
+<tr>
+<td><code>python3 main.py --report</code></td>
+<td>Relatório de comissões do mês</td>
+</tr>
+<tr>
+<td><code>python3 main.py --pdf 2026-0042</code></td>
+<td>Gera o PDF do orçamento</td>
+</tr>
+<tr>
+<td><code>python3 main.py --whatsapp 2026-0042</code></td>
+<td>Exibe o link do WhatsApp</td>
+</tr>
+<tr>
+<td><code>python3 main.py --backup</code></td>
+<td>Gera backup com carimbo de data/hora</td>
+</tr>
+<tr>
+<td><code>python3 main.py --backup backups/entrega.db</code></td>
+<td>Gera backup em caminho específico</td>
+</tr>
+<tr>
+<td><code>python3 main.py --db outro.db</code></td>
+<td>Usa outro arquivo SQLite</td>
+</tr>
+</tbody></table>
+<h2 id="72-painel-demonstrativo">7.2 Painel demonstrativo</h2>
+<figure class="figure-85">
+  <img src="capturas/painel-cli.png" alt="Painel demonstrativo do OficinaPro no terminal" style="width: 70%;">
+  <figcaption>Figura 5 — Painel CLI com indicadores do mês, status das OS e últimas ordens.</figcaption>
+</figure><p>O painel mostra os mesmos números da Etapa 2 e permite verificar rapidamente que a seed, os cálculos e os relatórios estão coerentes.</p>
+<h1 id="8-testes-e-qualidade">8. Testes e qualidade</h1>
+<h2 id="81-estratégia">8.1 Estratégia</h2>
+<p>Os testes usam <code>unittest</code> da biblioteca padrão, pois o ambiente não possui <code>pytest</code>. A suíte é dividida em três arquivos:</p>
+<table>
+<thead>
+<tr>
+<th>Arquivo</th>
+<th>Foco</th>
+<th align="right">Casos</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>tests/test_domain.py</code></td>
+<td>Validadores, entidades, itens, totais, transições, encapsulamento e Oficina</td>
+<td align="right">16</td>
+</tr>
+<tr>
+<td><code>tests/test_repositories.py</code></td>
+<td>CRUD, duplicidade, round-trip da OS, histórico append-only e backup/restauração</td>
+<td align="right">5</td>
+</tr>
+<tr>
+<td><code>tests/test_services.py</code></td>
+<td>Criação de OS, ciclo completo, relatórios, CSV, WhatsApp, PDF e configuração</td>
+<td align="right">7</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td align="right"><strong>28</strong></td>
+</tr>
+</tbody></table>
+<p>Cada teste usa banco temporário ou banco em memória, evitando dependência de estado externo. O teste de PDF é pulado automaticamente quando Chrome/Chromium não está disponível.</p>
+<h2 id="82-execução">8.2 Execução</h2>
+<figure>
+  <img src="capturas/testes.png" alt="Saída dos 28 testes automatizados">
+  <figcaption>Figura 6 — Execução de `python3 -m unittest discover -s tests -v`: 28 testes OK.</figcaption>
+</figure><pre><code class="language-bash">python3 -m unittest discover -s tests -v
+# Ran 28 tests in 1.593s
+# OK
+</code></pre>
+<h2 id="83-matriz-de-rastreabilidade">8.3 Matriz de rastreabilidade</h2>
+<table>
+<thead>
+<tr>
+<th>Requisito da Etapa 2</th>
+<th>Implementação</th>
+<th>Evidência de teste</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Herança <code>Pessoa → Cliente/Mecanico</code></td>
+<td><code>domain/pessoa.py</code>, <code>cliente.py</code>, <code>mecanico.py</code></td>
+<td><code>test_pessoa_abstrata</code>, <code>test_comissao_mecanico</code></td>
+</tr>
+<tr>
+<td>Herança <code>ItemOS → Peca/MaoDeObra</code></td>
+<td><code>domain/item_os.py</code>, <code>peca.py</code>, <code>mao_de_obra.py</code></td>
+<td><code>test_itens_polimorficos</code></td>
+</tr>
+<tr>
+<td>Cálculo de subtotais e total</td>
+<td><code>OrdemServico.__recalcular_total()</code></td>
+<td><code>test_totais_e_desconto</code></td>
+</tr>
+<tr>
+<td>Desconto não superior ao subtotal</td>
+<td><code>OrdemServico.aplicar_desconto()</code></td>
+<td><code>test_totais_e_desconto</code></td>
+</tr>
+<tr>
+<td>Transições de status</td>
+<td><code>_TRANSICOES</code>, <code>__validar_transicao()</code></td>
+<td><code>test_ciclo_completo_e_historico</code>, <code>test_transicao_invalida</code></td>
+</tr>
+<tr>
+<td>Histórico append-only</td>
+<td><code>status_historico</code> + repositório</td>
+<td><code>test_historico_append_only</code></td>
+</tr>
+<tr>
+<td>Veículo pertence ao cliente</td>
+<td><code>OrdemServico.__init__</code>, serviço</td>
+<td><code>test_criar_ordem_com_veiculo_de_outro_cliente</code></td>
+</tr>
+<tr>
+<td>Placa antiga e Mercosul</td>
+<td><code>normalizar_placa()</code></td>
+<td><code>test_placa_mercosul_e_antiga</code></td>
+</tr>
+<tr>
+<td>CPF/CNPJ único</td>
+<td><code>cliente.cpf_cnpj UNIQUE</code></td>
+<td><code>test_cliente_crud_e_duplicidade</code></td>
+</tr>
+<tr>
+<td>Soft delete</td>
+<td><code>Cliente.inativar()</code>, <code>ativo</code></td>
+<td><code>test_cliente_crud_e_duplicidade</code></td>
+</tr>
+<tr>
+<td>Persistência SQLite</td>
+<td><code>Database</code>, <code>migrations.py</code>, repositórios</td>
+<td><code>test_ordem_servico_roundtrip</code></td>
+</tr>
+<tr>
+<td>Backup/restauração</td>
+<td><code>BackupService</code></td>
+<td><code>test_backup_e_restauracao</code></td>
+</tr>
+<tr>
+<td>Relatório de comissões</td>
+<td><code>RelatorioService</code></td>
+<td><code>test_relatorio_reproduz_totais_da_etapa2</code></td>
+</tr>
+<tr>
+<td>PDF do orçamento</td>
+<td><code>PdfGenerator</code></td>
+<td><code>test_pdf_quando_chrome_disponivel</code></td>
+</tr>
+<tr>
+<td>WhatsApp</td>
+<td><code>application/whatsapp.py</code></td>
+<td><code>test_whatsapp</code></td>
+</tr>
+</tbody></table>
+<h2 id="84-resultados">8.4 Resultados</h2>
+<ul>
+<li><strong>28 testes executados, 28 aprovados, 0 falhas.</strong></li>
+<li>Seed reproduz <strong>R$ 18.450,00</strong> de faturamento, <strong>R$ 6.320,00</strong> de mão de obra, <strong>R$ 12.130,00</strong> de peças e <strong>R$ 743,00</strong> de comissões.</li>
+<li>PDF gerado com sucesso (1 página A4, aproximadamente 130 KB).</li>
+<li>Backup e restauração validados com <code>PRAGMA integrity_check</code>.</li>
+<li>Nenhum arquivo da Etapa 2 foi modificado.</li>
+</ul>
+<h1 id="9-decisões-e-trade-offs">9. Decisões e trade-offs</h1>
+<table>
+<thead>
+<tr>
+<th>Decisão</th>
+<th>Motivo</th>
+<th>Trade-off</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Decimal</code> para dinheiro</td>
+<td>Evita erros de arredondamento</td>
+<td>Mais verboso que <code>float</code></td>
+</tr>
+<tr>
+<td>Herança em tabela única para itens</td>
+<td>Leitura e histórico simples</td>
+<td>Colunas específicas ficam nulas</td>
+</tr>
+<tr>
+<td>Histórico append-only</td>
+<td>Auditoria e rastreabilidade</td>
+<td>Mais linhas no banco</td>
+</tr>
+<tr>
+<td>Soft delete</td>
+<td>Preserva histórico de OS</td>
+<td>Consultas precisam filtrar <code>ativo</code></td>
+</tr>
+<tr>
+<td>PDF via Chrome headless</td>
+<td>Funciona sem ReportLab</td>
+<td>Depende de Chrome instalado</td>
+</tr>
+<tr>
+<td>Testes com <code>unittest</code></td>
+<td>Sem <code>pytest</code> no ambiente</td>
+<td>Menos recursos que pytest</td>
+</tr>
+<tr>
+<td>Seed com 22 OS</td>
+<td>Reproduz os totais da Etapa 2</td>
+<td>Mais dados para manter</td>
+</tr>
+<tr>
+<td>Repositórios com SQL explícito</td>
+<td>Transparência e controle</td>
+<td>Mais código que um ORM</td>
+</tr>
+</tbody></table>
+<h1 id="10-limitações-e-próximos-passos">10. Limitações e próximos passos</h1>
+<h2 id="101-limitações-atuais">10.1 Limitações atuais</h2>
+<ul>
+<li>A interface gráfica ainda não foi implementada; a entrada é CLI.</li>
+<li>O ambiente de desenvolvimento não possui Tkinter/CustomTkinter, então a UI não pôde ser executada.</li>
+<li>O PDF depende de Chrome/Chromium; não há fallback puro em Python nesta etapa.</li>
+<li>O cadastro de clientes/veículos/mecânicos é feito pela seed e pelos repositórios; ainda não há formulários.</li>
+<li>O pagamento de comissões possui tabela reservada, mas não fluxo de UI.</li>
+</ul>
+<h2 id="102-próximos-passos-etapa-final">10.2 Próximos passos — Etapa Final</h2>
+<ol>
+<li>Implementar a interface CustomTkinter consumindo os serviços atuais.</li>
+<li>Criar as telas de dashboard, clientes, veículos, OS, editor de orçamento, relatórios e configurações.</li>
+<li>Integrar PDF, WhatsApp, backup e restauração na interface.</li>
+<li>Validar o fluxo completo em ambiente com <code>customtkinter</code> instalado.</li>
+<li>Produzir os slides e ensaiar a apresentação.</li>
+<li>Apresentar em <strong>19/11/2026</strong>.</li>
+</ol>
+<h1 id="11-conclusão">11. Conclusão</h1>
+<p>A Etapa 3 entrega o núcleo funcional do OficinaPro. O domínio implementa as regras da Etapa 2 com <code>Decimal</code>, herança, polimorfismo, encapsulamento e transições validadas. A persistência SQLite mantém o agregado consistente, com histórico append-only, soft delete e backup. Os serviços de aplicação cobrem o fluxo de OS, orçamento, relatórios e WhatsApp. O PDF reproduz a identidade visual do projeto. Os 28 testes automatizados e a seed com os totais exatos da Etapa 2 fornecem evidência objetiva de que o núcleo está pronto para receber a interface final.</p>
+<h1 id="12-referências">12. Referências</h1>
+<ul>
+<li>OFICINAPRO. <strong>Etapa 2 — Modelagem e Interfaces</strong>. Documento técnico, 2026. <code>docs/etapa2/Etapa2_Modelagem_e_Interfaces.pdf</code>.</li>
+<li>OFICINAPRO. <strong>Protótipo navegável</strong>. <code>docs/etapa2/prototipo/index.html</code>.</li>
+<li>PYTHON SOFTWARE FOUNDATION. <strong>Python 3.12 Documentation</strong>. Disponível em: <a href="https://docs.python.org/3.12/">https://docs.python.org/3.12/</a>.</li>
+<li>SQLITE. <strong>SQLite Documentation</strong>. Disponível em: <a href="https://www.sqlite.org/docs.html">https://www.sqlite.org/docs.html</a>.</li>
+<li>CUSTOMTKINTER. <strong>CustomTkinter Documentation</strong>. Disponível em: <a href="https://customtkinter.tomschimansky.com/documentation/">https://customtkinter.tomschimansky.com/documentation/</a>.</li>
+<li>WHATSAPP. <strong>Click to Chat</strong>. Disponível em: <a href="https://faq.whatsapp.com/5913398998672934">https://faq.whatsapp.com/5913398998672934</a>.</li>
+</ul>
+<hr>
+<div class="closing">
+  <img class="closing-logo" src="../../assets/logo-horizontal.png" alt="DevSolo Studio">
+  <p><strong>OficinaPro v1.0</strong> — Etapa 3: Implementação do Núcleo</p>
+  <p class="muted">DevSolo Studio • Juan Carlos Matos • 2026</p>
+</div>
+
+</body>
+</html>

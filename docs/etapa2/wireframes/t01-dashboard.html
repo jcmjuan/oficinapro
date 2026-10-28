@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OficinaPro — Dashboard</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body data-screen="dashboard">
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Dashboard</h1>
+          <div class="subtitle">Visão geral da oficina • segunda-feira, 26 de outubro de 2026</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            Buscar OS, cliente ou placa...
+          </div>
+          <a class="btn btn-primary" href="t05-editor-os.html" data-goto>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Nova OS
+          </a>
+          <div class="avatar orange">JM</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h2>Bom dia, Juan 👋</h2>
+            <p>Aqui está o resumo do movimento da oficina hoje.</p>
+          </div>
+          <button class="btn btn-secondary" data-toast="Atendimento rápido aberto (demonstração).">+ Novo atendimento</button>
+        </div>
+
+        <div class="grid-4" style="margin-bottom:16px">
+          <div class="card stat">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 14l2 2 4-4"/></svg></div>
+            <div class="label">OS abertas</div>
+            <div class="value">12</div>
+            <div class="trend">+3 desde ontem</div>
+          </div>
+          <div class="card stat">
+            <div class="icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div class="label">Faturamento do mês</div>
+            <div class="value">R$ 18.450</div>
+            <div class="trend">+12% em relação a setembro</div>
+          </div>
+          <div class="card stat">
+            <div class="icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+            <div class="label">Comissões a pagar</div>
+            <div class="value">R$ 743</div>
+            <div class="trend">3 mecânicos no período</div>
+          </div>
+          <div class="card stat">
+            <div class="icon slate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 13l2-5a2 2 0 0 1 1.9-1.3h10.2A2 2 0 0 1 19 8l2 5"/><path d="M3 13h18v4H3z"/><circle cx="7" cy="17" r="1.5"/><circle cx="17" cy="17" r="1.5"/></svg></div>
+            <div class="label">Veículos atendidos</div>
+            <div class="value">38</div>
+            <div class="trend">no mês de outubro</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <h3>Ordens de serviço recentes</h3>
+              <a class="btn btn-ghost btn-sm" href="t04-ordens-servico.html" data-goto>Ver todas →</a>
+            </div>
+            <table>
+              <thead>
+                <tr><th>Nº</th><th>Cliente</th><th>Veículo</th><th>Status</th><th>Total</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="mono">#2026-0042</td>
+                  <td><div class="flex"><div class="avatar">AR</div><div>Ana Paula Ribeiro</div></div></td>
+                  <td>Honda Civic · ABC-1D23</td>
+                  <td><span class="badge orcamento">Orçamento</span></td>
+                  <td class="nowrap"><strong>R$ 1.240,00</strong></td>
+                </tr>
+                <tr>
+                  <td class="mono">#2026-0041</td>
+                  <td><div class="flex"><div class="avatar">CL</div><div>Carlos Eduardo Lima</div></div></td>
+                  <td>VW Gol · XYZ-9K87</td>
+                  <td><span class="badge execucao">Em execução</span></td>
+                  <td class="nowrap"><strong>R$ 860,00</strong></td>
+                </tr>
+                <tr>
+                  <td class="mono">#2026-0040</td>
+                  <td><div class="flex"><div class="avatar">FS</div><div>Fernanda Souza</div></div></td>
+                  <td>Fiat Argo · QWE-2A34</td>
+                  <td><span class="badge finalizada">Finalizada</span></td>
+                  <td class="nowrap"><strong>R$ 1.980,00</strong></td>
+                </tr>
+                <tr>
+                  <td class="mono">#2026-0039</td>
+                  <td><div class="flex"><div class="avatar">JB</div><div>João Batista</div></div></td>
+                  <td>Toyota Corolla · JKL-5M67</td>
+                  <td><span class="badge aprovada">Aprovada</span></td>
+                  <td class="nowrap"><strong>R$ 2.350,00</strong></td>
+                </tr>
+                <tr>
+                  <td class="mono">#2026-0038</td>
+                  <td><div class="flex"><div class="avatar">MA</div><div>Mariana Alves</div></div></td>
+                  <td>Chevrolet Onix · MNO-8P90</td>
+                  <td><span class="badge cancelada">Cancelada</span></td>
+                  <td class="nowrap"><strong>R$ 420,00</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div class="card">
+              <div class="card-header"><h3>Movimento da semana</h3><span class="small muted">OS finalizadas</span></div>
+              <div class="card-body">
+                <div class="chart">
+                  <div class="bar"><div class="val">3</div><div class="fill" style="height:45%"></div><div class="cap">seg</div></div>
+                  <div class="bar"><div class="val">5</div><div class="fill" style="height:70%"></div><div class="cap">ter</div></div>
+                  <div class="bar"><div class="val">4</div><div class="fill" style="height:58%"></div><div class="cap">qua</div></div>
+                  <div class="bar"><div class="val">6</div><div class="fill" style="height:85%"></div><div class="cap">qui</div></div>
+                  <div class="bar"><div class="val">7</div><div class="fill" style="height:100%"></div><div class="cap">sex</div></div>
+                  <div class="bar"><div class="val">2</div><div class="fill green" style="height:30%"></div><div class="cap">sáb</div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Atenção hoje</h3><span class="badge orcamento">3 pendências</span></div>
+              <div class="card-body" style="padding-top:8px">
+                <div class="checklist">
+                  <label><input type="checkbox"> 3 orçamentos aguardando aprovação do cliente</label>
+                  <label><input type="checkbox"> 1 OS com previsão de entrega atrasada</label>
+                  <label><input type="checkbox"> 2 veículos aguardando retorno para revisão</label>
+                </div>
+                <div class="note" style="margin-top:14px">Dica: use o filtro <strong>Orçamento</strong> na tela de OS para cobrar as aprovações.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-note">OficinaPro • Protótipo de interface • Etapa 2</div>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

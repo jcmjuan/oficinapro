@@ -1,0 +1,40 @@
+sequenceDiagram
+    autonumber
+    actor A as Atendente
+    participant UI as Tela da OS
+    participant S as OrdemServicoService
+    participant OS as OrdemServico
+    participant DB as SQLite
+
+    A->>UI: Aprovar orçamento
+    UI->>S: aprovar(ordem)
+    S->>OS: aprovar()
+    OS->>OS: __validarTransicao(APROVADA)
+    alt transição permitida
+        OS-->>S: status = APROVADA
+        S->>DB: UPDATE ordem SET status = APROVADA
+        S-->>UI: confirmação e badge atualizado
+    else transição inválida
+        OS-->>S: erro de regra de negócio
+        S-->>UI: mensagem de erro
+    end
+
+    A->>UI: Iniciar execução
+    UI->>S: iniciar(ordem)
+    S->>OS: iniciar()
+    OS->>OS: __validarTransicao(EM_EXECUCAO)
+    OS-->>S: status = EM_EXECUCAO
+    S->>DB: UPDATE ordem SET status = EM_EXECUCAO
+    S-->>UI: OS em execução
+
+    A->>UI: Finalizar OS
+    UI->>S: finalizar(ordem)
+    S->>OS: finalizar()
+    OS->>OS: __validarTransicao(FINALIZADA)
+    OS->>OS: registrar data de finalização
+    OS-->>S: status = FINALIZADA
+    S->>DB: UPDATE ordem SET status = FINALIZADA
+    S->>S: gerar recibo em PDF
+    S-->>UI: recibo disponível
+    A->>UI: Baixar recibo
+    UI-->>A: PDF do recibo

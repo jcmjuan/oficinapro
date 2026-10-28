@@ -1,0 +1,34 @@
+sequenceDiagram
+    autonumber
+    actor A as Atendente
+    participant UI as Tela de OS
+    participant S as OrdemServicoService
+    participant R as Repositórios
+    participant DB as SQLite
+    participant OS as OrdemServico
+
+    A->>UI: Seleciona cliente, veículo e responsável
+    UI->>S: criarOrdem(cliente_id, veiculo_id, responsavel_id)
+    S->>R: buscar cliente e veículo
+    R->>DB: SELECT cliente, veiculo
+    DB-->>R: registros
+    R-->>S: objetos Cliente e Veiculo
+    S->>OS: new OrdemServico(numero, cliente, veiculo)
+    S->>DB: INSERT ordem (status = ORCAMENTO)
+    S-->>UI: OS criada
+
+    A->>UI: Adiciona peça ou mão de obra
+    UI->>S: adicionarItem(ordem, item)
+    S->>OS: adicionarItem(item)
+    OS->>OS: __recalcularTotal()
+    S->>DB: INSERT item_os
+    S-->>UI: subtotal e total atualizados
+
+    A->>UI: Clique em "Gerar orçamento"
+    UI->>S: gerarOrcamento(ordem)
+    S->>OS: calcularTotal()
+    OS-->>S: total
+    S->>S: montar PDF do orçamento
+    S-->>UI: arquivo PDF
+    A->>UI: Clique em "Enviar WhatsApp"
+    UI-->>A: link wa.me com texto pré-formatado

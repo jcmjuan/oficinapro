@@ -1,0 +1,9 @@
+erDiagram
+    OFICINA ||--o{ CLIENTE : atende
+    OFICINA ||--o{ MECANICO : emprega
+    CLIENTE ||--o{ VEICULO : possui
+    CLIENTE ||--o{ ORDEM_SERVICO : solicita
+    VEICULO ||--o{ ORDEM_SERVICO : recebe
+    MECANICO ||--o{ ORDEM_SERVICO : responde
+    ORDEM_SERVICO ||--|{ ITEM_OS : contem
+    MECANICO ||--o{ ITEM_OS : executa

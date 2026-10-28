@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    actor A as Atendente
+    participant UI as Tela de OS
+    participant S as Serviço de OS
+    participant DB as Banco de Dados
+    participant OS as OrdemServico
+
+    A->>UI: Seleciona cliente e veículo
+    UI->>S: criarOrdem(cliente, veiculo)
+    S->>DB: INSERT ordem (ORCAMENTO)
+    S-->>UI: OS criada
+    A->>UI: Adiciona peça ou mão de obra
+    UI->>S: adicionarItem(item)
+    S->>OS: adicionarItem(item)
+    OS->>OS: __recalcularTotal()
+    S->>DB: INSERT item
+    S-->>UI: total atualizado
+    A->>UI: Gerar orçamento
+    UI->>S: gerarOrcamento(OS)
+    S-->>UI: PDF + link WhatsApp

@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="file:///home/juan/%C3%81rea%20de%20trabalho/oficinapro/docs/final/">
+  <title>OficinaPro v1.0 — Apresentação Final</title>
+  <style>
+@page { size: 13.333in 7.5in; margin: 0; }
+:root {
+  --ink: #0F172A;
+  --muted: #64748B;
+  --line: #E2E8F0;
+  --orange: #F97316;
+  --soft: #F8FAFC;
+}
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "Inter", "Liberation Sans", Arial, sans-serif;
+  color: var(--ink);
+  background: #0F172A;
+}
+body {
+  padding: 28px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+.slide {
+  width: 1280px;
+  height: 720px;
+  background: var(--soft);
+  position: relative;
+  overflow: hidden;
+  padding: 54px 64px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  page-break-after: always;
+  break-after: page;
+}
+.slide:last-child { page-break-after: auto; break-after: auto; }
+.slide-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.kicker {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.slide-no { font-size: 12px; color: #94A3B8; font-weight: 700; }
+.slide-title {
+  font-size: 44px;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px;
+  color: var(--ink);
+}
+.slide-title span { color: var(--orange); }
+h3 { font-size: 16px; line-height: 1.25; margin: 0 0 8px; color: var(--ink); }
+p { font-size: 15px; line-height: 1.55; margin: 0 0 9px; color: #334155; }
+ul { margin: 0; padding-left: 20px; }
+li { font-size: 15px; line-height: 1.55; margin: 4px 0; color: #334155; }
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 12.5px;
+  background: #F1F5F9;
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #0F172A;
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.grid-62-38 { display: grid; grid-template-columns: 62% 1fr; gap: 26px; align-items: start; }
+.grid-58-42 { display: grid; grid-template-columns: 58% 1fr; gap: 26px; align-items: start; }
+.grid-55-45 { display: grid; grid-template-columns: 55% 1fr; gap: 26px; align-items: start; }
+.grid-38-62 { display: grid; grid-template-columns: 38% 1fr; gap: 28px; align-items: start; }
+.card {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 19px 21px;
+}
+.accent-card { border-top: 4px solid var(--orange); }
+.quote {
+  margin-top: 22px;
+  padding: 15px 20px;
+  border-left: 5px solid var(--orange);
+  background: #FFF7ED;
+  color: #7C2D12;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  border-radius: 0 10px 10px 0;
+}
+.slide-footer {
+  position: absolute;
+  left: 64px;
+  right: 64px;
+  bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #94A3B8;
+  border-top: 1px solid var(--line);
+  padding-top: 9px;
+}
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.metric {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 19px;
+}
+.metric strong {
+  display: block;
+  font-size: 42px;
+  line-height: 1;
+  color: var(--orange);
+  letter-spacing: -0.04em;
+}
+.metric span { font-size: 12px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; }
+.small-metrics .metric strong { font-size: 34px; }
+.mini-card {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+.mini-card p { font-size: 13px; margin: 0; }
+.shot-card {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 9px;
+}
+.shot-card img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+}
+.shots .shot-card img { height: 340px; object-fit: contain; object-position: top center; }
+.dashboard img { height: 380px; object-fit: contain; object-position: top center; }
+.portrait img { max-height: 480px; width: auto; max-width: 100%; margin: 0 auto; }
+.caption { font-size: 11px; color: var(--muted); margin: 8px 2px 0; line-height: 1.4; }
+.stack { display: flex; flex-direction: column; gap: 13px; }
+.stat-line {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.stat-line strong { font-size: 24px; color: var(--orange); letter-spacing: -0.02em; }
+.stat-line span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+.small { font-size: 13px !important; color: var(--muted) !important; }
+.pill-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
+.pill {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 13px;
+  font-size: 12px;
+  color: #334155;
+}
+.flow { display: flex; align-items: center; gap: 9px; margin-top: 18px; flex-wrap: wrap; }
+.flow-step {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 13px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+}
+.flow-step.done { background: #ECFDF5; border-color: #A7F3D0; color: #047857; }
+.arrow { color: #94A3B8; font-weight: 700; }
+.flow-cancel {
+  margin-left: auto;
+  color: #B91C1C;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.clean-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.clean-table th {
+  background: #F1F5F9;
+  font-size: 12px;
+  text-align: left;
+  padding: 10px 12px;
+  color: #475569;
+}
+.clean-table td {
+  font-size: 12px;
+  padding: 8px 12px;
+  border-top: 1px solid #E2E8F0;
+  color: #334155;
+}
+.code-card { background: #0F172A; border-radius: 12px; padding: 15px 17px; }
+.code-card pre {
+  margin: 0;
+  color: #E2E8F0;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 12.5px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.check-list { list-style: none; padding-left: 0; }
+.check-list li::before { content: "✓"; color: #059669; font-weight: 800; margin-right: 8px; }
+.demo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 13px; margin-top: 16px; }
+.demo-step {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 17px 15px;
+  min-height: 188px;
+}
+.demo-step span { font-size: 11px; font-weight: 800; color: var(--orange); letter-spacing: 0.12em; }
+.demo-step h3 { font-size: 15px; margin: 14px 0 6px; }
+.demo-step p { font-size: 13px; color: var(--muted); }
+
+/* Capa */
+.cover {
+  padding: 0;
+  background:
+    radial-gradient(circle at 88% 18%, #FFEDD5 0, rgba(255, 237, 213, 0) 34%),
+    radial-gradient(circle at 92% 78%, #E2E8F0 0, rgba(226, 232, 240, 0) 28%),
+    #F8FAFC;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 13px;
+  background: linear-gradient(90deg, #0F172A 0 72%, #F97316 72% 100%);
+}
+.cover::after {
+  content: "";
+  position: absolute;
+  right: -120px;
+  bottom: -180px;
+  width: 520px;
+  height: 520px;
+  border: 46px solid #F97316;
+  border-radius: 50%;
+  opacity: 0.16;
+}
+.cover-logo { position: absolute; top: 48px; left: 64px; width: 280px; }
+.cover-logo img { width: 100%; display: block; }
+.cover-main { position: absolute; left: 64px; top: 178px; width: 780px; }
+.cover h1 {
+  font-size: 82px;
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+.cover h1 span { color: var(--orange); font-size: 42px; letter-spacing: -0.02em; }
+.cover-sub { font-size: 29px; font-weight: 600; color: #334155; margin: 0 0 16px; }
+.cover-lead { font-size: 18px; line-height: 1.55; color: #475569; max-width: 700px; }
+.cover-meta {
+  position: absolute;
+  left: 64px;
+  bottom: 105px;
+  display: flex;
+  gap: 48px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  width: 760px;
+}
+.cover-meta div { font-size: 13px; line-height: 1.5; color: #475569; }
+.cover-meta strong {
+  display: block;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #64748B;
+  margin-bottom: 2px;
+}
+.cover-footer { position: absolute; left: 64px; bottom: 34px; font-size: 12px; color: #64748B; }
+
+/* Fechamento */
+.dark { background: #0F172A; color: #F8FAFC; }
+.closing::after {
+  content: "v1.0";
+  position: absolute;
+  right: 48px;
+  top: 190px;
+  font-size: 190px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  color: rgba(249, 115, 22, 0.10);
+  pointer-events: none;
+}
+.dark .kicker { color: #FB923C; }
+.dark .slide-no { color: #64748B; }
+.dark .slide-footer { border-color: #334155; color: #64748B; }
+.closing-title {
+  font-size: 62px;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  margin: 20px 0 0;
+  color: #F8FAFC;
+}
+.closing-title span { color: #FB923C; }
+.closing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 32px;
+  width: 900px;
+}
+.closing-grid div {
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+.closing-grid strong {
+  display: block;
+  color: #FB923C;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 6px;
+}
+.closing-grid p { color: #CBD5E1; font-size: 14px; margin: 0; }
+.thanks { margin-top: 36px; font-size: 29px; font-weight: 800; line-height: 1.25; color: #F8FAFC; }
+.thanks span { color: #FB923C; }
+
+@media print {
+  html, body { background: #FFFFFF; }
+  body { padding: 0; display: block; }
+  .slide { margin: 0; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+<!--
+  OficinaPro v1.0 — roteiro da apresentação final.
+  Cada bloco entre os marcadores SLIDE vira uma página 16:9 no PDF.
+  Imagens: docs/final/capturas/ e docs/etapa2/diagramas/.
+-->
+
+<div class="slide cover">
+  <div class="cover-logo"><img src="../../assets/logo-horizontal.png" alt="DevSolo Studio — OficinaPro"></div>
+  <div class="cover-main">
+    <div class="kicker">AVALIAÇÃO G2 • ETAPA FINAL • 19/11/2026</div>
+    <h1>OficinaPro <span>v1.0</span></h1>
+    <p class="cover-sub">Interface, integração e entrega final</p>
+    <p class="cover-lead">Do orçamento ao recibo: uma operação completa para a oficina, com PDF, WhatsApp, relatórios e backup.</p>
+  </div>
+  <div class="cover-meta">
+    <div><strong>Equipe</strong><br>DevSolo Studio</div>
+    <div><strong>Integrante</strong><br>Juan Carlos Matos</div>
+    <div><strong>Stack</strong><br>Python • CustomTkinter • SQLite</div>
+  </div>
+  <div class="cover-footer">Python 3.12+ • CustomTkinter • SQLite • unittest • Chrome headless</div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Contexto</span><span class="slide-no">02</span></div>
+  <h2 class="slide-title">Uma oficina que cresce<br><span>sem perder o controle.</span></h2>
+  <div class="grid-2">
+    <div class="card muted-card">
+      <h3>Antes</h3>
+      <ul>
+        <li>Orçamentos em planilhas e papéis.</li>
+        <li>Histórico do veículo disperso.</li>
+        <li>Comissões calculadas à mão.</li>
+        <li>PDF e WhatsApp montados manualmente.</li>
+      </ul>
+    </div>
+    <div class="card accent-card">
+      <h3>Com o OficinaPro</h3>
+      <ul>
+        <li>Cadastro único de cliente, veículo e equipe.</li>
+        <li>OS com itens, status e histórico auditável.</li>
+        <li>Orçamento e recibo em PDF.</li>
+        <li>WhatsApp em um clique e relatórios gerenciais.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote">O núcleo da Etapa 3 virou produto: a mesma regra de negócio, agora com uma experiência completa.</div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">A entrega</span><span class="slide-no">03</span></div>
+  <h2 class="slide-title">O escopo em números.</h2>
+  <div class="metric-grid">
+    <div class="metric"><strong>7</strong><span>telas</span></div>
+    <div class="metric"><strong>9</strong><span>diálogos</span></div>
+    <div class="metric"><strong>28</strong><span>testes</span></div>
+    <div class="metric"><strong>14</strong><span>fluxos validados</span></div>
+    <div class="metric"><strong>20</strong><span>capturas reais</span></div>
+    <div class="metric"><strong>13</strong><span>páginas de relatório</span></div>
+  </div>
+  <div class="grid-3">
+    <div class="mini-card"><h3>Núcleo preservado</h3><p>Domínio, SQLite, serviços, PDF e WhatsApp da Etapa 3.</p></div>
+    <div class="mini-card"><h3>Interface integrada</h3><p>CustomTkinter consumindo os mesmos serviços, sem regra duplicada.</p></div>
+    <div class="mini-card"><h3>Entrega completa</h3><p>Relatório, capturas, slides, seed e instruções de execução.</p></div>
+  </div>
+  <div class="quote">Uma entrega verificável: 28 testes automatizados e 14 fluxos de interface exercitados.</div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Arquitetura</span><span class="slide-no">04</span></div>
+  <h2 class="slide-title">A interface não recalcula nada.</h2>
+  <div class="grid-58-42">
+    <div class="shot-card">
+      <img src="../etapa2/diagramas/arquitetura.png" alt="Arquitetura em camadas do OficinaPro">
+      <p class="caption">Arquitetura preservada da Etapa 2: apresentação → serviços → domínio/repositórios.</p>
+    </div>
+    <div class="stack">
+      <div class="card"><h3>AppContext</h3><p>Monta banco, repositórios e serviços em um único ponto.</p></div>
+      <div class="card"><h3>Serviços</h3><p>OS, orçamento, relatórios e configuração concentram as regras.</p></div>
+      <div class="card"><h3>Entrada</h3><p><code>python3 main.py</code> abre a UI; <code>--cli</code> preserva o terminal.</p></div>
+    </div>
+  </div>
+  <div class="quote">A dependência aponta sempre para dentro: a interface conhece serviços, não SQL.</div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Dashboard</span><span class="slide-no">05</span></div>
+  <h2 class="slide-title">A operação em uma tela.</h2>
+  <div class="grid-62-38">
+    <div class="shot-card dashboard">
+      <img src="capturas/dashboard.png" alt="Dashboard do OficinaPro">
+      <p class="caption">Indicadores do mês, ordens recentes e distribuição por status.</p>
+    </div>
+    <div class="stack">
+      <div class="stat-line"><strong>R$ 18.450</strong><span>faturamento</span></div>
+      <div class="stat-line"><strong>R$ 6.320</strong><span>mão de obra</span></div>
+      <div class="stat-line"><strong>R$ 743</strong><span>comissões</span></div>
+      <p class="small">Os números vêm de <code>RelatorioService</code> e <code>resumo_dashboard()</code>; a tela apenas apresenta.</p>
+    </div>
+  </div>
+  <div class="quote">Indicadores calculados pelos serviços; a interface só organiza a leitura.</div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Cadastros</span><span class="slide-no">06</span></div>
+  <h2 class="slide-title">Clientes e frota, sem retrabalho.</h2>
+  <div class="grid-2 shots">
+    <div class="shot-card"><img src="capturas/clientes.png" alt="Tela de clientes"><p class="caption">Clientes com busca, situação e acesso à frota.</p></div>
+    <div class="shot-card"><img src="capturas/veiculos.png" alt="Tela de veículos"><p class="caption">Frota com última OS, quilometragem e histórico.</p></div>
+  </div>
+  <div class="pill-row">
+    <span class="pill">Busca por nome, placa, documento e e-mail</span>
+    <span class="pill">Soft delete com reativação</span>
+    <span class="pill">Filtro contextual cliente → veículos</span>
+  </div>
+  <div class="quote">O mesmo cadastro alimenta a OS, o histórico do veículo e os relatórios.</div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Operação</span><span class="slide-no">07</span></div>
+  <h2 class="slide-title">Da fila ao editor da OS.</h2>
+  <div class="grid-2 shots">
+    <div class="shot-card"><img src="capturas/ordens.png" alt="Lista de ordens de serviço"><p class="caption">Fila filtrável por status e busca textual.</p></div>
+    <div class="shot-card"><img src="capturas/editor-os.png" alt="Editor da ordem de serviço"><p class="caption">Itens, desconto, histórico e ações contextuais.</p></div>
+  </div>
+  <div class="flow">
+    <span class="flow-step">Orçamento</span><span class="arrow">→</span>
+    <span class="flow-step">Aprovada</span><span class="arrow">→</span>
+    <span class="flow-step">Em execução</span><span class="arrow">→</span>
+    <span class="flow-step done">Finalizada</span>
+    <span class="flow-cancel">Cancelada (com motivo)</span>
+  </div>
+  <div class="quote">Cada transição é validada pelo domínio e registrada no histórico append-only.</div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Documentos</span><span class="slide-no">08</span></div>
+  <h2 class="slide-title">Orçamento, recibo e WhatsApp.</h2>
+  <div class="grid-38-62">
+    <div class="shot-card portrait"><img src="capturas/dialogo-documento.png" alt="Prévia do orçamento"><p class="caption">Prévia com identidade visual, itens e totais.</p></div>
+    <div class="stack">
+      <div class="card"><h3>PDF sob demanda</h3><p>Orçamento em <code>ORCAMENTO</code> e recibo em <code>FINALIZADA</code>.</p></div>
+      <div class="card"><h3>WhatsApp em um clique</h3><p>Mensagem pronta com cliente, OS, veículo, itens, total e validade.</p></div>
+      <div class="card"><h3>Link <code>wa.me</code></h3><p>Sem API proprietária: abre a conversa no aplicativo ou navegador.</p></div>
+      <div class="card"><h3>Recibo automático</h3><p>O título muda quando a OS sai de orçamento e é finalizada.</p></div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Gestão</span><span class="slide-no">09</span></div>
+  <h2 class="slide-title">Relatórios, comissões e backup.</h2>
+  <div class="grid-58-42 shots">
+    <div class="shot-card"><img src="capturas/relatorios.png" alt="Tela de relatórios"><p class="caption">Faturamento, comissões e composição por período.</p></div>
+    <div class="shot-card"><img src="capturas/configuracoes-backup.png" alt="Aba de backup"><p class="caption">Backup e restauração com validação.</p></div>
+  </div>
+  <div class="pill-row">
+    <span class="pill">CSV de comissões</span>
+    <span class="pill">Backup do banco</span>
+    <span class="pill">Schema e ambiente</span>
+    <span class="pill">Equipe e oficina</span>
+  </div>
+  <div class="quote">Relatórios e backup fecham o ciclo de gestão sem sair da aplicação.</div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Integração</span><span class="slide-no">10</span></div>
+  <h2 class="slide-title">Uma regra, duas interfaces.</h2>
+  <div class="grid-55-45">
+    <table class="clean-table">
+      <thead><tr><th>Ação da UI</th><th>Serviço</th></tr></thead>
+      <tbody>
+        <tr><td>Criar OS</td><td><code>OrdemServicoService</code></td></tr>
+        <tr><td>Adicionar item</td><td><code>adicionar_peca()</code></td></tr>
+        <tr><td>Desconto</td><td><code>aplicar_desconto()</code></td></tr>
+        <tr><td>Transições</td><td><code>aprovar / iniciar / finalizar</code></td></tr>
+        <tr><td>PDF e WhatsApp</td><td><code>OrcamentoService</code></td></tr>
+        <tr><td>Relatórios</td><td><code>RelatorioService</code></td></tr>
+        <tr><td>Backup</td><td><code>ConfiguracaoService</code></td></tr>
+      </tbody>
+    </table>
+    <div class="stack">
+      <div class="code-card"><pre>python3 main.py        # UI
+python3 main.py --cli  # terminal
+python3 main.py --ui   # força UI</pre></div>
+      <div class="card"><h3>Sem duplicação</h3><p>A UI coleta dados e apresenta resultados; o domínio valida e calcula.</p></div>
+      <div class="card"><h3>CLI preservado</h3><p>Fallback para ambientes sem Tkinter ou demonstrações headless.</p></div>
+    </div>
+  </div>
+  <div class="quote">A mesma regra sustenta a interface, o terminal e os testes automatizados.</div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Qualidade</span><span class="slide-no">11</span></div>
+  <h2 class="slide-title">Validado, não só compilado.</h2>
+  <div class="metric-grid small-metrics">
+    <div class="metric"><strong>28</strong><span>testes OK</span></div>
+    <div class="metric"><strong>14</strong><span>fluxos de UI</span></div>
+    <div class="metric"><strong>0</strong><span>erros de compilação</span></div>
+    <div class="metric"><strong>7</strong><span>telas exercitadas</span></div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>Roteiro de integração</h3>
+      <ul class="check-list">
+        <li>Cliente, veículo e mecânico</li>
+        <li>OS, peças, mão de obra e desconto</li>
+        <li>Aprovação, execução e finalização</li>
+        <li>PDF, WhatsApp e cancelamento</li>
+        <li>CSV, backup e restauração</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Ambiente da validação</h3>
+      <p>Python 3.14.4 • Tk 8.6 • CustomTkinter 5.2.2</p>
+      <p>Janela 1440 × 900 • capturas reais em <code>docs/final/capturas/</code></p>
+      <p class="small">O roteiro criou as OS 2026-0043 e 2026-0044 em banco temporário, sem alterar a base demonstrativa.</p>
+    </div>
+  </div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Demonstração</span><span class="slide-no">12</span></div>
+  <h2 class="slide-title">Um roteiro de cinco minutos.</h2>
+  <div class="demo-grid">
+    <div class="demo-step"><span>01</span><h3>Abrir a OS</h3><p>Cliente, veículo e responsável.</p></div>
+    <div class="demo-step"><span>02</span><h3>Adicionar itens</h3><p>Peça e mão de obra com totais.</p></div>
+    <div class="demo-step"><span>03</span><h3>Concluir</h3><p>Aprovar, iniciar e finalizar.</p></div>
+    <div class="demo-step"><span>04</span><h3>Enviar</h3><p>PDF e WhatsApp em um clique.</p></div>
+    <div class="demo-step"><span>05</span><h3>Gerir</h3><p>Relatório, CSV e backup.</p></div>
+  </div>
+  <div class="quote">A demonstração percorre o mesmo caminho do cliente: orçamento → aprovação → execução → recibo.</div>
+  <div class="grid-3" style="margin-top:16px">
+    <div class="mini-card"><h3>OS finalizada</h3><p>Histórico e quilometragem atualizados.</p></div>
+    <div class="mini-card"><h3>PDF gerado</h3><p>Documento pronto para envio.</p></div>
+    <div class="mini-card"><h3>WhatsApp aberto</h3><p>Mensagem com o resumo da OS.</p></div>
+  </div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide">
+  <div class="slide-head"><span class="kicker">Roadmap</span><span class="slide-no">13</span></div>
+  <h2 class="slide-title">O que fica para a próxima versão.</h2>
+  <div class="grid-2">
+    <div class="card muted-card">
+      <h3>Limitações atuais</h3>
+      <ul>
+        <li>Aplicação desktop local, sem autenticação.</li>
+        <li>Comissões informativas, sem baixa financeira.</li>
+        <li>PDF depende de Chrome/Chromium headless.</li>
+        <li>Sem estoque, agenda ou emissão fiscal.</li>
+      </ul>
+    </div>
+    <div class="card accent-card">
+      <h3>Próximos passos</h3>
+      <ul>
+        <li>Pagamento de comissões e fechamento financeiro.</li>
+        <li>Estoque de peças e alertas de mínimo.</li>
+        <li>Agenda de serviços e previsão de entrega.</li>
+        <li>Empacotamento com PyInstaller e autenticação.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote">A base está pronta: o próximo ciclo é de profundidade operacional, não de reconstrução.</div>
+  <div class="flow" style="margin-top:18px">
+    <span class="flow-step done">v1.0 entrega</span><span class="arrow">→</span>
+    <span class="flow-step">v1.1 financeiro</span><span class="arrow">→</span>
+    <span class="flow-step">v1.2 estoque/agenda</span><span class="arrow">→</span>
+    <span class="flow-step">v2.0 distribuição</span>
+  </div>
+  <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
+</div>
+<div class="slide dark closing">
+  <div class="slide-head"><span class="kicker">Conclusão</span><span class="slide-no">14</span></div>
+  <h2 class="closing-title">Contrato cumprido.<br><span>Pronto para operar.</span></h2>
+  <div class="closing-grid">
+    <div><strong>Núcleo</strong><p>Domínio, SQLite, serviços e testes.</p></div>
+    <div><strong>Interface</strong><p>Sete telas integradas, sem regra duplicada.</p></div>
+    <div><strong>Entrega</strong><p>Relatório, capturas, slides e execução.</p></div>
+  </div>
+  <div class="thanks">Obrigado.<br><span>Perguntas?</span></div>
+  <div class="slide-footer"><span>OficinaPro v1.0 • DevSolo Studio</span><span>Juan Carlos Matos • 19/11/2026</span></div>
+</div>
+</body>
+</html>

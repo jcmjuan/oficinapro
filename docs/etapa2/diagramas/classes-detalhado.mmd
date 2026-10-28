@@ -1,0 +1,129 @@
+classDiagram
+    direction LR
+
+    class Pessoa {
+        <<abstract>>
+        -nome : str
+        -telefone : str
+        -email : str
+        +nome() str
+        +telefone() str
+        +email() str
+        +resumo()* str
+        -__validarContato() bool
+    }
+
+    class Cliente {
+        -cpfCnpj : str
+        -endereco : str
+        -veiculos : list~Veiculo~
+        +adicionarVeiculo(v : Veiculo) void
+        +listarVeiculos() list~Veiculo~
+        +resumo() str
+    }
+
+    class Mecanico {
+        -registro : str
+        -especialidade : str
+        -taxaComissao : float
+        +calcularComissao(valor : float) float
+        +resumo() str
+    }
+
+    class Veiculo {
+        -placa : str
+        -marca : str
+        -modelo : str
+        -ano : int
+        -km : int
+        -cliente : Cliente
+        +atualizarKm(km : int) void
+        +historico() list~OrdemServico~
+        +descricao() str
+    }
+
+    class ItemOS {
+        <<abstract>>
+        -descricao : str
+        -quantidade : float
+        -valorUnitario : float
+        +calcularSubtotal()* float
+        +descrever()* str
+    }
+
+    class Peca {
+        -codigo : str
+        -fornecedor : str
+        +calcularSubtotal() float
+        +descrever() str
+    }
+
+    class MaoDeObra {
+        -horas : float
+        -taxaHoraria : float
+        -executor : Mecanico
+        +calcularSubtotal() float
+        +descrever() str
+    }
+
+    class OrdemServico {
+        -numero : str
+        -status : StatusOS
+        -cliente : Cliente
+        -veiculo : Veiculo
+        -responsavel : Mecanico
+        -itens : list~ItemOS~
+        -desconto : float
+        -dataAbertura : datetime
+        -dataFinalizacao : datetime
+        -observacoes : str
+        +adicionarItem(item : ItemOS) void
+        +removerItem(item : ItemOS) void
+        +calcularSubtotal() float
+        +calcularTotal() float
+        +aprovar() void
+        +iniciar() void
+        +finalizar() void
+        +cancelar() void
+        +podeTransicionar(novo : StatusOS) bool
+        -__recalcularTotal() void
+        -__validarTransicao(novo : StatusOS) void
+    }
+
+    class Oficina {
+        -nome : str
+        -cnpj : str
+        -telefone : str
+        -endereco : str
+        -taxaHorariaPadrao : float
+        -comissaoPadrao : float
+        +adicionarCliente(c : Cliente) void
+        +adicionarMecanico(m : Mecanico) void
+        +emitirOrdemServico(cliente : Cliente, veiculo : Veiculo) OrdemServico
+        +relatorioComissoes(inicio : date, fim : date) list
+    }
+
+    class StatusOS {
+        <<enumeration>>
+        ORCAMENTO
+        APROVADA
+        EM_EXECUCAO
+        FINALIZADA
+        CANCELADA
+    }
+
+    Pessoa <|-- Cliente
+    Pessoa <|-- Mecanico
+    ItemOS <|-- Peca
+    ItemOS <|-- MaoDeObra
+
+    Cliente "1" --> "0..*" Veiculo : possui
+    Cliente "1" --> "0..*" OrdemServico : solicita
+    Veiculo "1" --> "0..*" OrdemServico : recebe
+    Mecanico "1" --> "0..*" OrdemServico : responsável
+    OrdemServico "1" *-- "1..*" ItemOS : contém
+    Mecanico "1" --> "0..*" MaoDeObra : executa
+    Oficina "1" --> "0..*" Cliente : atende
+    Oficina "1" --> "0..*" Mecanico : emprega
+    Oficina "1" --> "0..*" OrdemServico : gerencia
+    OrdemServico --> StatusOS : usa

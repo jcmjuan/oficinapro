@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OficinaPro — Configurações</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body data-screen="config">
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Configurações</h1>
+          <div class="subtitle">Preferências da oficina, financeiro e dados do sistema</div>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" data-toast="Configurações restauradas para o padrão (demonstração).">Restaurar padrão</button>
+          <button class="btn btn-primary" data-toast="Configurações salvas com sucesso (demonstração).">Salvar alterações</button>
+          <div class="avatar orange">JM</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h2>Configurações do sistema</h2>
+            <p>Personalize os dados da oficina, regras financeiras e preferências de uso.</p>
+          </div>
+          <span class="badge aprovada">Ambiente local</span>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active">Dados da oficina</div>
+          <div class="tab">Financeiro</div>
+          <div class="tab">Aparência</div>
+          <div class="tab">Backup e dados</div>
+          <div class="tab">Sobre</div>
+        </div>
+
+        <div class="grid-2" style="grid-template-columns:1.45fr .85fr;align-items:start">
+          <div class="card">
+            <div class="card-header">
+              <h3>Dados da oficina</h3>
+              <span class="small muted">Usados em orçamentos e recibos</span>
+            </div>
+            <div class="card-body">
+              <div class="flex" style="margin-bottom:18px;gap:14px">
+                <img src="../../../assets/logo.svg" alt="Logo da oficina" style="width:64px;height:64px;border-radius:14px">
+                <div>
+                  <strong>Logotipo da oficina</strong>
+                  <div class="small muted">PNG ou SVG • recomendado 512 × 512 px</div>
+                  <div class="flex" style="margin-top:8px;gap:8px">
+                    <button class="btn btn-secondary btn-sm" data-toast="Seletor de arquivo (demonstração).">Alterar logo</button>
+                    <button class="btn btn-ghost btn-sm" data-toast="Logo removido (demonstração).">Remover</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="field">
+                  <label>Nome da oficina *</label>
+                  <input value="DevSolo Studio">
+                </div>
+                <div class="field">
+                  <label>Nome fantasia *</label>
+                  <input value="OficinaPro">
+                </div>
+                <div class="field">
+                  <label>CNPJ *</label>
+                  <input value="12.345.678/0001-90">
+                </div>
+                <div class="field">
+                  <label>Telefone / WhatsApp *</label>
+                  <input value="(11) 98765-4321">
+                </div>
+                <div class="field">
+                  <label>E-mail</label>
+                  <input value="contato@devsolo.studio">
+                </div>
+                <div class="field">
+                  <label>Site</label>
+                  <input value="www.devsolo.studio">
+                </div>
+                <div class="field full">
+                  <label>Endereço</label>
+                  <input value="Av. das Oficinas, 120 — Vila Industrial">
+                </div>
+                <div class="field">
+                  <label>Cidade</label>
+                  <input value="São Paulo">
+                </div>
+                <div class="field">
+                  <label>UF</label>
+                  <select>
+                    <option>SP</option>
+                    <option>RJ</option>
+                    <option>MG</option>
+                    <option>PR</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>CEP</label>
+                  <input value="03120-000">
+                </div>
+                <div class="field">
+                  <label>Horário de funcionamento</label>
+                  <input value="Seg–Sex, 08:00–18:00 • Sáb, 08:00–12:00">
+                </div>
+              </div>
+
+              <div class="note" style="margin-top:16px">Esses dados aparecem no cabeçalho dos orçamentos e recibos. O logotipo é armazenado localmente na pasta de dados do aplicativo.</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div class="card">
+              <div class="card-header"><h3>Preferências rápidas</h3></div>
+              <div class="card-body">
+                <div class="checklist">
+                  <label><input type="checkbox" checked> Avisar sobre orçamentos sem resposta</label>
+                  <label><input type="checkbox" checked> Abrir WhatsApp após gerar orçamento</label>
+                  <label><input type="checkbox"> Backup automático ao fechar o sistema</label>
+                  <label><input type="checkbox" checked> Exibir valores com duas casas decimais</label>
+                  <label><input type="checkbox" checked> Confirmar antes de cancelar uma OS</label>
+                </div>
+                <div class="field" style="margin-top:16px">
+                  <label>Tema da interface</label>
+                  <select>
+                    <option>Claro (padrão)</option>
+                    <option>Escuro</option>
+                    <option>Automático</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Backup e dados</h3></div>
+              <div class="card-body">
+                <div class="flex" style="justify-content:space-between;margin-bottom:8px">
+                  <span class="small muted">Último backup</span>
+                  <strong class="small">25/10/2026 às 22:00</strong>
+                </div>
+                <div class="flex" style="justify-content:space-between;margin-bottom:14px">
+                  <span class="small muted">Banco de dados</span>
+                  <strong class="small">SQLite • 2,4 MB</strong>
+                </div>
+                <div class="flex" style="gap:8px">
+                  <button class="btn btn-primary btn-sm" style="flex:1" data-toast="Backup criado em /dados/backups (demonstração).">Fazer backup</button>
+                  <button class="btn btn-secondary btn-sm" style="flex:1" data-toast="Seletor de backup (demonstração).">Restaurar</button>
+                </div>
+                <div class="small muted" style="margin-top:10px">Arquivo local: <span class="mono">oficinapro.db</span></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header"><h3>Sobre</h3></div>
+              <div class="card-body">
+                <div class="flex" style="justify-content:space-between"><span class="small muted">Produto</span><strong class="small">OficinaPro</strong></div>
+                <div class="flex" style="justify-content:space-between;margin-top:6px"><span class="small muted">Versão</span><strong class="small">1.0.0</strong></div>
+                <div class="flex" style="justify-content:space-between;margin-top:6px"><span class="small muted">Desenvolvido por</span><strong class="small">DevSolo Studio</strong></div>
+                <div class="flex" style="justify-content:space-between;margin-top:6px"><span class="small muted">Responsável</span><strong class="small">Juan Carlos Matos</strong></div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-note">OficinaPro • Protótipo de interface • Etapa 2</div>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

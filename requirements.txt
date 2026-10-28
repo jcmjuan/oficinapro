@@ -1,0 +1,6 @@
+# Núcleo executável da Etapa 3 — usa apenas a biblioteca padrão do Python.
+# Não há dependências obrigatórias para rodar domínio, SQLite, relatórios,
+# testes e geração de PDF via Chrome headless.
+#
+# Para a interface final (CustomTkinter), use:
+#   pip install -r requirements-ui.txt

@@ -1,0 +1,67 @@
+# ==============================================================
+# OficinaPro — arquivos que NÃO vão para o repositório
+#
+# Documentação, PDFs de entrega, diagramas, capturas e assets
+# continuam versionados de propósito: facilitam a leitura do
+# projeto direto no GitHub.
+# ==============================================================
+
+# --- Ambiente virtual -----------------------------------------
+.venv/
+venv/
+env/
+ENV/
+
+# --- Bytecode e caches do Python ------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# --- Testes e análise estática --------------------------------
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+
+# --- Empacotamento --------------------------------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --- Banco de dados local -------------------------------------
+# Recriado com `python main.py --reset` (seed demonstrativa).
+oficinapro.db
+oficinapro.db-shm
+oficinapro.db-wal
+*.sqlite
+*.sqlite3
+
+# --- Artefatos gerados em tempo de execução -------------------
+# Backups do `--backup`.
+backups/*.db
+backups/*.sqlite*
+# Logs e temporários.
+*.log
+*.tmp
+~$*
+
+# Orçamentos gerados por `--pdf`.
+# Estão versionados de propósito como exemplo de saída; se
+# preferir não versionar, descomente a linha abaixo.
+# orcamentos/*.pdf
+
+# --- Sistema operacional --------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Editores e IDEs ------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo

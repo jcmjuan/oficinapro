@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OficinaPro — Protótipo navegável</title>
+  <link rel="stylesheet" href="../wireframes/base.css">
+  <style>
+    .proto-sidebar { width: 286px; }
+    .proto-main { flex: 1; display: flex; flex-direction: column; min-width: 0; background: var(--slate-100); }
+    .proto-stage { flex: 1; min-height: 0; padding: 16px; }
+    .proto-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .proto-frame iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      height: 900px;
+      border: 0;
+      display: block;
+      background: #fff;
+      transform-origin: top left;
+    }
+    .proto-bottom {
+      height: 68px;
+      flex-shrink: 0;
+      background: #fff;
+      border-top: 1px solid var(--slate-200);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 22px;
+    }
+    .proto-progress { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .proto-progress .track { width: 150px; height: 6px; background: var(--slate-200); border-radius: 999px; overflow: hidden; flex-shrink: 0; }
+    .proto-progress .bar { height: 100%; width: 12.5%; background: var(--orange); border-radius: 999px; transition: width .2s; }
+    .proto-screen-desc { font-size: 12px; color: var(--slate-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .proto-controls { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .proto-controls .step { font-size: 12px; color: var(--slate-500); min-width: 52px; text-align: center; font-weight: 600; }
+    .proto-nav a { cursor: pointer; }
+    .proto-nav .num {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .08);
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .proto-nav a.active .num { background: rgba(255, 255, 255, .22); }
+    .proto-hint { font-size: 11px; color: var(--slate-400); line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar proto-sidebar">
+      <div class="brand">
+        <img src="../../../assets/logo.svg" alt="DevSolo Studio">
+        <div>
+          <div class="name">DevSolo Studio</div>
+          <div class="product">OficinaPro</div>
+        </div>
+      </div>
+      <div class="nav-label">Protótipo navegável</div>
+      <div class="nav proto-nav" id="proto-nav"></div>
+      <div class="sidebar-footer">
+        <div class="proto-hint">Clique nas telas ou use as setas ← → do teclado. Os botões internos simulam as ações do sistema.</div>
+        <div style="margin-top:10px;color:var(--slate-500)">OficinaPro v1.0 • Etapa 2</div>
+      </div>
+    </aside>
+
+    <main class="proto-main">
+      <header class="topbar">
+        <div>
+          <h1 id="screen-title">Dashboard</h1>
+          <div class="subtitle" id="screen-subtitle">Visão geral da oficina</div>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn btn-secondary" id="open-tab" href="../wireframes/t01-dashboard.html" target="_blank" rel="noopener">Abrir em nova aba</a>
+          <button class="btn btn-primary" id="next-top">Próxima tela →</button>
+          <div class="avatar orange">JM</div>
+        </div>
+      </header>
+
+      <div class="proto-stage">
+        <div class="proto-frame">
+          <iframe id="screen-frame" src="../wireframes/t01-dashboard.html?embed=1" title="Tela do protótipo OficinaPro"></iframe>
+        </div>
+      </div>
+
+      <footer class="proto-bottom">
+        <div class="proto-progress">
+          <span class="small muted" style="font-weight:700;white-space:nowrap">Fluxo guiado</span>
+          <div class="track"><div class="bar" id="progress-bar"></div></div>
+          <span class="proto-screen-desc" id="screen-desc">Visão geral da oficina</span>
+        </div>
+        <div class="proto-controls">
+          <button class="btn btn-secondary btn-sm" id="prev-btn">← Anterior</button>
+          <span class="step" id="step-label">1 / 8</span>
+          <button class="btn btn-primary btn-sm" id="next-btn">Próxima →</button>
+          <button class="btn btn-ghost btn-sm" id="restart-btn" title="Voltar ao início">↺</button>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const screens = [
+      { id: "t01-dashboard", label: "Dashboard", title: "Dashboard", desc: "Visão geral da oficina: indicadores, OS recentes e pendências." },
+      { id: "t02-clientes", label: "Clientes", title: "Clientes", desc: "Cadastro e consulta de clientes, com drawer de novo cliente." },
+      { id: "t03-veiculos", label: "Veículos", title: "Veículos", desc: "Frota atendida, consulta por placa e histórico de manutenções." },
+      { id: "t04-ordens-servico", label: "Ordens de Serviço", title: "Ordens de Serviço", desc: "Fila de atendimento com filtros por status e ações rápidas." },
+      { id: "t05-editor-os", label: "Editor de OS", title: "Nova Ordem de Serviço", desc: "Abertura da OS, itens de peça e mão de obra e resumo financeiro." },
+      { id: "t06-orcamento-recibo", label: "Orçamento / Recibo", title: "Orçamento e Recibo", desc: "Documento A4, envio por WhatsApp, impressão e status da OS." },
+      { id: "t07-relatorios", label: "Relatórios", title: "Relatórios", desc: "Faturamento, composição por tipo e comissões por mecânico." },
+      { id: "t08-configuracoes", label: "Configurações", title: "Configurações", desc: "Dados da oficina, preferências, backup e informações do sistema." }
+    ];
+
+    let current = 0;
+    const frame = document.getElementById("screen-frame");
+    const nav = document.getElementById("proto-nav");
+    const title = document.getElementById("screen-title");
+    const subtitle = document.getElementById("screen-subtitle");
+    const desc = document.getElementById("screen-desc");
+    const step = document.getElementById("step-label");
+    const bar = document.getElementById("progress-bar");
+    const openTab = document.getElementById("open-tab");
+    const prev = document.getElementById("prev-btn");
+    const next = document.getElementById("next-btn");
+    const nextTop = document.getElementById("next-top");
+
+    nav.innerHTML = screens
+      .map(
+        (s, i) => `
+        <a href="#" data-index="${i}">
+          <span class="num">${i + 1}</span>
+          <span>${s.label}</span>
+        </a>`
+      )
+      .join("");
+
+    function updateChrome() {
+      const s = screens[current];
+      title.textContent = s.title;
+      subtitle.textContent = s.desc;
+      desc.textContent = s.desc;
+      step.textContent = `${current + 1} / ${screens.length}`;
+      bar.style.width = `${((current + 1) / screens.length) * 100}%`;
+      openTab.href = `../wireframes/${s.id}.html`;
+      prev.disabled = current === 0;
+      next.disabled = current === screens.length - 1;
+      nextTop.disabled = current === screens.length - 1;
+      next.textContent = current === screens.length - 1 ? "Fim do fluxo" : "Próxima →";
+      nextTop.textContent = current === screens.length - 1 ? "Fim do fluxo" : "Próxima tela →";
+      document.querySelectorAll("#proto-nav a").forEach((a) => {
+        a.classList.toggle("active", Number(a.dataset.index) === current);
+      });
+    }
+
+    function go(index, updateFrame = true) {
+      current = Math.max(0, Math.min(screens.length - 1, index));
+      if (updateFrame) {
+        frame.src = `../wireframes/${screens[current].id}.html?embed=1`;
+      }
+      updateChrome();
+    }
+
+    nav.addEventListener("click", (event) => {
+      const link = event.target.closest("a[data-index]");
+      if (!link) return;
+      event.preventDefault();
+      go(Number(link.dataset.index));
+    });
+
+    prev.addEventListener("click", () => go(current - 1));
+    next.addEventListener("click", () => go(current + 1));
+    nextTop.addEventListener("click", () => go(current + 1));
+    document.getElementById("restart-btn").addEventListener("click", () => go(0));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") go(current - 1);
+      if (event.key === "ArrowRight") go(current + 1);
+    });
+
+    // Mantém o título do shell sincronizado quando a navegação ocorre dentro do iframe.
+    frame.addEventListener("load", () => {
+      try {
+        const file = frame.contentWindow.location.pathname.split("/").pop().replace(".html", "");
+        const index = screens.findIndex((s) => s.id === file);
+        if (index >= 0 && index !== current) {
+          current = index;
+          updateChrome();
+        }
+      } catch (error) {
+        /* file:// pode bloquear o acesso ao location do iframe; a navegação do shell continua funcionando. */
+      }
+    });
+
+    function fitFrame() {
+      const box = document.querySelector(".proto-frame");
+      const scale = Math.min(box.clientWidth / 1440, box.clientHeight / 900);
+      frame.style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener("resize", fitFrame);
+    fitFrame();
+    updateChrome();
+  </script>
+</body>
+</html>

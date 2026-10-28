@@ -1,0 +1,24 @@
+flowchart LR
+    DASH["T01 · Dashboard"]
+    CLI["T02 · Clientes"]
+    VEI["T03 · Veículos"]
+    OS["T04 · Ordens de Serviço"]
+    EDIT["T05 · Editor de OS"]
+    ORC["T06 · Orçamento / Recibo"]
+    REL["T07 · Relatórios"]
+    CONF["T08 · Configurações"]
+
+    DASH --> CLI
+    DASH --> OS
+    DASH --> REL
+    DASH --> CONF
+    CLI --> VEI
+    VEI --> OS
+    OS --> EDIT
+    EDIT --> ORC
+    REL --> ORC
+
+    classDef screen fill:#F8FAFC,stroke:#CBD5E1,color:#1E293B,stroke-width:1.5px;
+    classDef dash fill:#1E293B,stroke:#1E293B,color:#FFFFFF,stroke-width:2px;
+    class DASH dash;
+    class CLI,VEI,OS,EDIT,ORC,REL,CONF screen;

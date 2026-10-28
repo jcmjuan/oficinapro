@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor A as Atendente
+    participant UI as Tela da OS
+    participant S as Serviço de OS
+    participant OS as OrdemServico
+    participant DB as Banco de Dados
+
+    A->>UI: Aprovar orçamento
+    UI->>S: aprovar(OS)
+    S->>OS: aprovar()
+    OS->>OS: __validarTransicao()
+    OS-->>S: status APROVADA
+    S->>DB: UPDATE status
+    S-->>UI: confirmação
+
+    A->>UI: Iniciar execução
+    UI->>S: iniciar(OS)
+    S->>OS: iniciar()
+    OS-->>S: status EM_EXECUCAO
+    S->>DB: UPDATE status
+
+    A->>UI: Finalizar OS
+    UI->>S: finalizar(OS)
+    S->>OS: finalizar()
+    OS-->>S: status FINALIZADA
+    S->>DB: UPDATE status
+    S-->>UI: recibo em PDF

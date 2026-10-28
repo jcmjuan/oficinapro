@@ -1,0 +1,32 @@
+flowchart TD
+    APP["OficinaPro<br/>janela principal"]
+
+    APP --> DASH["T01 · Dashboard"]
+    APP --> CAD["Cadastros"]
+    APP --> OPS["Operação"]
+    APP --> GEST["Gestão"]
+
+    CAD --> CLI["T02 · Clientes"]
+    CAD --> VEI["T03 · Veículos"]
+
+    OPS --> OS["T04 · Ordens de Serviço"]
+    OS --> EDIT["T05 · Editor de OS"]
+    EDIT --> ORC["T06 · Orçamento / Recibo"]
+
+    GEST --> REL["T07 · Relatórios"]
+    GEST --> CONF["T08 · Configurações"]
+
+    DASH -. "atalho: nova OS" .-> EDIT
+    CLI -. "veículo do cliente" .-> VEI
+    VEI -. "abrir histórico" .-> OS
+    OS -. "gerar PDF" .-> ORC
+    ORC -. "enviar WhatsApp" .-> CLI
+    REL -. "exportar PDF" .-> ORC
+
+    classDef screen fill:#F8FAFC,stroke:#CBD5E1,color:#1E293B,stroke-width:1.5px;
+    classDef hub fill:#1E293B,stroke:#1E293B,color:#FFFFFF,stroke-width:2px;
+    classDef group fill:#FFF7ED,stroke:#F97316,color:#9A3412,stroke-width:1.5px;
+
+    class APP hub;
+    class DASH,CLI,VEI,OS,EDIT,ORC,REL,CONF screen;
+    class CAD,OPS,GEST group;

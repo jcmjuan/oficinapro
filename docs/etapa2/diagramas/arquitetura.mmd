@@ -1,0 +1,36 @@
+flowchart LR
+  subgraph AP["Apresentação"]
+    UI["Telas desktop<br/>Dashboard • Clientes • Veículos<br/>Ordens • Editor • Relatórios"]
+  end
+  subgraph APP["Aplicação"]
+    OS["OrdemServicoService"]
+    REL["RelatorioService"]
+    PDF["OrcamentoService"]
+    CFG["ConfiguracaoService"]
+  end
+  subgraph DOM["Domínio"]
+    P["Pessoa / Cliente / Mecanico"]
+    V["Veiculo"]
+    O["OrdemServico / ItemOS"]
+    IT["Peca / MaoDeObra"]
+  end
+  subgraph INF["Infraestrutura"]
+    REPO["Repositórios"]
+    DB[("SQLite<br/>oficinapro.db")]
+    FS["Backup • PDF • Logs"]
+  end
+  UI --> OS
+  UI --> REL
+  UI --> CFG
+  OS --> O
+  OS --> P
+  OS --> V
+  REL --> O
+  PDF --> O
+  O --> IT
+  OS --> REPO
+  REL --> REPO
+  CFG --> REPO
+  REPO --> DB
+  PDF --> FS
+  CFG --> FS

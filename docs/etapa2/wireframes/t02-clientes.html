@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OficinaPro — Clientes</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body data-screen="clientes">
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Clientes</h1>
+          <div class="subtitle">42 clientes cadastrados • 58 veículos vinculados</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            Buscar por nome, telefone ou CPF...
+          </div>
+          <button class="btn btn-primary" data-toast="Formulário de novo cliente (demonstração).">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Novo cliente
+          </button>
+          <div class="avatar orange">JM</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h2>Base de clientes</h2>
+            <p>Cadastre contatos, veículos e histórico de atendimentos.</p>
+          </div>
+          <div class="flex">
+            <button class="btn btn-secondary" data-toast="Exportação de clientes em CSV (demonstração).">Exportar CSV</button>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <button class="chip active" data-filter="todos">Todos <span class="count">42</span></button>
+          <button class="chip" data-filter="com-veiculo">Com veículo <span class="count">36</span></button>
+          <button class="chip" data-filter="sem-os">Sem OS <span class="count">8</span></button>
+          <button class="chip" data-filter="recorrentes">Recorrentes <span class="count">14</span></button>
+          <div class="spacer"></div>
+          <span class="small muted">Ordenar por: <strong>Nome (A–Z)</strong></span>
+        </div>
+
+        <div class="card">
+          <table>
+            <thead>
+              <tr><th>Cliente</th><th>Telefone</th><th>E-mail</th><th>Veículos</th><th>Última OS</th><th>Ações</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="flex"><div class="avatar">AR</div><div><strong>Ana Paula Ribeiro</strong><div class="small muted">CPF 123.456.789-00</div></div></div></td>
+                <td>(11) 98765-4321</td>
+                <td>ana.ribeiro@email.com</td>
+                <td>Honda Civic · ABC-1D23</td>
+                <td><span class="badge orcamento">Orçamento</span><div class="small muted">26/10/2026</div></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Editar cliente Ana Paula (demonstração).">Editar</button></td>
+              </tr>
+              <tr>
+                <td><div class="flex"><div class="avatar">CL</div><div><strong>Carlos Eduardo Lima</strong><div class="small muted">CPF 234.567.890-11</div></div></div></td>
+                <td>(11) 97654-3210</td>
+                <td>carlos.lima@email.com</td>
+                <td>VW Gol · XYZ-9K87</td>
+                <td><span class="badge execucao">Em execução</span><div class="small muted">25/10/2026</div></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Editar cliente Carlos Eduardo (demonstração).">Editar</button></td>
+              </tr>
+              <tr>
+                <td><div class="flex"><div class="avatar">FS</div><div><strong>Fernanda Souza</strong><div class="small muted">CPF 345.678.901-22</div></div></div></td>
+                <td>(11) 96543-2109</td>
+                <td>fernanda.souza@email.com</td>
+                <td>Fiat Argo · QWE-2A34</td>
+                <td><span class="badge finalizada">Finalizada</span><div class="small muted">24/10/2026</div></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Editar cliente Fernanda Souza (demonstração).">Editar</button></td>
+              </tr>
+              <tr>
+                <td><div class="flex"><div class="avatar">JB</div><div><strong>João Batista</strong><div class="small muted">CPF 456.789.012-33</div></div></div></td>
+                <td>(11) 95432-1098</td>
+                <td>joao.batista@email.com</td>
+                <td>Toyota Corolla · JKL-5M67</td>
+                <td><span class="badge aprovada">Aprovada</span><div class="small muted">23/10/2026</div></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Editar cliente João Batista (demonstração).">Editar</button></td>
+              </tr>
+              <tr>
+                <td><div class="flex"><div class="avatar">MA</div><div><strong>Mariana Alves</strong><div class="small muted">CPF 567.890.123-44</div></div></div></td>
+                <td>(11) 94321-0987</td>
+                <td>mariana.alves@email.com</td>
+                <td>Chevrolet Onix · MNO-8P90</td>
+                <td><span class="badge cancelada">Cancelada</span><div class="small muted">22/10/2026</div></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Editar cliente Mariana Alves (demonstração).">Editar</button></td>
+              </tr>
+              <tr>
+                <td><div class="flex"><div class="avatar">RN</div><div><strong>Roberto Nunes</strong><div class="small muted">CPF 678.901.234-55</div></div></div></td>
+                <td>(11) 93210-9876</td>
+                <td>roberto.nunes@email.com</td>
+                <td>Ford Ka · RST-3V45</td>
+                <td><span class="badge finalizada">Finalizada</span><div class="small muted">18/10/2026</div></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Editar cliente Roberto Nunes (demonstração).">Editar</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pagination">
+            <span>Mostrando 1–6 de 42 clientes</span>
+            <div class="pages"><span class="page active">1</span><span class="page">2</span><span class="page">3</span><span class="page">…</span><span class="page">7</span></div>
+          </div>
+        </div>
+
+        <div class="footer-note">OficinaPro • Protótipo de interface • Etapa 2</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Drawer de cadastro (exemplo de interação) -->
+  <div class="drawer-overlay">
+    <aside class="drawer">
+      <div class="flex" style="justify-content:space-between;align-items:flex-start">
+        <div>
+          <h3>Novo cliente</h3>
+          <div class="drawer-sub">Preencha os dados de contato. O veículo pode ser vinculado em seguida.</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" data-toast="Cadastro cancelado (demonstração).">✕</button>
+      </div>
+
+      <div class="form-grid">
+        <div class="field full">
+          <label>Nome completo *</label>
+          <input value="Roberto Nunes">
+        </div>
+        <div class="field">
+          <label>Telefone / WhatsApp *</label>
+          <input value="(11) 93210-9876">
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input value="roberto.nunes@email.com">
+        </div>
+        <div class="field">
+          <label>CPF / CNPJ</label>
+          <input value="678.901.234-55">
+        </div>
+        <div class="field">
+          <label>Data de nascimento</label>
+          <input value="14/03/1985">
+        </div>
+        <div class="field full">
+          <label>Endereço</label>
+          <input value="Rua das Palmeiras, 210 — São Paulo/SP">
+        </div>
+        <div class="field full">
+          <label>Observações</label>
+          <textarea rows="3">Cliente prefere contato por WhatsApp no período da tarde.</textarea>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:16px">Campos com * são obrigatórios. O sistema valida telefone e CPF/CNPJ antes de salvar.</div>
+
+      <div class="drawer-actions">
+        <button class="btn btn-secondary" data-toast="Cadastro cancelado (demonstração).">Cancelar</button>
+        <button class="btn btn-primary" data-toast="Cliente salvo com sucesso (demonstração).">Salvar cliente</button>
+      </div>
+    </aside>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

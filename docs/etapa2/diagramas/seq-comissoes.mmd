@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor G as Gestor
+    participant UI as Tela de Relatórios
+    participant RS as RelatorioService
+    participant OR as OrdemServicoRepository
+    participant DB as SQLite
+    participant M as Mecanico
+
+    G->>UI: Seleciona período e mecânico
+    UI->>RS: gerarComissoes(inicio, fim, mecanico_id)
+    RS->>OR: listarFinalizadas(inicio, fim)
+    OR->>DB: SELECT ordens + itens de mão de obra
+    DB-->>OR: registros
+    OR-->>RS: lista de OrdensServico
+
+    loop cada item de mão de obra
+        RS->>M: calcularComissao(item.subtotal)
+        M-->>RS: valor da comissão
+    end
+
+    RS-->>UI: totais por mecânico e total geral
+    UI-->>G: tabela, cards e gráfico
+
+    G->>UI: Exportar relatório
+    UI->>RS: exportarPDF(periodo, dados)
+    RS-->>UI: arquivo PDF
+    UI-->>G: download / abertura do PDF

@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    actor G as Gestor
+    participant UI as Tela de Relatórios
+    participant RS as Serviço de Relatórios
+    participant DB as Banco de Dados
+    participant M as Mecanico
+
+    G->>UI: Seleciona período e mecânico
+    UI->>RS: gerarComissoes(inicio, fim, mecanico)
+    RS->>DB: SELECT ordens finalizadas + itens
+    DB-->>RS: registros
+    loop cada item de mão de obra
+        RS->>M: calcularComissao(subtotal)
+        M-->>RS: valor
+    end
+    RS-->>UI: totais por mecânico
+    UI-->>G: tabela, cards e gráfico
+    G->>UI: Exportar PDF
+    UI->>RS: exportarPDF()
+    RS-->>UI: arquivo PDF

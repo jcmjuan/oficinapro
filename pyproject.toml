@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oficinapro"
+version = "1.0.0"
+description = "Sistema de gestão de oficina mecânica — núcleo de domínio, persistência e relatórios"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "DevSolo Studio" }]
+dependencies = []
+
+[project.optional-dependencies]
+ui = ["customtkinter>=5.2.2"]
+pdf-reportlab = ["reportlab>=4.2"]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools]
+py-modules = ["main"]
+
+[tool.setuptools.packages.find]
+include = ["domain*", "application*", "infrastructure*", "ui*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

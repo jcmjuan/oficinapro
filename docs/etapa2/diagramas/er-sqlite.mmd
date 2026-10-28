@@ -1,0 +1,74 @@
+erDiagram
+    OFICINA ||--o{ CLIENTE : atende
+    OFICINA ||--o{ MECANICO : emprega
+    CLIENTE ||--o{ VEICULO : possui
+    CLIENTE ||--o{ ORDEM_SERVICO : solicita
+    VEICULO ||--o{ ORDEM_SERVICO : recebe
+    MECANICO ||--o{ ORDEM_SERVICO : responde
+    ORDEM_SERVICO ||--|{ ITEM_OS : contem
+    MECANICO ||--o{ ITEM_OS : executa
+
+    OFICINA {
+        int id PK
+        string nome
+        string cnpj
+        string telefone
+        string endereco
+        float taxa_horaria_padrao
+        float comissao_padrao
+    }
+
+    CLIENTE {
+        int id PK
+        string nome
+        string telefone
+        string email
+        string cpf_cnpj
+        string endereco
+    }
+
+    MECANICO {
+        int id PK
+        string nome
+        string telefone
+        string email
+        string registro
+        string especialidade
+        float taxa_comissao
+    }
+
+    VEICULO {
+        int id PK
+        int cliente_id FK
+        string placa UK
+        string marca
+        string modelo
+        int ano
+        int km
+    }
+
+    ORDEM_SERVICO {
+        int id PK
+        string numero UK
+        int cliente_id FK
+        int veiculo_id FK
+        int responsavel_id FK
+        string status
+        float desconto
+        datetime data_abertura
+        datetime data_finalizacao
+        string observacoes
+    }
+
+    ITEM_OS {
+        int id PK
+        int ordem_id FK
+        string tipo
+        string descricao
+        float quantidade
+        float valor_unitario
+        float horas
+        int mecanico_id FK
+        string codigo
+        string fornecedor
+    }

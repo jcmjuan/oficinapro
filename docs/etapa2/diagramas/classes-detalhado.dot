@@ -1,0 +1,137 @@
+digraph UML {
+  graph [
+    rankdir=TB,
+    splines=true,
+    nodesep=0.55,
+    ranksep=0.75,
+    pad=0.25,
+    bgcolor="white",
+    fontname="Helvetica"
+  ];
+  node [
+    shape=plaintext,
+    fontname="Helvetica",
+    fontsize=10,
+    margin=0
+  ];
+  edge [
+    color="#475569",
+    penwidth=1.3,
+    fontname="Helvetica",
+    fontsize=9,
+    fontcolor="#334155"
+  ];
+
+  Oficina [label=<
+    <TABLE BORDER="1" COLOR="#3B82F6" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#DBEAFE" ALIGN="CENTER"><B>Oficina</B></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- nome : str<BR/>- cnpj : str<BR/>- telefone : str<BR/>- endereco : str<BR/>- taxaHorariaPadrao : float<BR/>- comissaoPadrao : float</TD></TR>
+      <TR><TD ALIGN="LEFT">+ adicionarCliente(c : Cliente) void<BR/>+ adicionarMecanico(m : Mecanico) void<BR/>+ emitirOrdemServico(c : Cliente, v : Veiculo) OrdemServico<BR/>+ relatorioComissoes(inicio : date, fim : date) list</TD></TR>
+    </TABLE>
+  >];
+
+  Pessoa [label=<
+    <TABLE BORDER="1" COLOR="#A855F7" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#F3E8FF" ALIGN="CENTER"><B>Pessoa</B><BR/><I>&lt;&lt;abstract&gt;&gt;</I></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- nome : str<BR/>- telefone : str<BR/>- email : str</TD></TR>
+      <TR><TD ALIGN="LEFT">+ nome() str<BR/>+ telefone() str<BR/>+ email() str<BR/>+ resumo()* str<BR/>- __validarContato() bool</TD></TR>
+    </TABLE>
+  >];
+
+  Cliente [label=<
+    <TABLE BORDER="1" COLOR="#14B8A6" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#CCFBF1" ALIGN="CENTER"><B>Cliente</B></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- cpfCnpj : str<BR/>- endereco : str<BR/>- veiculos : list&lt;Veiculo&gt;</TD></TR>
+      <TR><TD ALIGN="LEFT">+ adicionarVeiculo(v : Veiculo) void<BR/>+ listarVeiculos() list&lt;Veiculo&gt;<BR/>+ resumo() str</TD></TR>
+    </TABLE>
+  >];
+
+  Mecanico [label=<
+    <TABLE BORDER="1" COLOR="#F97316" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#FFEDD5" ALIGN="CENTER"><B>Mecanico</B></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- registro : str<BR/>- especialidade : str<BR/>- taxaComissao : float</TD></TR>
+      <TR><TD ALIGN="LEFT">+ calcularComissao(valor : float) float<BR/>+ resumo() str</TD></TR>
+    </TABLE>
+  >];
+
+  Veiculo [label=<
+    <TABLE BORDER="1" COLOR="#06B6D4" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#CFFAFE" ALIGN="CENTER"><B>Veiculo</B></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- placa : str<BR/>- marca : str<BR/>- modelo : str<BR/>- ano : int<BR/>- km : int<BR/>- cliente : Cliente</TD></TR>
+      <TR><TD ALIGN="LEFT">+ atualizarKm(km : int) void<BR/>+ historico() list&lt;OrdemServico&gt;<BR/>+ descricao() str</TD></TR>
+    </TABLE>
+  >];
+
+  ItemOS [label=<
+    <TABLE BORDER="1" COLOR="#22C55E" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#DCFCE7" ALIGN="CENTER"><B>ItemOS</B><BR/><I>&lt;&lt;abstract&gt;&gt;</I></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- descricao : str<BR/>- quantidade : float<BR/>- valorUnitario : float</TD></TR>
+      <TR><TD ALIGN="LEFT">+ calcularSubtotal()* float<BR/>+ descrever()* str</TD></TR>
+    </TABLE>
+  >];
+
+  Peca [label=<
+    <TABLE BORDER="1" COLOR="#8B5CF6" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#EDE9FE" ALIGN="CENTER"><B>Peca</B></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- codigo : str<BR/>- fornecedor : str</TD></TR>
+      <TR><TD ALIGN="LEFT">+ calcularSubtotal() float<BR/>+ descrever() str</TD></TR>
+    </TABLE>
+  >];
+
+  MaoDeObra [label=<
+    <TABLE BORDER="1" COLOR="#EF4444" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#FEE2E2" ALIGN="CENTER"><B>MaoDeObra</B></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- horas : float<BR/>- taxaHoraria : float<BR/>- executor : Mecanico</TD></TR>
+      <TR><TD ALIGN="LEFT">+ calcularSubtotal() float<BR/>+ descrever() str</TD></TR>
+    </TABLE>
+  >];
+
+  OrdemServico [label=<
+    <TABLE BORDER="1" COLOR="#EAB308" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#FEF9C3" ALIGN="CENTER"><B>OrdemServico</B></TD></TR>
+      <TR><TD ALIGN="LEFT" SIDES="B">- numero : str<BR/>- status : StatusOS<BR/>- cliente : Cliente<BR/>- veiculo : Veiculo<BR/>- responsavel : Mecanico<BR/>- itens : list&lt;ItemOS&gt;<BR/>- desconto : float<BR/>- dataAbertura : datetime<BR/>- dataFinalizacao : datetime<BR/>- observacoes : str</TD></TR>
+      <TR><TD ALIGN="LEFT">+ adicionarItem(item : ItemOS) void<BR/>+ removerItem(item : ItemOS) void<BR/>+ calcularSubtotal() float<BR/>+ calcularTotal() float<BR/>+ aprovar() void<BR/>+ iniciar() void<BR/>+ finalizar() void<BR/>+ cancelar() void<BR/>+ podeTransicionar(novo : StatusOS) bool<BR/>- __recalcularTotal() void<BR/>- __validarTransicao(novo : StatusOS) void</TD></TR>
+    </TABLE>
+  >];
+
+  StatusOS [label=<
+    <TABLE BORDER="1" COLOR="#22C55E" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5">
+      <TR><TD BGCOLOR="#DCFCE7" ALIGN="CENTER"><B>StatusOS</B><BR/><I>&lt;&lt;enumeration&gt;&gt;</I></TD></TR>
+      <TR><TD ALIGN="LEFT">ORCAMENTO<BR/>APROVADA<BR/>EM_EXECUCAO<BR/>FINALIZADA<BR/>CANCELADA</TD></TR>
+    </TABLE>
+  >];
+
+  // ---- Herança ----
+  Pessoa -> Cliente [arrowhead=onormal, penwidth=1.5];
+  Pessoa -> Mecanico [arrowhead=onormal, penwidth=1.5];
+  ItemOS -> Peca [arrowhead=onormal, penwidth=1.5];
+  ItemOS -> MaoDeObra [arrowhead=onormal, penwidth=1.5];
+
+  // ---- Associações e composição ----
+  Oficina -> Cliente [label="atende", arrowhead=none, taillabel="1", headlabel="0..*", labeldistance=1.7];
+  Oficina -> Mecanico [label="emprega", arrowhead=none, taillabel="1", headlabel="0..*", labeldistance=1.7];
+  Oficina -> OrdemServico [label="gerencia", arrowhead=none, taillabel="1", headlabel="0..*", labeldistance=1.7];
+
+  Cliente -> Veiculo [label="possui", arrowhead=none, taillabel="1", headlabel="0..*", labeldistance=1.7];
+  Cliente -> OrdemServico [label="solicita", arrowhead=none, taillabel="1", headlabel="0..*", labeldistance=1.7];
+  Veiculo -> OrdemServico [label="recebe", arrowhead=none, taillabel="1", headlabel="0..*", labeldistance=1.7];
+  Mecanico -> OrdemServico [label="responsável", arrowhead=none, taillabel="1", headlabel="0..*", labeldistance=1.7];
+
+  OrdemServico -> ItemOS [label="contém", dir=both, arrowtail=diamond, arrowhead=none, taillabel="1", headlabel="1..*", labeldistance=1.7];
+  Mecanico -> MaoDeObra [label="executa", arrowhead=none, taillabel="1", headlabel="0..*", labeldistance=1.7];
+  OrdemServico -> StatusOS [label="usa", arrowhead=normal, style=dashed, constraint=false];
+
+  // ---- Grade de ranks ----
+  { rank=same; Oficina; }
+  { rank=same; Pessoa; ItemOS; }
+  { rank=same; Cliente; Mecanico; Veiculo; Peca; MaoDeObra; }
+  { rank=same; OrdemServico; StatusOS; }
+
+  // Ordem horizontal dentro das linhas
+  Pessoa -> ItemOS [style=invis];
+  Cliente -> Mecanico [style=invis];
+  Mecanico -> Veiculo [style=invis];
+  Veiculo -> Peca [style=invis];
+  Peca -> MaoDeObra [style=invis];
+  OrdemServico -> StatusOS [style=invis];
+}

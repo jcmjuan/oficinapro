@@ -1,0 +1,32 @@
+stateDiagram-v2
+    direction LR
+
+    [*] --> ORCAMENTO : abrir OS
+
+    ORCAMENTO --> APROVADA : aprovar()
+    ORCAMENTO --> CANCELADA : cancelar()
+
+    APROVADA --> EM_EXECUCAO : iniciar()
+    APROVADA --> CANCELADA : cancelar()
+
+    EM_EXECUCAO --> FINALIZADA : finalizar()
+    EM_EXECUCAO --> CANCELADA : cancelar()
+
+    FINALIZADA --> [*]
+    CANCELADA --> [*]
+
+    note right of ORCAMENTO
+        Orçamento gerado e enviado
+        ao cliente para aprovação.
+    end note
+
+    note right of EM_EXECUCAO
+        Serviços e peças em execução.
+        O total pode ser ajustado
+        enquanto a OS não for finalizada.
+    end note
+
+    note right of FINALIZADA
+        Recibo emitido e comissões
+        calculadas para o período.
+    end note

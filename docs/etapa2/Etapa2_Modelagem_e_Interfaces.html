@@ -1,0 +1,4131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>OficinaPro — Etapa 2: Modelagem e Interfaces</title>
+  <style>
+@page { size: A4; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "Inter", "Liberation Sans", Arial, sans-serif;
+  font-size: 10.2pt;
+  line-height: 1.55;
+  color: #1E293B;
+  background: #FFFFFF;
+}
+p { margin: 0 0 7px; }
+strong { color: #0F172A; }
+a { color: #EA580C; text-decoration: none; }
+h1, h2, h3, h4, h5, h6 {
+  color: #1E293B;
+  line-height: 1.25;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+h1 {
+  font-size: 20pt;
+  margin: 0 0 14px;
+  padding-bottom: 5px;
+  border-bottom: 2.5px solid #F97316;
+}
+#sumário + ol {
+  columns: 2;
+  column-gap: 26px;
+  margin: 2px 0 10px;
+  padding-left: 22px;
+  font-size: 9.4pt;
+  line-height: 1.4;
+}
+#sumário + ol li { break-inside: avoid; margin: 0 0 1px; }
+h2 {
+  font-size: 14pt;
+  margin: 18px 0 8px;
+}
+h3 {
+  font-size: 11.6pt;
+  margin: 14px 0 6px;
+}
+h4 {
+  font-size: 10.4pt;
+  margin: 12px 0 5px;
+}
+ul { margin: 4px 0 9px 0; padding-left: 20px; }
+ol { margin: 4px 0 9px 0; padding-left: 26px; }
+li { margin: 2px 0; }
+blockquote {
+  margin: 9px 0 12px;
+  padding: 8px 12px;
+  background: #FFF7ED;
+  border-left: 4px solid #F97316;
+  color: #7C2D12;
+  border-radius: 0 5px 5px 0;
+}
+blockquote p { margin: 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 7px 0 12px;
+  font-size: 8.2pt;
+  line-height: 1.4;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; break-inside: avoid; }
+th {
+  background: #F1F5F9;
+  color: #334155;
+  font-weight: 700;
+  text-align: left;
+  border: 1px solid #CBD5E1;
+  padding: 4px 5px;
+  vertical-align: top;
+}
+td {
+  border: 1px solid #E2E8F0;
+  padding: 4px 5px;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background: #F8FAFC; }
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 8.4pt;
+  background: #F1F5F9;
+  padding: 1px 3px;
+  border-radius: 3px;
+  color: #0F172A;
+}
+pre {
+  background: #0F172A;
+  color: #E2E8F0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 7.7pt;
+  line-height: 1.45;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  page-break-inside: auto;
+  break-inside: auto;
+}
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+figure {
+  margin: 10px 0 14px;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  background: #FFFFFF;
+}
+figcaption {
+  margin-top: 5px;
+  font-size: 8.3pt;
+  color: #64748B;
+  text-align: center;
+}
+.figure-narrow img { width: 55%; }
+.figure-85 img { width: 85%; }
+.figure-90 img { width: 90%; }
+.figure-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 10px 0 14px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.figure-row figure { flex: 1; min-width: 0; margin: 0; }
+.figure-row figure img { width: 100%; }
+.page-break {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  page-break-after: always;
+  break-after: page;
+}
+.closing {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px solid #E2E8F0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+.closing-logo { width: 220px; max-width: 70%; margin-bottom: 8px; }
+.closing p { margin: 2px 0; font-size: 9pt; }
+.muted { color: #64748B; }
+hr { border: 0; border-top: 1px solid #E2E8F0; margin: 14px 0; }
+
+@page { size: A4; margin: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "Inter", "Liberation Sans", Arial, sans-serif;
+  color: #1E293B;
+  background: #FFFFFF;
+}
+.cover {
+  position: relative;
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  padding: 30mm 24mm 24mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 11mm;
+  background: linear-gradient(90deg, #1E293B 0 72%, #F97316 72% 100%);
+}
+.cover::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4mm;
+  background: #F97316;
+}
+.cover-logo { width: 330px; max-width: 82%; margin-bottom: 30px; }
+.cover-kicker {
+  font-size: 10pt;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #F97316;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.cover-title {
+  font-size: 43pt;
+  line-height: 1.05;
+  font-weight: 800;
+  color: #1E293B;
+  margin: 0 0 10px;
+  border: 0;
+  padding: 0;
+}
+.cover-title span { color: #F97316; font-size: 23pt; font-weight: 700; }
+.cover-subtitle {
+  font-size: 24pt;
+  line-height: 1.15;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 18px;
+}
+.cover-lead {
+  font-size: 12pt;
+  line-height: 1.6;
+  color: #475569;
+  max-width: 150mm;
+  margin: 0 0 28px;
+}
+.cover-meta {
+  display: flex;
+  gap: 12mm;
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 12px 0;
+  margin-bottom: 22px;
+}
+.cover-meta div {
+  font-size: 10pt;
+  color: #475569;
+  line-height: 1.5;
+}
+.cover-meta strong {
+  display: block;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748B;
+  margin-bottom: 2px;
+}
+.cover-footer {
+  font-size: 9pt;
+  color: #64748B;
+  margin-top: auto;
+  padding-top: 18px;
+}
+</style>
+</head>
+<body>
+<div class="cover">
+  <img class="cover-logo" src="../../assets/logo-horizontal.png" alt="DevSolo Studio — OficinaPro">
+  <div class="cover-kicker">AVALIAÇÃO G2 • ETAPA 2</div>
+  <h1 class="cover-title">OficinaPro <span>v1.0</span></h1>
+  <div class="cover-subtitle">Modelagem e Interfaces</div>
+  <p class="cover-lead">Documentação técnica, diagramas UML, wireframes e protótipo navegável para gestão de ordens de serviço e orçamentos em oficinas mecânicas.</p>
+  <div class="cover-meta">
+    <div><strong>Equipe</strong><br>DevSolo Studio</div>
+    <div><strong>Integrante</strong><br>Juan Carlos Matos</div>
+    <div><strong>Entrega</strong><br>29/10/2026</div>
+  </div>
+  <div class="cover-footer">Python 3.12+ • CustomTkinter • SQLite • Mermaid • Protótipo HTML</div>
+</div><div class="page-break"></div><h1 id="resumo-executivo">Resumo executivo</h1>
+<p>O <strong>OficinaPro v1.0</strong> é um sistema desktop de gestão para pequenas oficinas mecânicas, concebido para substituir cadernos, planilhas e orçamentos dispersos por um fluxo único de atendimento. A Etapa 1 definiu o problema, o público, as ferramentas e as classes iniciais. Esta Etapa 2 consolida a <strong>modelagem orientada a objetos</strong>, o <strong>diagrama de estados da ordem de serviço</strong>, a <strong>arquitetura de persistência</strong>, o <strong>design system</strong>, o <strong>mapa de navegação</strong>, os <strong>oito wireframes</strong> e os <strong>fluxos de interação</strong> que servirão de contrato visual e funcional para a implementação.</p>
+<p>A modelagem foi refinada a partir das classes preliminares da Etapa 1. O domínio agora conta com <strong>9 classes principais e o enumerador <code>StatusOS</code></strong>: <code>Oficina</code>, <code>Pessoa</code> (abstrata), <code>Cliente</code>, <code>Mecanico</code>, <code>Veiculo</code>, <code>OrdemServico</code>, <code>ItemOS</code> (abstrata), <code>Peca</code> e <code>MaoDeObra</code>; o enumerador <code>StatusOS</code> completa o modelo. A herança aparece em dois eixos — <code>Pessoa → Cliente/Mecanico</code> e <code>ItemOS → Peca/MaoDeObra</code> — e o polimorfismo é exercitado por <code>ItemOS.calcularSubtotal()</code>, implementado de forma distinta por peça e por mão de obra. A classe <code>OrdemServico</code> encapsula a coleção de itens no atributo privado <code>__itens</code> e mantém o recálculo financeiro no método privado <code>__recalcular_total()</code>.</p>
+<p>As interfaces foram desenhadas para um ambiente de balcão, com alvo de <strong>1440 × 900 px</strong>, sidebar persistente, hierarquia clara, ações primárias em laranja e feedback imediato por badges, timelines e mensagens. O protótipo navegável em HTML permite percorrer as oito telas na ordem do fluxo principal e simular ações como abrir OS, gerar orçamento, enviar por WhatsApp, aprovar, finalizar e calcular comissões. A versão final será implementada em <strong>Python 3.12+ com CustomTkinter</strong>, mantendo os mesmos tokens visuais e a mesma estrutura de informação.</p>
+<blockquote>
+<p><strong>Status da entrega:</strong> Etapa 2 concluída em 26/10/2026, com três dias de antecedência em relação ao prazo de 29/10/2026. A Etapa 3 (codificação central) está prevista para 05/11/2026 e a entrega final para 19/11/2026.</p>
+</blockquote>
+<h2 id="ficha-do-documento">Ficha do documento</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Projeto</td>
+<td>OficinaPro v1.0</td>
+</tr>
+<tr>
+<td>Etapa</td>
+<td>Etapa 2 — Modelagem e Interfaces</td>
+</tr>
+<tr>
+<td>Equipe</td>
+<td>DevSolo Studio</td>
+</tr>
+<tr>
+<td>Integrante</td>
+<td>Juan Carlos Matos</td>
+</tr>
+<tr>
+<td>Ambiente previsto</td>
+<td>Python 3.12+, CustomTkinter, SQLite, VS Code, Git/GitHub</td>
+</tr>
+<tr>
+<td>Diagramação</td>
+<td>Mermaid, SVG autoral e protótipo HTML/CSS/JS</td>
+</tr>
+<tr>
+<td>Entrega</td>
+<td>29/10/2026</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Concluído para submissão</td>
+</tr>
+<tr>
+<td>Documento</td>
+<td><code>docs/etapa2/Etapa2_Modelagem_e_Interfaces.md</code></td>
+</tr>
+<tr>
+<td>Protótipo</td>
+<td><code>docs/etapa2/prototipo/index.html</code></td>
+</tr>
+</tbody></table>
+<h2 id="sumário">Sumário</h2>
+<ol>
+<li><a href="#1-contexto-e-objetivo">Contexto e objetivo</a></li>
+<li><a href="#2-requisitos">Requisitos</a></li>
+<li><a href="#3-regras-de-neg%C3%B3cio">Regras de negócio</a></li>
+<li><a href="#4-modelagem-orientada-a-objetos">Modelagem orientada a objetos</a></li>
+<li><a href="#5-diagrama-de-estados-da-os">Diagrama de estados da OS</a></li>
+<li><a href="#6-arquitetura-e-persist%C3%AAncia">Arquitetura e persistência</a></li>
+<li><a href="#7-design-system-e-identidade-visual">Design system e identidade visual</a></li>
+<li><a href="#8-mapa-de-navega%C3%A7%C3%A3o">Mapa de navegação</a></li>
+<li><a href="#9-wireframes">Wireframes</a></li>
+<li><a href="#10-fluxos-de-intera%C3%A7%C3%A3o">Fluxos de interação</a></li>
+<li><a href="#11-plano-de-testes">Plano de testes</a></li>
+<li><a href="#12-cronograma-e-riscos">Cronograma e riscos</a></li>
+<li><a href="#13-gloss%C3%A1rio">Glossário</a></li>
+<li><a href="#14-refer%C3%AAncias">Referências</a></li>
+<li><a href="#15-ap%C3%AAndices">Apêndices</a></li>
+</ol>
+<h2 id="como-ler-este-documento">Como ler este documento</h2>
+<ul>
+<li>As figuras são exibidas em alta resolução e também estão disponíveis como arquivos separados em <code>docs/etapa2/diagramas/</code> e <code>docs/etapa2/capturas/</code>.</li>
+<li>Os wireframes são páginas HTML independentes em <code>docs/etapa2/wireframes/</code>. O protótipo navegável integra todas elas em <code>docs/etapa2/prototipo/index.html</code>.</li>
+<li>Os diagramas têm fontes Mermaid em <code>docs/etapa2/diagramas/*.mmd</code>; o diagrama de classes principal e o diagrama de estados também possuem versões SVG/PNG autorais para melhor legibilidade no PDF.</li>
+<li>A documentação usa a convenção UML: <code>+</code> público, <code>-</code> privado, <code>*</code> abstrato, <code>&lt;&lt;abstract&gt;&gt;</code> classe abstrata e <code>&lt;&lt;enumeration&gt;&gt;</code> enumerador.</li>
+<li>Valores monetários são apresentados em reais (BRL), com duas casas decimais. No modelo, <code>float</code> representa o tipo didático; na implementação, recomenda-se <code>Decimal</code> para cálculos financeiros.</li>
+</ul>
+<h1 id="1-contexto-e-objetivo">1. Contexto e objetivo</h1>
+<h2 id="11-problema">1.1 Problema</h2>
+<p>Pequenas oficinas mecânicas de bairro frequentemente controlam orçamentos, peças, mão de obra e comissões em cadernos, mensagens de WhatsApp e planilhas separadas. Esse cenário produz quatro problemas recorrentes:</p>
+<ol>
+<li><strong>Erros de soma e de composição do orçamento</strong>, especialmente quando há muitas peças e horas de serviço.</li>
+<li><strong>Falta de clareza para o cliente</strong>, que recebe um orçamento informal, sem discriminação de peças, mão de obra, validade e condições.</li>
+<li><strong>Perda de histórico do veículo</strong>, dificultando recompras, revisões e decisões técnicas.</li>
+<li><strong>Dificuldade para calcular e pagar comissões</strong>, pois o percentual de cada mecânico é aplicado sobre bases diferentes.</li>
+</ol>
+<p>O OficinaPro ataca esses problemas com um fluxo simples: cadastrar cliente e veículo, abrir uma ordem de serviço, adicionar peças e mão de obra, gerar um orçamento legível, acompanhar a aprovação, executar, finalizar e apurar comissões.</p>
+<h2 id="12-público-alvo">1.2 Público-alvo</h2>
+<table>
+<thead>
+<tr>
+<th>Perfil</th>
+<th>Necessidade principal</th>
+<th>Como o sistema atende</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Proprietário ou gestor</td>
+<td>Visão financeira e controle de comissões</td>
+<td>Dashboard, relatórios por período e tabela de comissões</td>
+</tr>
+<tr>
+<td>Atendente de balcão</td>
+<td>Abrir OS e responder ao cliente com agilidade</td>
+<td>Busca por cliente/placa, editor de OS e envio por WhatsApp</td>
+</tr>
+<tr>
+<td>Mecânico</td>
+<td>Saber o que executar e quanto rende o serviço</td>
+<td>OS com itens, responsável, horas e comissão calculada</td>
+</tr>
+<tr>
+<td>Cliente da oficina</td>
+<td>Entender o que está sendo cobrado</td>
+<td>Orçamento e recibo em PDF, com itens, totais e validade</td>
+</tr>
+</tbody></table>
+<h2 id="13-objetivo-da-etapa-2">1.3 Objetivo da Etapa 2</h2>
+<p>A Etapa 2 tem como objetivo transformar a proposta da Etapa 1 em um <strong>artefato de projeto verificável</strong>, com:</p>
+<ul>
+<li>modelo de classes consistente com os requisitos;</li>
+<li>regras de transição de estado da OS;</li>
+<li>arquitetura e esquema de dados que suportem a implementação;</li>
+<li>identidade visual e componentes reutilizáveis;</li>
+<li>oito telas navegáveis que cubram o fluxo principal;</li>
+<li>fluxos de interação e plano de testes que orientem a Etapa 3.</li>
+</ul>
+<h2 id="14-escopo-e-limites">1.4 Escopo e limites</h2>
+<p><strong>Dentro do escopo da Etapa 2:</strong> modelagem UML, diagrama de estados, arquitetura lógica, esquema SQLite, design system, wireframes, protótipo navegável, fluxos, plano de testes, cronograma e riscos.</p>
+<p><strong>Fora do escopo desta etapa:</strong> implementação completa em CustomTkinter, integração real com WhatsApp Business API, emissão de nota fiscal, controle de estoque, aplicativo móvel, multiusuário em nuvem e sincronização remota. O protótipo HTML é um <strong>artefato de design</strong>, não a interface final; a implementação seguirá a mesma estrutura visual em CustomTkinter.</p>
+<h2 id="15-critérios-de-sucesso">1.5 Critérios de sucesso</h2>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Evidência nesta entrega</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Modelo com pelo menos 5 classes</td>
+<td>9 classes principais e 1 enumerador</td>
+</tr>
+<tr>
+<td>Herança</td>
+<td><code>Pessoa → Cliente/Mecanico</code> e <code>ItemOS → Peca/MaoDeObra</code></td>
+</tr>
+<tr>
+<td>Polimorfismo</td>
+<td><code>ItemOS.calcularSubtotal()</code> sobrescrito em <code>Peca</code> e <code>MaoDeObra</code></td>
+</tr>
+<tr>
+<td>Associação</td>
+<td><code>Cliente–Veiculo–OrdemServico–ItemOS</code> e associações com <code>Mecanico</code></td>
+</tr>
+<tr>
+<td>Atributo privado</td>
+<td><code>OrdemServico.__itens</code></td>
+</tr>
+<tr>
+<td>Método privado</td>
+<td><code>OrdemServico.__recalcular_total()</code></td>
+</tr>
+<tr>
+<td>Programa principal com 2+ objetos</td>
+<td>Prévia de <code>main.py</code> no Apêndice C</td>
+</tr>
+<tr>
+<td>Fluxo de telas</td>
+<td>8 wireframes + protótipo navegável</td>
+</tr>
+<tr>
+<td>Documento para submissão</td>
+<td>Markdown, PDF e fontes editáveis</td>
+</tr>
+</tbody></table>
+<h1 id="2-requisitos">2. Requisitos</h1>
+<h2 id="21-rastreabilidade-com-a-etapa-1">2.1 Rastreabilidade com a Etapa 1</h2>
+<table>
+<thead>
+<tr>
+<th>Requisito da Etapa 1</th>
+<th>Como foi refinado na Etapa 2</th>
+<th>Onde aparece</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cadastro de clientes</td>
+<td>Inclui CPF/CNPJ, endereço, observações e validação</td>
+<td>T02, classe <code>Cliente</code>, tabela <code>cliente</code></td>
+</tr>
+<tr>
+<td>Cadastro de veículos</td>
+<td>Inclui placa única, marca, modelo, ano, km e histórico</td>
+<td>T03, classe <code>Veiculo</code>, tabela <code>veiculo</code></td>
+</tr>
+<tr>
+<td>Itens da OS</td>
+<td>Separação explícita entre peça e mão de obra</td>
+<td>T05, classes <code>Peca</code>/<code>MaoDeObra</code></td>
+</tr>
+<tr>
+<td>Configurações da oficina</td>
+<td>Dados cadastrais, taxa horária e comissão padrão</td>
+<td>T08, classe <code>Oficina</code>, tabela <code>oficina</code></td>
+</tr>
+<tr>
+<td>Orçamentos e recibos em PDF</td>
+<td>Documento A4 com itens, totais, validade e assinatura</td>
+<td>T06, <code>OrcamentoService</code></td>
+</tr>
+<tr>
+<td>Relatório de comissões</td>
+<td>Filtro por período e mecânico, com exportação</td>
+<td>T07, <code>RelatorioService</code></td>
+</tr>
+<tr>
+<td>Link de WhatsApp</td>
+<td>Mensagem pré-formatada com resumo e link de aprovação</td>
+<td>T06, ação “WhatsApp”</td>
+</tr>
+<tr>
+<td>Classes iniciais</td>
+<td>Refinadas e ampliadas com <code>Oficina</code> e <code>StatusOS</code></td>
+<td>Seção 4</td>
+</tr>
+</tbody></table>
+<h2 id="22-requisitos-funcionais">2.2 Requisitos funcionais</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requisito</th>
+<th>Prioridade</th>
+<th>Critério de aceite</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RF01</td>
+<td>Cadastrar, editar, consultar e inativar clientes</td>
+<td>Must</td>
+<td>Cliente salvo com nome e telefone; CPF/CNPJ único; busca por nome/telefone</td>
+</tr>
+<tr>
+<td>RF02</td>
+<td>Cadastrar, editar e consultar veículos</td>
+<td>Must</td>
+<td>Veículo vinculado a um cliente; placa única; histórico acessível</td>
+</tr>
+<tr>
+<td>RF03</td>
+<td>Abrir ordem de serviço</td>
+<td>Must</td>
+<td>OS criada com cliente, veículo, mecânico e status <code>ORCAMENTO</code></td>
+</tr>
+<tr>
+<td>RF04</td>
+<td>Adicionar peças e mão de obra à OS</td>
+<td>Must</td>
+<td>Item salvo com descrição, quantidade/horas e valor; subtotal calculado</td>
+</tr>
+<tr>
+<td>RF05</td>
+<td>Recalcular subtotal e total automaticamente</td>
+<td>Must</td>
+<td>Total = soma dos subtotais − desconto; atualização imediata</td>
+</tr>
+<tr>
+<td>RF06</td>
+<td>Gerar orçamento em PDF e link de WhatsApp</td>
+<td>Must</td>
+<td>PDF com dados da oficina, cliente, veículo, itens, totais e validade</td>
+</tr>
+<tr>
+<td>RF07</td>
+<td>Aprovar, iniciar, finalizar e cancelar OS</td>
+<td>Must</td>
+<td>Transições válidas conforme Seção 5; transições inválidas bloqueadas</td>
+</tr>
+<tr>
+<td>RF08</td>
+<td>Calcular comissões por mecânico</td>
+<td>Must</td>
+<td>Comissão = mão de obra × taxa; somente OS finalizadas</td>
+</tr>
+<tr>
+<td>RF09</td>
+<td>Emitir relatórios por período e mecânico</td>
+<td>Should</td>
+<td>Cards, gráfico e tabela; exportação em PDF/CSV</td>
+</tr>
+<tr>
+<td>RF10</td>
+<td>Buscar e filtrar clientes, veículos e OS</td>
+<td>Must</td>
+<td>Busca por nome, telefone, placa, número e status</td>
+</tr>
+<tr>
+<td>RF11</td>
+<td>Fazer backup e restaurar dados locais</td>
+<td>Should</td>
+<td>Backup do arquivo SQLite; restauração com confirmação</td>
+</tr>
+<tr>
+<td>RF12</td>
+<td>Configurar dados da oficina e padrões financeiros</td>
+<td>Should</td>
+<td>Dados salvos e refletidos nos documentos</td>
+</tr>
+<tr>
+<td>RF13</td>
+<td>Registrar histórico de status da OS</td>
+<td>Should</td>
+<td>Cada transição gera registro com data, usuário e motivo</td>
+</tr>
+<tr>
+<td>RF14</td>
+<td>Exibir dashboard com indicadores</td>
+<td>Should</td>
+<td>OS abertas, faturamento, comissões e veículos atendidos</td>
+</tr>
+</tbody></table>
+<h2 id="23-requisitos-não-funcionais">2.3 Requisitos não funcionais</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Categoria</th>
+<th>Requisito</th>
+<th>Verificação</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RNF01</td>
+<td>Plataforma</td>
+<td>Aplicação desktop offline para Linux, com compatibilidade prevista para Windows</td>
+<td>Execução local sem servidor</td>
+</tr>
+<tr>
+<td>RNF02</td>
+<td>Tecnologia</td>
+<td>Python 3.12+, CustomTkinter e SQLite</td>
+<td>Stack do projeto</td>
+</tr>
+<tr>
+<td>RNF03</td>
+<td>Desempenho</td>
+<td>Abrir listas e calcular totais em menos de 2 s para 10 mil registros</td>
+<td>Teste com massa de dados</td>
+</tr>
+<tr>
+<td>RNF04</td>
+<td>Usabilidade</td>
+<td>Abrir uma OS em até 3 cliques a partir do dashboard</td>
+<td>Teste de fluxo</td>
+</tr>
+<tr>
+<td>RNF05</td>
+<td>Integridade</td>
+<td>Transações atômicas e chaves estrangeiras ativas</td>
+<td>Testes de falha e rollback</td>
+</tr>
+<tr>
+<td>RNF06</td>
+<td>Segurança</td>
+<td>Dados locais, backup protegido e nenhum envio automático de dados</td>
+<td>Revisão de configuração</td>
+</tr>
+<tr>
+<td>RNF07</td>
+<td>Privacidade</td>
+<td>Coleta mínima de dados; exclusão lógica de clientes com histórico</td>
+<td>Revisão de schema</td>
+</tr>
+<tr>
+<td>RNF08</td>
+<td>Acessibilidade</td>
+<td>Contraste adequado, foco visível, rótulos e status não apenas por cor</td>
+<td>Checklist WCAG 2.2</td>
+</tr>
+<tr>
+<td>RNF09</td>
+<td>Manutenibilidade</td>
+<td>Separação entre domínio, aplicação, infraestrutura e apresentação</td>
+<td>Revisão de arquitetura</td>
+</tr>
+<tr>
+<td>RNF10</td>
+<td>Portabilidade de dados</td>
+<td>Exportação CSV e backup SQLite</td>
+<td>Teste de exportação/restauração</td>
+</tr>
+<tr>
+<td>RNF11</td>
+<td>Consistência visual</td>
+<td>Paleta, tipografia e componentes do design system</td>
+<td>Revisão dos wireframes</td>
+</tr>
+<tr>
+<td>RNF12</td>
+<td>Documentação</td>
+<td>Diagramas com fontes editáveis e instruções de reprodução</td>
+<td>Este documento + README</td>
+</tr>
+</tbody></table>
+<h2 id="24-requisitos-fora-de-escopo">2.4 Requisitos fora de escopo</h2>
+<ul>
+<li>Multiusuário simultâneo e controle de permissões por perfil.</li>
+<li>Sincronização em nuvem e acesso remoto.</li>
+<li>Emissão de NF-e/NFS-e e integração fiscal.</li>
+<li>Controle de estoque com baixa automática de peças.</li>
+<li>Aplicativo móvel nativo.</li>
+<li>Integração oficial com a API do WhatsApp Business.</li>
+<li>Assinatura digital com certificado.</li>
+</ul>
+<h2 id="25-decisões-de-projeto">2.5 Decisões de projeto</h2>
+<table>
+<thead>
+<tr>
+<th>Decisão</th>
+<th>Justificativa</th>
+<th>Consequência</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SQLite como banco local</td>
+<td>Zero configuração, transacional, adequado a desktop e backup por arquivo</td>
+<td>Necessidade de migrações versionadas</td>
+</tr>
+<tr>
+<td>CustomTkinter na interface final</td>
+<td>Stack definida na Etapa 1 e adequada a desktop</td>
+<td>Protótipo HTML serve como especificação visual</td>
+</tr>
+<tr>
+<td>PDF via ReportLab na aplicação</td>
+<td>Controle de layout A4 e dependência leve</td>
+<td>Protótipo usa HTML/Chrome para gerar as imagens</td>
+</tr>
+<tr>
+<td>WhatsApp por link <code>wa.me</code></td>
+<td>Não exige API paga nem servidor</td>
+<td>Abertura do cliente de WhatsApp no navegador/app</td>
+</tr>
+<tr>
+<td><code>Decimal</code> para dinheiro na implementação</td>
+<td>Evita erros de arredondamento binário</td>
+<td>Modelo didático usa <code>float</code>; código usa <code>Decimal</code></td>
+</tr>
+<tr>
+<td>Soft delete de clientes</td>
+<td>Preserva histórico de OS</td>
+<td>Consultas precisam filtrar <code>ativo = 1</code></td>
+</tr>
+<tr>
+<td>Numeração <code>YYYY-NNNN</code></td>
+<td>Legível e sequencial por ano</td>
+<td>Reinício anual com controle de sequência</td>
+</tr>
+</tbody></table>
+<h1 id="3-regras-de-negócio">3. Regras de negócio</h1>
+<h2 id="31-regras-principais">3.1 Regras principais</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Regra</th>
+<th>Consequência</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RN01</td>
+<td>Toda OS nasce com status <code>ORCAMENTO</code></td>
+<td>Não é possível criar OS já aprovada</td>
+</tr>
+<tr>
+<td>RN02</td>
+<td>A aprovação só é permitida a partir de <code>ORCAMENTO</code></td>
+<td>Aprovar OS já finalizada ou cancelada é bloqueado</td>
+</tr>
+<tr>
+<td>RN03</td>
+<td>A execução só inicia a partir de <code>APROVADA</code></td>
+<td>Evita execução sem autorização do cliente</td>
+</tr>
+<tr>
+<td>RN04</td>
+<td>A finalização só é permitida a partir de <code>EM_EXECUCAO</code></td>
+<td>Garante que o serviço foi iniciado</td>
+</tr>
+<tr>
+<td>RN05</td>
+<td>O cancelamento é permitido em <code>ORCAMENTO</code>, <code>APROVADA</code> ou <code>EM_EXECUCAO</code></td>
+<td>OS finalizada não pode ser cancelada; deve ser tratada como retrabalho/garantia</td>
+</tr>
+<tr>
+<td>RN06</td>
+<td>O total é <code>soma(subtotais) − desconto</code></td>
+<td>Desconto não pode ser negativo nem maior que o subtotal</td>
+</tr>
+<tr>
+<td>RN07</td>
+<td>O subtotal da peça é <code>quantidade × valor_unitario</code></td>
+<td>Quantidade e valor devem ser positivos</td>
+</tr>
+<tr>
+<td>RN08</td>
+<td>O subtotal da mão de obra é <code>horas × taxa_horaria</code></td>
+<td>Horas e taxa devem ser positivas</td>
+</tr>
+<tr>
+<td>RN09</td>
+<td>A comissão é <code>subtotal_mão_de_obra × taxa_comissao</code></td>
+<td>Considera apenas OS <code>FINALIZADA</code></td>
+</tr>
+<tr>
+<td>RN10</td>
+<td>A taxa de comissão do mecânico prevalece sobre a padrão</td>
+<td>A oficina define o padrão; o mecânico pode ter exceção</td>
+</tr>
+<tr>
+<td>RN11</td>
+<td>O orçamento tem validade padrão de 7 dias</td>
+<td>Após expirar, exige revalidação antes da aprovação</td>
+</tr>
+<tr>
+<td>RN12</td>
+<td>CPF/CNPJ e placa são únicos</td>
+<td>Evita duplicidade de cliente e veículo</td>
+</tr>
+<tr>
+<td>RN13</td>
+<td>Excluir cliente com OS é bloqueado</td>
+<td>Exclusão é lógica (<code>ativo = 0</code>)</td>
+</tr>
+<tr>
+<td>RN14</td>
+<td>Toda transição de status é registrada</td>
+<td>Histórico auditável com data, usuário e motivo</td>
+</tr>
+<tr>
+<td>RN15</td>
+<td>Valores monetários usam duas casas e arredondamento comercial</td>
+<td><code>ROUND_HALF_UP</code> com <code>Decimal</code></td>
+</tr>
+<tr>
+<td>RN16</td>
+<td>O número da OS é único e sequencial por ano</td>
+<td>Formato <code>2026-0001</code></td>
+</tr>
+</tbody></table>
+<h2 id="32-fórmulas">3.2 Fórmulas</h2>
+<pre><code class="language-text">subtotal_peca      = quantidade × valor_unitario
+subtotal_mao_obra  = horas × taxa_horaria
+subtotal_os        = Σ subtotal_item
+total_os           = subtotal_os − desconto
+comissao_mecanico  = Σ subtotal_mao_obra_das_OS_finalizadas × taxa_comissao
+</code></pre>
+<h2 id="33-validações-obrigatórias">3.3 Validações obrigatórias</h2>
+<ul>
+<li>Nome do cliente com pelo menos 3 caracteres; telefone com DDD.</li>
+<li>CPF/CNPJ válido e único; placa no formato Mercosul ou antigo.</li>
+<li>Veículo sempre vinculado a um cliente ativo.</li>
+<li>OS sempre com cliente, veículo e mecânico responsável.</li>
+<li>Item com descrição, quantidade/horas e valor maior que zero.</li>
+<li>Desconto entre <code>0</code> e <code>subtotal_os</code>.</li>
+<li>Transição de status validada por <code>__validar_transicao()</code>.</li>
+<li>Cancelamento com motivo obrigatório.</li>
+<li>Backend impede alteração de OS <code>FINALIZADA</code>, exceto por rotina administrativa explícita.</li>
+</ul>
+<h2 id="34-exemplo-de-cálculo">3.4 Exemplo de cálculo</h2>
+<p>Uma OS com as peças “filtro de óleo” (R$ 45,00), “óleo 5W30” (R$ 180,00), “pastilha” (R$ 320,00) e “correia dentada” (R$ 215,00), além de 4,0 horas de mão de obra a R$ 120,00/h, tem:</p>
+<pre><code class="language-text">peças        = 45 + 180 + 320 + 215 = 760,00
+mão de obra  = 4,0 × 120             = 480,00
+subtotal     = 760 + 480             = 1.240,00
+desconto     = 0,00
+total        = 1.240,00
+</code></pre>
+<p>Se o mecânico responsável tem taxa de 12%, a comissão sobre a mão de obra é <code>480,00 × 0,12 = 57,60</code>. Esse valor só entra no relatório quando a OS estiver <code>FINALIZADA</code>.</p>
+<h1 id="4-modelagem-orientada-a-objetos">4. Modelagem orientada a objetos</h1>
+<h2 id="41-visão-geral-do-modelo">4.1 Visão geral do modelo</h2>
+<p>O modelo foi organizado em quatro grupos:</p>
+<ol>
+<li><strong>Contexto da oficina:</strong> <code>Oficina</code> representa o estabelecimento, seus padrões financeiros e a emissão de ordens.</li>
+<li><strong>Pessoas:</strong> <code>Pessoa</code> concentra os dados comuns; <code>Cliente</code> e <code>Mecanico</code> especializam o comportamento.</li>
+<li><strong>Ativos e atendimento:</strong> <code>Veiculo</code> pertence a um cliente; <code>OrdemServico</code> agrega cliente, veículo, responsável e itens.</li>
+<li><strong>Itens e estado:</strong> <code>ItemOS</code> é a base polimórfica de <code>Peca</code> e <code>MaoDeObra</code>; <code>StatusOS</code> enumera o ciclo de vida da OS.</li>
+</ol>
+<figure>
+  <img src="diagramas/classes-compacto.png" alt="Diagrama de classes compacto do OficinaPro">
+  <figcaption>Figura 1 — Diagrama de classes principal, com herança, associação, composição e os pontos de polimorfismo. A versão detalhada está no Apêndice A.</figcaption>
+</figure><h2 id="42-notação-utilizada">4.2 Notação utilizada</h2>
+<table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Notação</th>
+<th>Uso no modelo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Classe</td>
+<td>Retângulo com nome, atributos e métodos</td>
+<td>Todas as entidades</td>
+</tr>
+<tr>
+<td>Classe abstrata</td>
+<td><code>&lt;&lt;abstract&gt;&gt;</code></td>
+<td><code>Pessoa</code>, <code>ItemOS</code></td>
+</tr>
+<tr>
+<td>Enumerador</td>
+<td><code>&lt;&lt;enumeration&gt;&gt;</code></td>
+<td><code>StatusOS</code></td>
+</tr>
+<tr>
+<td>Atributo privado</td>
+<td><code>-</code> antes do nome</td>
+<td><code>- __itens</code>, <code>- cpfCnpj</code></td>
+</tr>
+<tr>
+<td>Método público</td>
+<td><code>+</code> antes do nome</td>
+<td><code>+ calcularTotal()</code></td>
+</tr>
+<tr>
+<td>Método privado</td>
+<td><code>-</code> antes do nome</td>
+<td><code>- __recalcular_total()</code></td>
+</tr>
+<tr>
+<td>Herança</td>
+<td>Triângulo vazado apontando para a superclasse</td>
+<td><code>Cliente</code> e <code>Mecanico</code> herdam de <code>Pessoa</code></td>
+</tr>
+<tr>
+<td>Associação</td>
+<td>Linha com multiplicidade</td>
+<td><code>Cliente 1 — 0..* Veiculo</code></td>
+</tr>
+<tr>
+<td>Composição</td>
+<td>Losango preenchido</td>
+<td><code>OrdemServico</code> contém <code>ItemOS</code></td>
+</tr>
+<tr>
+<td>Dependência</td>
+<td>Seta tracejada</td>
+<td><code>OrdemServico</code> usa <code>StatusOS</code></td>
+</tr>
+</tbody></table>
+<h2 id="43-dicionário-de-classes">4.3 Dicionário de classes</h2>
+<h3 id="431-oficina">4.3.1 Oficina</h3>
+<p><strong>Responsabilidade:</strong> representar o estabelecimento, manter os padrões financeiros e emitir ordens de serviço.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>nome</code></td>
+<td>Nome fantasia da oficina</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>cnpj</code></td>
+<td>CNPJ usado em documentos</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>telefone</code></td>
+<td>Contato principal</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>endereco</code></td>
+<td>Endereço exibido no orçamento</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>taxaHorariaPadrao</code></td>
+<td>Valor padrão da hora de serviço</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>comissaoPadrao</code></td>
+<td>Percentual padrão de comissão</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>adicionarCliente(c)</code></td>
+<td>Vincula cliente à oficina</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>adicionarMecanico(m)</code></td>
+<td>Vincula mecânico à oficina</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>emitirOrdemServico(c, v)</code></td>
+<td>Cria uma OS em <code>ORCAMENTO</code></td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>relatorioComissoes(inicio, fim)</code></td>
+<td>Consolida comissões do período</td>
+</tr>
+</tbody></table>
+<h3 id="432-pessoa-abstrata">4.3.2 Pessoa (abstrata)</h3>
+<p><strong>Responsabilidade:</strong> padronizar os dados de contato e o contrato de resumo.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>nome</code></td>
+<td>Nome completo ou razão social</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>telefone</code></td>
+<td>Telefone com DDD</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>email</code></td>
+<td>E-mail opcional</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>resumo()*</code></td>
+<td>Contrato abstrato de apresentação</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>__validarContato()</code></td>
+<td>Validação interna de nome e telefone</td>
+</tr>
+</tbody></table>
+<h3 id="433-cliente">4.3.3 Cliente</h3>
+<p><strong>Responsabilidade:</strong> identificar o contratante e manter seus veículos.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>cpfCnpj</code></td>
+<td>Documento único</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>endereco</code></td>
+<td>Endereço do cliente</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>veiculos</code></td>
+<td>Lista de veículos vinculados</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>adicionarVeiculo(v)</code></td>
+<td>Vincula um veículo</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>listarVeiculos()</code></td>
+<td>Retorna os veículos do cliente</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>resumo()</code></td>
+<td>Implementa o contrato de <code>Pessoa</code></td>
+</tr>
+</tbody></table>
+<h3 id="434-mecanico">4.3.4 Mecanico</h3>
+<p><strong>Responsabilidade:</strong> identificar o executor e calcular sua comissão.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>registro</code></td>
+<td>Matrícula interna</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>especialidade</code></td>
+<td>Área de atuação</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>taxaComissao</code></td>
+<td>Percentual sobre mão de obra</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>calcularComissao(valor)</code></td>
+<td>Aplica a taxa ao valor informado</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>resumo()</code></td>
+<td>Implementa o contrato de <code>Pessoa</code></td>
+</tr>
+</tbody></table>
+<h3 id="435-veiculo">4.3.5 Veiculo</h3>
+<p><strong>Responsabilidade:</strong> representar o automóvel atendido e seu histórico.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>placa</code></td>
+<td>Identificador único do veículo</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>marca</code></td>
+<td>Fabricante</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>modelo</code></td>
+<td>Modelo/versão</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>ano</code></td>
+<td>Ano de fabricação/modelo</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>km</code></td>
+<td>Quilometragem atual</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>cliente</code></td>
+<td>Proprietário</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>atualizarKm(km)</code></td>
+<td>Atualiza a quilometragem</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>historico()</code></td>
+<td>Retorna as OS do veículo</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>descricao()</code></td>
+<td>Retorna “marca modelo · placa”</td>
+</tr>
+</tbody></table>
+<h3 id="436-ordemservico">4.3.6 OrdemServico</h3>
+<p><strong>Responsabilidade:</strong> agregar o atendimento, controlar o ciclo de vida e calcular totais.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>numero</code></td>
+<td>Número único no formato <code>YYYY-NNNN</code></td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>status</code></td>
+<td>Estado atual (<code>StatusOS</code>)</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>cliente</code></td>
+<td>Cliente do atendimento</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>veiculo</code></td>
+<td>Veículo atendido</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>responsavel</code></td>
+<td>Mecânico responsável</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>__itens</code></td>
+<td>Coleção privada de <code>ItemOS</code></td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>desconto</code></td>
+<td>Desconto aplicado ao total</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>dataAbertura</code></td>
+<td>Data/hora de abertura</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>dataFinalizacao</code></td>
+<td>Data/hora de finalização</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>observacoes</code></td>
+<td>Anotações do atendimento</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>adicionarItem(item)</code></td>
+<td>Adiciona item e recalcula</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>removerItem(item)</code></td>
+<td>Remove item e recalcula</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>calcularSubtotal()</code></td>
+<td>Soma os subtotais dos itens</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>calcularTotal()</code></td>
+<td>Aplica o desconto ao subtotal</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>aprovar()</code></td>
+<td><code>ORCAMENTO → APROVADA</code></td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>iniciar()</code></td>
+<td><code>APROVADA → EM_EXECUCAO</code></td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>finalizar()</code></td>
+<td><code>EM_EXECUCAO → FINALIZADA</code></td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>cancelar()</code></td>
+<td>Cancela com motivo</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>podeTransicionar(novo)</code></td>
+<td>Consulta a regra de transição</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>__recalcular_total()</code></td>
+<td>Recalcula e atualiza o total interno</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>__validar_transicao(novo)</code></td>
+<td>Valida a transição antes de aplicar</td>
+</tr>
+</tbody></table>
+<h3 id="437-itemos-abstrata">4.3.7 ItemOS (abstrata)</h3>
+<p><strong>Responsabilidade:</strong> definir o contrato comum dos itens cobrados.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>descricao</code></td>
+<td>Descrição do item</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>quantidade</code></td>
+<td>Quantidade (peça) ou base de cálculo</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>valorUnitario</code></td>
+<td>Valor unitário ou taxa</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>calcularSubtotal()*</code></td>
+<td>Contrato polimórfico</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>descrever()*</code></td>
+<td>Contrato de descrição para o documento</td>
+</tr>
+</tbody></table>
+<h3 id="438-peca">4.3.8 Peca</h3>
+<p><strong>Responsabilidade:</strong> representar uma peça aplicada ao veículo.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>codigo</code></td>
+<td>Código interno/fornecedor</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>fornecedor</code></td>
+<td>Fornecedor da peça</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>calcularSubtotal()</code></td>
+<td><code>quantidade × valorUnitario</code></td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>descrever()</code></td>
+<td>Texto para orçamento/recibo</td>
+</tr>
+</tbody></table>
+<h3 id="439-maodeobra">4.3.9 MaoDeObra</h3>
+<p><strong>Responsabilidade:</strong> representar o serviço executado por um mecânico.</p>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Nome</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Atributo</td>
+<td><code>horas</code></td>
+<td>Horas trabalhadas</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>taxaHoraria</code></td>
+<td>Valor da hora</td>
+</tr>
+<tr>
+<td>Atributo</td>
+<td><code>executor</code></td>
+<td>Mecânico que executou</td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>calcularSubtotal()</code></td>
+<td><code>horas × taxaHoraria</code></td>
+</tr>
+<tr>
+<td>Método</td>
+<td><code>descrever()</code></td>
+<td>Texto para orçamento/recibo</td>
+</tr>
+</tbody></table>
+<h3 id="4310-statusos-enumeração">4.3.10 StatusOS (enumeração)</h3>
+<table>
+<thead>
+<tr>
+<th>Valor</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ORCAMENTO</code></td>
+<td>OS aberta, orçamento em elaboração ou aguardando aprovação</td>
+</tr>
+<tr>
+<td><code>APROVADA</code></td>
+<td>Cliente aprovou; serviço pode iniciar</td>
+</tr>
+<tr>
+<td><code>EM_EXECUCAO</code></td>
+<td>Serviço em andamento</td>
+</tr>
+<tr>
+<td><code>FINALIZADA</code></td>
+<td>Serviço concluído; recibo disponível</td>
+</tr>
+<tr>
+<td><code>CANCELADA</code></td>
+<td>Atendimento encerrado sem execução/conclusão</td>
+</tr>
+</tbody></table>
+<h2 id="44-diagrama-detalhado">4.4 Diagrama detalhado</h2>
+<p>O diagrama detalhado inclui todos os atributos e métodos, inclusive os métodos privados e as multiplicidades. Ele é a referência para a implementação da Etapa 3.</p>
+<figure class="figure-85">
+  <img src="diagramas/classes-detalhado.png" alt="Diagrama de classes detalhado do OficinaPro">
+  <figcaption>Figura 2 — Diagrama de classes detalhado. A versão em tamanho maior está no Apêndice A.</figcaption>
+</figure><h2 id="45-mapa-explícito-dos-requisitos-de-poo">4.5 Mapa explícito dos requisitos de POO</h2>
+<p>A tabela abaixo conecta cada exigência da atividade aos elementos do modelo. Ela também serve como checklist de correção.</p>
+<table>
+<thead>
+<tr>
+<th>Exigência</th>
+<th>Onde está no modelo</th>
+<th>Como foi atendida</th>
+<th>Evidência</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pelo menos 5 classes</td>
+<td>Seção 4.3</td>
+<td>9 classes + 1 enumerador</td>
+<td><code>Oficina</code>, <code>Pessoa</code>, <code>Cliente</code>, <code>Mecanico</code>, <code>Veiculo</code>, <code>OrdemServico</code>, <code>ItemOS</code>, <code>Peca</code>, <code>MaoDeObra</code>, <code>StatusOS</code></td>
+</tr>
+<tr>
+<td>Herança</td>
+<td>Figura 1 e 2</td>
+<td><code>Pessoa</code> é superclasse de <code>Cliente</code> e <code>Mecanico</code>; <code>ItemOS</code> é superclasse de <code>Peca</code> e <code>MaoDeObra</code></td>
+<td>Setas com triângulo vazado</td>
+</tr>
+<tr>
+<td>Polimorfismo</td>
+<td><code>ItemOS.calcularSubtotal()</code></td>
+<td><code>Peca</code> calcula quantidade × valor; <code>MaoDeObra</code> calcula horas × taxa; <code>OrdemServico</code> percorre <code>ItemOS</code> sem conhecer o tipo concreto</td>
+<td>Métodos sobrescritos</td>
+</tr>
+<tr>
+<td>Associação</td>
+<td>Figura 1 e 2</td>
+<td><code>Cliente 1 — 0..* Veiculo</code>; <code>Cliente 1 — 0..* OrdemServico</code>; <code>Veiculo 1 — 0..* OrdemServico</code>; <code>OrdemServico 1 — 1..* ItemOS</code>; <code>Mecanico 1 — 0..* OrdemServico</code></td>
+<td>Multiplicidades nas linhas</td>
+</tr>
+<tr>
+<td>Atributo privado</td>
+<td><code>OrdemServico.__itens</code></td>
+<td>A coleção só é acessada por métodos da própria classe; em Python, o nome é mangleado para <code>_OrdemServico__itens</code></td>
+<td><code>- __itens : list&lt;ItemOS&gt;</code></td>
+</tr>
+<tr>
+<td>Método privado</td>
+<td><code>OrdemServico.__recalcular_total()</code></td>
+<td>Recalcula o total após adicionar/remover item ou alterar desconto; não faz parte da API pública</td>
+<td><code>- __recalcular_total() void</code></td>
+</tr>
+<tr>
+<td>Programa principal com 2+ objetos</td>
+<td>Seção 4.7</td>
+<td>Prévia de <code>main.py</code> com 2 clientes, 2 veículos e 2 ordens de serviço</td>
+<td>Código comentado</td>
+</tr>
+<tr>
+<td>Composição</td>
+<td><code>OrdemServico</code> contém <code>ItemOS</code></td>
+<td>Itens não existem sem a OS; o losango fica no lado da OS</td>
+<td>Losango preenchido</td>
+</tr>
+<tr>
+<td>Enumeração</td>
+<td><code>StatusOS</code></td>
+<td>Cinco estados válidos, sem strings mágicas</td>
+<td><code>&lt;&lt;enumeration&gt;&gt;</code></td>
+</tr>
+</tbody></table>
+<h3 id="451-polimorfismo-em-código">4.5.1 Polimorfismo em código</h3>
+<p>O trecho abaixo é a forma prevista para a Etapa 3. A classe abstrata define o contrato; as subclasses implementam o cálculo; a OS não precisa de <code>if tipo == &quot;peça&quot;</code>.</p>
+<pre><code class="language-python">from abc import ABC, abstractmethod
+from decimal import Decimal
+
+class ItemOS(ABC):
+    def __init__(self, descricao: str, quantidade: Decimal, valor_unitario: Decimal):
+        self.descricao = descricao
+        self.quantidade = quantidade
+        self.valor_unitario = valor_unitario
+
+    @abstractmethod
+    def calcular_subtotal(self) -&gt; Decimal:
+        ...
+
+class Peca(ItemOS):
+    def calcular_subtotal(self) -&gt; Decimal:
+        return self.quantidade * self.valor_unitario
+
+class MaoDeObra(ItemOS):
+    def __init__(self, descricao: str, horas: Decimal, taxa_horaria: Decimal):
+        super().__init__(descricao, horas, taxa_horaria)
+        self.horas = horas
+        self.taxa_horaria = taxa_horaria
+
+    def calcular_subtotal(self) -&gt; Decimal:
+        return self.horas * self.taxa_horaria
+</code></pre>
+<h3 id="452-encapsulamento-de-itens">4.5.2 Encapsulamento de <code>__itens</code></h3>
+<pre><code class="language-python">class OrdemServico:
+    def __init__(self, numero: str):
+        self.numero = numero
+        self.__itens: list[ItemOS] = []
+        self.__total = Decimal(&quot;0.00&quot;)
+
+    def adicionar_item(self, item: ItemOS) -&gt; None:
+        if item.calcular_subtotal() &lt;= 0:
+            raise ValueError(&quot;O item deve ter subtotal positivo.&quot;)
+        self.__itens.append(item)
+        self.__recalcular_total()
+
+    def remover_item(self, item: ItemOS) -&gt; None:
+        self.__itens.remove(item)
+        self.__recalcular_total()
+
+    def __recalcular_total(self) -&gt; None:
+        subtotal = sum((item.calcular_subtotal() for item in self.__itens), Decimal(&quot;0.00&quot;))
+        if self.desconto &lt; 0 or self.desconto &gt; subtotal:
+            raise ValueError(&quot;Desconto inválido.&quot;)
+        self.__total = subtotal - self.desconto
+
+    @property
+    def total(self) -&gt; Decimal:
+        return self.__total
+
+    @property
+    def itens(self) -&gt; tuple[ItemOS, ...]:
+        return tuple(self.__itens)  # cópia somente leitura
+</code></pre>
+<p>O atributo <code>__itens</code> não é exposto diretamente. A propriedade <code>itens</code> devolve uma tupla imutável, preservando o encapsulamento e permitindo que a interface apenas leia os dados. O método <code>__recalcular_total()</code> é privado e centraliza a regra financeira, evitando que a UI ou os serviços alterem o total manualmente.</p>
+<h2 id="46-princípios-aplicados">4.6 Princípios aplicados</h2>
+<table>
+<thead>
+<tr>
+<th>Princípio</th>
+<th>Aplicação</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Encapsulamento</strong></td>
+<td><code>OrdemServico</code> mantém <code>__itens</code>, <code>__total</code> e <code>__recalcular_total()</code> privados; a UI usa métodos públicos</td>
+</tr>
+<tr>
+<td><strong>Herança</strong></td>
+<td><code>Cliente</code> e <code>Mecanico</code> reaproveitam <code>Pessoa</code>; <code>Peca</code> e <code>MaoDeObra</code> reaproveitam <code>ItemOS</code></td>
+</tr>
+<tr>
+<td><strong>Polimorfismo</strong></td>
+<td><code>calcularSubtotal()</code> é chamado de forma uniforme pela OS</td>
+</tr>
+<tr>
+<td><strong>Composição</strong></td>
+<td>A OS é dona dos itens; o ciclo de vida do item está subordinado ao da OS</td>
+</tr>
+<tr>
+<td><strong>Coesão</strong></td>
+<td>Cada classe tem uma responsabilidade clara: cliente, veículo, item, OS, oficina</td>
+</tr>
+<tr>
+<td><strong>Baixo acoplamento</strong></td>
+<td>A UI conversa com serviços; serviços conversam com repositórios; o domínio não conhece SQLite</td>
+</tr>
+<tr>
+<td><strong>Fail fast</strong></td>
+<td>Validações lançam exceções antes de persistir dados inválidos</td>
+</tr>
+<tr>
+<td><strong>Auditabilidade</strong></td>
+<td>Toda transição de status é registrada em <code>status_historico</code></td>
+</tr>
+</tbody></table>
+<h3 id="461-por-que-ordemservico-é-a-raiz-de-agregação">4.6.1 Por que <code>OrdemServico</code> é a raiz de agregação</h3>
+<p>A OS é o ponto de consistência do atendimento. Um item não faz sentido sem uma OS; um total não existe sem itens; um status não pode mudar sem validar a transição. Por isso, as operações de adicionar/remover item e de mudança de estado passam pela OS, e não diretamente pelos itens.</p>
+<h3 id="462-por-que-itemos-é-abstrata">4.6.2 Por que <code>ItemOS</code> é abstrata</h3>
+<p>Peça e mão de obra compartilham descrição e a necessidade de calcular subtotal, mas têm fórmulas diferentes. A classe abstrata permite que a OS trate ambos de forma uniforme, enquanto cada subclasse mantém seus próprios atributos (código/fornecedor versus horas/taxa/executor).</p>
+<h3 id="463-por-que-statusos-é-enumeração">4.6.3 Por que <code>StatusOS</code> é enumeração</h3>
+<p>Strings livres permitiriam estados inválidos (<code>&quot;aprovado&quot;</code>, <code>&quot;Aprovada&quot;</code>, <code>&quot;EM_EXECUÇÃO&quot;</code>). A enumeração garante um conjunto fechado e serve de base para a máquina de estados.</p>
+<h2 id="47-prévia-do-programa-principal">4.7 Prévia do programa principal</h2>
+<p>O programa abaixo demonstra a criação de múltiplos objetos (dois clientes, dois veículos e duas OS), o uso do polimorfismo e o cálculo de comissão. Ele é uma <strong>prévia conceitual</strong>: a implementação completa, com persistência e interface, será entregue na Etapa 3.</p>
+<pre><code class="language-python">from decimal import Decimal
+from domain.oficina import Oficina
+from domain.cliente import Cliente
+from domain.mecanico import Mecanico
+from domain.veiculo import Veiculo
+from domain.peca import Peca
+from domain.mao_de_obra import MaoDeObra
+
+
+def main() -&gt; None:
+    oficina = Oficina(
+        nome=&quot;DevSolo Studio&quot;,
+        cnpj=&quot;12.345.678/0001-90&quot;,
+        taxa_horaria_padrao=Decimal(&quot;120.00&quot;),
+    )
+
+    mecanico = Mecanico(
+        nome=&quot;Marcos Silva&quot;,
+        telefone=&quot;(11) 98888-0001&quot;,
+        registro=&quot;MEC-001&quot;,
+        taxa_comissao=Decimal(&quot;0.12&quot;),
+    )
+
+    ana = Cliente(&quot;Ana Paula Ribeiro&quot;, &quot;(11) 98765-4321&quot;, &quot;123.456.789-00&quot;)
+    carlos = Cliente(&quot;Carlos Eduardo Lima&quot;, &quot;(11) 97654-3210&quot;, &quot;234.567.890-11&quot;)
+
+    civic = Veiculo(&quot;ABC-1D23&quot;, &quot;Honda&quot;, &quot;Civic&quot;, 2019, 62480, ana)
+    gol = Veiculo(&quot;XYZ-9K87&quot;, &quot;Volkswagen&quot;, &quot;Gol&quot;, 2015, 118920, carlos)
+
+    os1 = oficina.emitir_ordem_servico(ana, civic, mecanico)
+    os1.adicionar_item(Peca(&quot;Filtro de óleo&quot;, 1, Decimal(&quot;45.00&quot;), &quot;FO-1842&quot;, &quot;AutoPeças Central&quot;))
+    os1.adicionar_item(Peca(&quot;Óleo 5W30&quot;, 1, Decimal(&quot;180.00&quot;), &quot;OL-5W30&quot;, &quot;Lubrax&quot;))
+    os1.adicionar_item(MaoDeObra(&quot;Troca de óleo e filtros&quot;, Decimal(&quot;1.5&quot;), Decimal(&quot;120.00&quot;), mecanico))
+    os1.adicionar_item(MaoDeObra(&quot;Alinhamento e balanceamento&quot;, Decimal(&quot;1.0&quot;), Decimal(&quot;120.00&quot;), mecanico))
+
+    os2 = oficina.emitir_ordem_servico(carlos, gol, mecanico)
+    os2.adicionar_item(Peca(&quot;Pastilha de freio&quot;, 1, Decimal(&quot;320.00&quot;), &quot;PF-2210&quot;, &quot;Bosch&quot;))
+    os2.adicionar_item(MaoDeObra(&quot;Substituição de pastilhas&quot;, Decimal(&quot;1.5&quot;), Decimal(&quot;120.00&quot;), mecanico))
+
+    print(os1.resumo())
+    print(os2.resumo())
+    print(f&quot;Comissão prevista: R$ {mecanico.calcular_comissao(os1.subtotal_mao_obra):.2f}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<p><strong>Saída esperada (resumo):</strong></p>
+<pre><code class="language-text">OS 2026-0001 • Ana Paula Ribeiro • Honda Civic ABC-1D23
+Itens: 4 • Subtotal: R$ 525,00 • Total: R$ 525,00 • Status: ORCAMENTO
+
+OS 2026-0002 • Carlos Eduardo Lima • Volkswagen Gol XYZ-9K87
+Itens: 2 • Subtotal: R$ 500,00 • Total: R$ 500,00 • Status: ORCAMENTO
+
+Comissão prevista: R$ 30,00
+</code></pre>
+<blockquote>
+<p><strong>Observação:</strong> os valores acima são apenas ilustrativos para demonstrar a criação dos objetos e a chamada polimórfica. O cálculo real da OS 2026-0042 usado nos wireframes é R$ 1.240,00 (Seção 3.4).</p>
+</blockquote>
+<h2 id="48-evolução-prevista-do-modelo">4.8 Evolução prevista do modelo</h2>
+<p>Para a Etapa 3, o modelo pode evoluir sem quebrar a estrutura atual:</p>
+<ul>
+<li><strong>Repositórios:</strong> <code>ClienteRepository</code>, <code>VeiculoRepository</code>, <code>OrdemServicoRepository</code>, com interface comum.</li>
+<li><strong>Serviços:</strong> <code>OrdemServicoService</code>, <code>RelatorioService</code>, <code>OrcamentoService</code>, <code>ConfiguracaoService</code>.</li>
+<li><strong>Objetos de valor:</strong> <code>Dinheiro</code>, <code>Placa</code>, <code>Documento</code>, <code>Periodo</code>, para validações mais fortes.</li>
+<li><strong>Eventos de domínio:</strong> <code>OrdemAprovada</code>, <code>OrdemFinalizada</code>, para disparar PDF, histórico e relatórios.</li>
+<li><strong>Testes:</strong> unitários de domínio, integração com SQLite em memória e testes de contrato dos serviços.</li>
+</ul>
+<h1 id="5-diagrama-de-estados-da-os">5. Diagrama de estados da OS</h1>
+<h2 id="51-visão-geral">5.1 Visão geral</h2>
+<p>A ordem de serviço tem um ciclo de vida explícito. O diagrama abaixo mostra os cinco estados e as transições permitidas. A regra é implementada por <code>OrdemServico.__validar_transicao()</code> e registrada em <code>status_historico</code>.</p>
+<figure>
+  <img src="diagramas/estados-os.png" alt="Diagrama de estados da ordem de serviço">
+  <figcaption>Figura 3 — Máquina de estados da OS: ORCAMENTO, APROVADA, EM_EXECUCAO, FINALIZADA e CANCELADA.</figcaption>
+</figure><h2 id="52-descrição-dos-estados">5.2 Descrição dos estados</h2>
+<table>
+<thead>
+<tr>
+<th>Estado</th>
+<th>Significado</th>
+<th>O que pode acontecer</th>
+<th>Próximos estados</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ORCAMENTO</code></td>
+<td>OS aberta; itens sendo montados ou orçamento aguardando o cliente</td>
+<td>Editar itens, aplicar desconto, gerar PDF, enviar WhatsApp, aprovar, cancelar</td>
+<td><code>APROVADA</code>, <code>CANCELADA</code></td>
+</tr>
+<tr>
+<td><code>APROVADA</code></td>
+<td>Cliente autorizou o serviço</td>
+<td>Iniciar execução, cancelar com motivo</td>
+<td><code>EM_EXECUCAO</code>, <code>CANCELADA</code></td>
+</tr>
+<tr>
+<td><code>EM_EXECUCAO</code></td>
+<td>Serviço em andamento</td>
+<td>Finalizar, cancelar com motivo</td>
+<td><code>FINALIZADA</code>, <code>CANCELADA</code></td>
+</tr>
+<tr>
+<td><code>FINALIZADA</code></td>
+<td>Serviço concluído e recibo disponível</td>
+<td>Consultar recibo, imprimir, calcular comissão</td>
+<td>Nenhum (estado terminal)</td>
+</tr>
+<tr>
+<td><code>CANCELADA</code></td>
+<td>Atendimento encerrado sem conclusão</td>
+<td>Consultar histórico</td>
+<td>Nenhum (estado terminal)</td>
+</tr>
+</tbody></table>
+<h2 id="53-tabela-de-transições">5.3 Tabela de transições</h2>
+<table>
+<thead>
+<tr>
+<th>De</th>
+<th>Evento</th>
+<th>Guarda</th>
+<th>Para</th>
+<th>Efeitos colaterais</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ORCAMENTO</code></td>
+<td><code>aprovar()</code></td>
+<td>Orçamento válido, pelo menos 1 item, total &gt; 0</td>
+<td><code>APROVADA</code></td>
+<td>Grava <code>data_aprovacao</code>, usuário e histórico</td>
+</tr>
+<tr>
+<td><code>APROVADA</code></td>
+<td><code>iniciar()</code></td>
+<td>Mecânico responsável definido</td>
+<td><code>EM_EXECUCAO</code></td>
+<td>Grava <code>data_inicio</code> e histórico</td>
+</tr>
+<tr>
+<td><code>EM_EXECUCAO</code></td>
+<td><code>finalizar()</code></td>
+<td>Pelo menos 1 item, valores consistentes</td>
+<td><code>FINALIZADA</code></td>
+<td>Grava <code>data_finalizacao</code>, gera recibo e comissão</td>
+</tr>
+<tr>
+<td><code>ORCAMENTO</code></td>
+<td><code>cancelar(motivo)</code></td>
+<td>Motivo informado</td>
+<td><code>CANCELADA</code></td>
+<td>Grava <code>data_cancelamento</code>, motivo e histórico</td>
+</tr>
+<tr>
+<td><code>APROVADA</code></td>
+<td><code>cancelar(motivo)</code></td>
+<td>Motivo informado</td>
+<td><code>CANCELADA</code></td>
+<td>Grava <code>data_cancelamento</code>, motivo e histórico</td>
+</tr>
+<tr>
+<td><code>EM_EXECUCAO</code></td>
+<td><code>cancelar(motivo)</code></td>
+<td>Motivo informado</td>
+<td><code>CANCELADA</code></td>
+<td>Grava <code>data_cancelamento</code>, motivo e histórico</td>
+</tr>
+<tr>
+<td><code>FINALIZADA</code></td>
+<td><code>cancelar()</code></td>
+<td>—</td>
+<td>Bloqueado</td>
+<td>Lança <code>TransicaoInvalida</code></td>
+</tr>
+<tr>
+<td><code>CANCELADA</code></td>
+<td>Qualquer evento</td>
+<td>—</td>
+<td>Bloqueado</td>
+<td>Lança <code>TransicaoInvalida</code></td>
+</tr>
+</tbody></table>
+<h2 id="54-invariantes">5.4 Invariantes</h2>
+<ol>
+<li>Uma OS sempre tem exatamente um status válido.</li>
+<li><code>data_finalizacao</code> só existe em <code>FINALIZADA</code>.</li>
+<li><code>data_cancelamento</code> só existe em <code>CANCELADA</code>.</li>
+<li>Uma OS <code>FINALIZADA</code> não pode voltar a <code>EM_EXECUCAO</code>; retrabalho deve gerar nova OS ou ordem de garantia.</li>
+<li>Uma OS <code>CANCELADA</code> não pode ser reaberta; deve ser criada uma nova OS.</li>
+<li>O histórico de status é append-only: cada transição gera uma linha, sem atualização destrutiva.</li>
+<li>A comissão só é considerada para OS <code>FINALIZADA</code>.</li>
+</ol>
+<h2 id="55-exemplo-de-caminho-válido">5.5 Exemplo de caminho válido</h2>
+<pre><code class="language-text">ORCAMENTO --aprovar()--&gt; APROVADA --iniciar()--&gt; EM_EXECUCAO --finalizar()--&gt; FINALIZADA
+</code></pre>
+<p>Com cancelamento:</p>
+<pre><code class="language-text">ORCAMENTO --cancelar(&quot;Cliente desistiu&quot;)--&gt; CANCELADA
+APROVADA  --cancelar(&quot;Peça indisponível&quot;)--&gt; CANCELADA
+EM_EXECUCAO --cancelar(&quot;Cliente solicitou interrupção&quot;)--&gt; CANCELADA
+</code></pre>
+<h2 id="56-exemplo-de-transição-inválida">5.6 Exemplo de transição inválida</h2>
+<pre><code class="language-text">FINALIZADA --cancelar()--&gt; ERRO: &quot;OS finalizada não pode ser cancelada.&quot;
+CANCELADA  --aprovar()--&gt; ERRO: &quot;OS cancelada não pode ser aprovada.&quot;
+ORCAMENTO  --finalizar()--&gt; ERRO: &quot;A OS precisa estar em execução para ser finalizada.&quot;
+</code></pre>
+<p>A mensagem deve ser exibida na interface em linguagem clara, sem termos técnicos, e o botão inválido deve ficar desabilitado quando possível. A validação de domínio continua sendo a última linha de defesa.</p>
+<h1 id="6-arquitetura-e-persistência">6. Arquitetura e persistência</h1>
+<h2 id="61-visão-em-camadas">6.1 Visão em camadas</h2>
+<p>A aplicação segue uma separação em quatro camadas. A interface não acessa SQLite diretamente; os serviços coordenam o domínio e os repositórios; o domínio concentra as regras.</p>
+<figure>
+  <img src="diagramas/arquitetura.png" alt="Arquitetura em camadas do OficinaPro">
+  <figcaption>Figura 4 — Arquitetura lógica: apresentação, aplicação, domínio e infraestrutura.</figcaption>
+</figure><table>
+<thead>
+<tr>
+<th>Camada</th>
+<th>Responsabilidade</th>
+<th>Componentes previstos</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Apresentação</td>
+<td>Renderizar telas, capturar eventos, validar formulários e exibir feedback</td>
+<td><code>App</code>, <code>DashboardView</code>, <code>ClienteView</code>, <code>VeiculoView</code>, <code>OrdemServicoView</code>, <code>RelatorioView</code>, <code>ConfiguracaoView</code></td>
+</tr>
+<tr>
+<td>Aplicação</td>
+<td>Orquestrar casos de uso, transações e autorização simples</td>
+<td><code>OrdemServicoService</code>, <code>RelatorioService</code>, <code>OrcamentoService</code>, <code>ConfiguracaoService</code></td>
+</tr>
+<tr>
+<td>Domínio</td>
+<td>Entidades, regras de negócio, cálculos e transições</td>
+<td><code>Oficina</code>, <code>Pessoa</code>, <code>Cliente</code>, <code>Mecanico</code>, <code>Veiculo</code>, <code>OrdemServico</code>, <code>ItemOS</code>, <code>Peca</code>, <code>MaoDeObra</code>, <code>StatusOS</code></td>
+</tr>
+<tr>
+<td>Infraestrutura</td>
+<td>Persistência, PDF, backup, configuração e logs</td>
+<td>Repositórios SQLite, <code>Database</code>, <code>PdfGenerator</code>, <code>BackupService</code>, <code>Settings</code></td>
+</tr>
+</tbody></table>
+<h2 id="62-estrutura-de-pastas-prevista">6.2 Estrutura de pastas prevista</h2>
+<pre><code class="language-text">oficinapro/
+├── main.py
+├── domain/
+│   ├── pessoa.py
+│   ├── cliente.py
+│   ├── mecanico.py
+│   ├── veiculo.py
+│   ├── item_os.py
+│   ├── peca.py
+│   ├── mao_de_obra.py
+│   ├── ordem_servico.py
+│   ├── status_os.py
+│   └── oficina.py
+├── application/
+│   ├── ordem_servico_service.py
+│   ├── relatorio_service.py
+│   ├── orcamento_service.py
+│   └── configuracao_service.py
+├── infrastructure/
+│   ├── database.py
+│   ├── repositories/
+│   ├── pdf/
+│   ├── backup.py
+│   └── settings.py
+├── ui/
+│   ├── app.py
+│   ├── telas/
+│   └── componentes/
+└── tests/
+    ├── test_dominio.py
+    ├── test_ordem_servico.py
+    ├── test_comissoes.py
+    └── test_repositorios.py
+</code></pre>
+<h2 id="63-modelo-de-dados-sqlite">6.3 Modelo de dados SQLite</h2>
+<p>O esquema usa <strong>single-table inheritance</strong> para os itens: uma única tabela <code>item_os</code> guarda peças e mão de obra, diferenciadas pela coluna <code>tipo</code>. Essa escolha simplifica consultas de relatório e mantém a integridade referencial com a OS. As subclasses <code>Peca</code> e <code>MaoDeObra</code> continuam existindo no domínio.</p>
+<table>
+<thead>
+<tr>
+<th>Tabela</th>
+<th>Campos principais</th>
+<th>Chaves e restrições</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>oficina</code></td>
+<td><code>id</code>, <code>nome</code>, <code>cnpj</code>, <code>telefone</code>, <code>endereco</code>, <code>taxa_horaria_padrao</code>, <code>comissao_padrao</code>, <code>criado_em</code></td>
+<td><code>id</code> PK; <code>cnpj</code> UNIQUE; <code>taxa_horaria_padrao &gt;= 0</code>; <code>comissao_padrao BETWEEN 0 AND 1</code></td>
+</tr>
+<tr>
+<td><code>cliente</code></td>
+<td><code>id</code>, <code>nome</code>, <code>telefone</code>, <code>email</code>, <code>cpf_cnpj</code>, <code>endereco</code>, <code>data_nascimento</code>, <code>observacoes</code>, <code>ativo</code>, <code>criado_em</code></td>
+<td><code>id</code> PK; <code>cpf_cnpj</code> UNIQUE; <code>ativo</code> default 1; índice em <code>nome</code></td>
+</tr>
+<tr>
+<td><code>mecanico</code></td>
+<td><code>id</code>, <code>nome</code>, <code>telefone</code>, <code>email</code>, <code>registro</code>, <code>especialidade</code>, <code>taxa_comissao</code>, <code>ativo</code></td>
+<td><code>id</code> PK; <code>registro</code> UNIQUE; <code>taxa_comissao BETWEEN 0 AND 1</code></td>
+</tr>
+<tr>
+<td><code>veiculo</code></td>
+<td><code>id</code>, <code>cliente_id</code>, <code>placa</code>, <code>marca</code>, <code>modelo</code>, <code>ano</code>, <code>km</code>, <code>cor</code>, <code>combustivel</code>, <code>observacoes</code></td>
+<td><code>id</code> PK; <code>cliente_id</code> FK → <code>cliente</code>; <code>placa</code> UNIQUE; <code>ano</code> e <code>km &gt;= 0</code></td>
+</tr>
+<tr>
+<td><code>ordem_servico</code></td>
+<td><code>id</code>, <code>numero</code>, <code>cliente_id</code>, <code>veiculo_id</code>, <code>mecanico_id</code>, <code>status</code>, <code>desconto</code>, <code>data_abertura</code>, <code>data_aprovacao</code>, <code>data_inicio</code>, <code>data_finalizacao</code>, <code>data_cancelamento</code>, <code>motivo_cancelamento</code>, <code>observacoes</code>, <code>criado_por</code></td>
+<td><code>id</code> PK; <code>numero</code> UNIQUE; FKs; <code>status</code> CHECK; <code>desconto &gt;= 0</code>; índices em <code>status</code> e <code>data_abertura</code></td>
+</tr>
+<tr>
+<td><code>item_os</code></td>
+<td><code>id</code>, <code>ordem_servico_id</code>, <code>tipo</code>, <code>descricao</code>, <code>quantidade</code>, <code>valor_unitario</code>, <code>horas</code>, <code>taxa_horaria</code>, <code>mecanico_id</code>, <code>codigo_peca</code>, <code>fornecedor</code></td>
+<td><code>id</code> PK; <code>ordem_servico_id</code> FK; <code>tipo</code> CHECK (<code>PECA</code>, <code>MAO_DE_OBRA</code>); <code>mecanico_id</code> FK; <code>quantidade/horas/valor &gt;= 0</code></td>
+</tr>
+<tr>
+<td><code>status_historico</code></td>
+<td><code>id</code>, <code>ordem_servico_id</code>, <code>status_anterior</code>, <code>status_novo</code>, <code>data_hora</code>, <code>usuario</code>, <code>motivo</code></td>
+<td><code>id</code> PK; <code>ordem_servico_id</code> FK; <code>status_anterior</code>/<code>status_novo</code> CHECK; append-only</td>
+</tr>
+<tr>
+<td><code>configuracao</code></td>
+<td><code>chave</code>, <code>valor</code>, <code>atualizado_em</code></td>
+<td><code>chave</code> PK; valores serializados em texto</td>
+</tr>
+<tr>
+<td><code>comissao_pagamento</code></td>
+<td><code>id</code>, <code>mecanico_id</code>, <code>periodo_inicio</code>, <code>periodo_fim</code>, <code>valor</code>, <code>pago_em</code>, <code>observacoes</code></td>
+<td><code>id</code> PK; <code>mecanico_id</code> FK; <code>valor &gt;= 0</code>; opcional para Etapa 3</td>
+</tr>
+</tbody></table>
+<h3 id="631-relacionamentos">6.3.1 Relacionamentos</h3>
+<table>
+<thead>
+<tr>
+<th>Relação</th>
+<th>Cardinalidade</th>
+<th>Regra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>oficina</code> → <code>cliente</code></td>
+<td>1 : N</td>
+<td>Uma oficina atende vários clientes</td>
+</tr>
+<tr>
+<td><code>oficina</code> → <code>mecanico</code></td>
+<td>1 : N</td>
+<td>Uma oficina emprega vários mecânicos</td>
+</tr>
+<tr>
+<td><code>cliente</code> → <code>veiculo</code></td>
+<td>1 : N</td>
+<td>Um cliente pode ter vários veículos</td>
+</tr>
+<tr>
+<td><code>cliente</code> → <code>ordem_servico</code></td>
+<td>1 : N</td>
+<td>Um cliente pode solicitar várias OS</td>
+</tr>
+<tr>
+<td><code>veiculo</code> → <code>ordem_servico</code></td>
+<td>1 : N</td>
+<td>Um veículo pode receber várias OS</td>
+</tr>
+<tr>
+<td><code>mecanico</code> → <code>ordem_servico</code></td>
+<td>1 : N</td>
+<td>Um mecânico pode ser responsável por várias OS</td>
+</tr>
+<tr>
+<td><code>ordem_servico</code> → <code>item_os</code></td>
+<td>1 : N</td>
+<td>Uma OS contém um ou mais itens (composição)</td>
+</tr>
+<tr>
+<td><code>mecanico</code> → <code>item_os</code></td>
+<td>1 : N</td>
+<td>Um mecânico pode executar vários itens de mão de obra</td>
+</tr>
+<tr>
+<td><code>ordem_servico</code> → <code>status_historico</code></td>
+<td>1 : N</td>
+<td>Uma OS tem vários registros de transição</td>
+</tr>
+</tbody></table>
+<h3 id="632-índices-e-desempenho">6.3.2 Índices e desempenho</h3>
+<pre><code class="language-sql">CREATE INDEX idx_cliente_nome       ON cliente(nome);
+CREATE INDEX idx_cliente_cpf        ON cliente(cpf_cnpj);
+CREATE INDEX idx_veiculo_placa      ON veiculo(placa);
+CREATE INDEX idx_os_status          ON ordem_servico(status);
+CREATE INDEX idx_os_data_abertura   ON ordem_servico(data_abertura);
+CREATE INDEX idx_item_os_os         ON item_os(ordem_servico_id);
+CREATE INDEX idx_item_os_mecanico   ON item_os(mecanico_id);
+</code></pre>
+<p>As consultas de relatório filtram por <code>data_finalizacao</code> e <code>mecanico_id</code>. Para volumes maiores, pode-se criar um índice composto:</p>
+<pre><code class="language-sql">CREATE INDEX idx_os_finalizada_mecanico
+  ON ordem_servico(mecanico_id, data_finalizacao)
+  WHERE status = &#39;FINALIZADA&#39;;
+</code></pre>
+<h3 id="633-integridade-e-transações">6.3.3 Integridade e transações</h3>
+<ul>
+<li><code>PRAGMA foreign_keys = ON;</code> em toda conexão.</li>
+<li><code>PRAGMA journal_mode = WAL;</code> para melhor concorrência de leitura.</li>
+<li><code>PRAGMA busy_timeout = 5000;</code> para evitar falhas momentâneas.</li>
+<li>Operações que envolvem OS + itens usam uma única transação.</li>
+<li>Aprovação, finalização e cancelamento usam transação com <code>UPDATE</code> condicional no status atual para evitar dupla transição.</li>
+<li>Exclusão de cliente é lógica (<code>ativo = 0</code>), preservando o histórico.</li>
+<li>Valores monetários são convertidos para centavos ou <code>Decimal</code> na aplicação; o SQLite armazena <code>NUMERIC</code>/<code>TEXT</code> conforme a estratégia adotada.</li>
+</ul>
+<h3 id="634-backup-e-restauração">6.3.4 Backup e restauração</h3>
+<p>O backup pode ser feito com <code>VACUUM INTO</code> para gerar uma cópia consistente:</p>
+<pre><code class="language-sql">VACUUM INTO &#39;backups/oficinapro_2026-10-26.db&#39;;
+</code></pre>
+<p>Regras:</p>
+<ol>
+<li>Fazer backup antes de qualquer migração de schema.</li>
+<li>Manter os últimos 7 backups automáticos e permitir backup manual.</li>
+<li>Restaurar somente com confirmação explícita e com o aplicativo fechado.</li>
+<li>Validar a integridade do arquivo restaurado com <code>PRAGMA integrity_check;</code>.</li>
+<li>Nunca armazenar o backup apenas no mesmo diretório do banco principal.</li>
+</ol>
+<h3 id="635-migrações">6.3.5 Migrações</h3>
+<p>O controle de versão do schema pode usar <code>PRAGMA user_version</code> ou uma tabela <code>schema_migrations</code>. Cada migração deve ser idempotente e testada com um banco de exemplo. A Etapa 3 deve começar com a versão <code>1</code> e evoluir por scripts numerados.</p>
+<h2 id="64-decisões-de-persistência">6.4 Decisões de persistência</h2>
+<table>
+<thead>
+<tr>
+<th>Decisão</th>
+<th>Alternativa descartada</th>
+<th>Motivo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SQLite local</td>
+<td>PostgreSQL/MySQL</td>
+<td>Simplicidade de instalação em desktop e backup por arquivo</td>
+</tr>
+<tr>
+<td>Single-table inheritance em <code>item_os</code></td>
+<td>Tabelas separadas <code>peca</code> e <code>mao_de_obra</code></td>
+<td>Consultas de relatório mais simples; o domínio mantém o polimorfismo</td>
+</tr>
+<tr>
+<td>Soft delete de cliente</td>
+<td><code>DELETE</code> físico</td>
+<td>Preserva histórico de OS e auditoria</td>
+</tr>
+<tr>
+<td><code>status_historico</code> append-only</td>
+<td>Apenas o campo <code>status</code> na OS</td>
+<td>Rastreabilidade e diagnóstico de transições</td>
+</tr>
+<tr>
+<td><code>VACUUM INTO</code> para backup</td>
+<td>Cópia direta do arquivo</td>
+<td>Evita cópia inconsistente com WAL ativo</td>
+</tr>
+<tr>
+<td><code>Decimal</code> na aplicação</td>
+<td><code>float</code> puro</td>
+<td>Evita erros de arredondamento em dinheiro</td>
+</tr>
+</tbody></table>
+<h1 id="7-design-system-e-identidade-visual">7. Design system e identidade visual</h1>
+<h2 id="71-conceito">7.1 Conceito</h2>
+<p>A identidade da DevSolo Studio combina uma <strong>prancheta</strong> (padronização, checklist, ordem) com uma <strong>chave</strong> (ofício mecânico, solução). O produto OficinaPro usa essa base com uma interface sóbria, de balcão, em que o laranja sinaliza ação e o verde sinaliza aprovação/conclusão. O grafite dá peso e legibilidade; o slate organiza fundos e bordas.</p>
+<h2 id="72-paleta">7.2 Paleta</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Hex</th>
+<th>Uso principal</th>
+<th>Contraste</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--graphite</code></td>
+<td><code>#1E293B</code></td>
+<td>Sidebar, títulos, texto forte</td>
+<td>Alto sobre branco</td>
+</tr>
+<tr>
+<td><code>--graphite-900</code></td>
+<td><code>#0F172A</code></td>
+<td>Fundos escuros, sombras</td>
+<td>Alto</td>
+</tr>
+<tr>
+<td><code>--orange</code></td>
+<td><code>#F97316</code></td>
+<td>Ações primárias, destaque, marca</td>
+<td>Usar texto branco</td>
+</tr>
+<tr>
+<td><code>--orange-600</code></td>
+<td><code>#EA580C</code></td>
+<td>Hover de ações primárias</td>
+<td>Usar texto branco</td>
+</tr>
+<tr>
+<td><code>--green</code></td>
+<td><code>#22C55E</code></td>
+<td>Aprovação, pagamento, sucesso</td>
+<td>Usar texto escuro</td>
+</tr>
+<tr>
+<td><code>--green-700</code></td>
+<td><code>#15803D</code></td>
+<td>Texto de sucesso</td>
+<td>Alto sobre branco</td>
+</tr>
+<tr>
+<td><code>--red</code></td>
+<td><code>#EF4444</code></td>
+<td>Cancelamento, erro</td>
+<td>Usar texto branco/escuro conforme fundo</td>
+</tr>
+<tr>
+<td><code>--amber</code></td>
+<td><code>#F59E0B</code></td>
+<td>Pendência, orçamento</td>
+<td>Usar texto escuro</td>
+</tr>
+<tr>
+<td><code>--slate-50</code></td>
+<td><code>#F8FAFC</code></td>
+<td>Fundo de tabelas/cabeçalhos</td>
+<td>Baixo</td>
+</tr>
+<tr>
+<td><code>--slate-100</code></td>
+<td><code>#F1F5F9</code></td>
+<td>Fundo geral</td>
+<td>Baixo</td>
+</tr>
+<tr>
+<td><code>--slate-200</code></td>
+<td><code>#E2E8F0</code></td>
+<td>Bordas e divisores</td>
+<td>Baixo</td>
+</tr>
+<tr>
+<td><code>--slate-500</code></td>
+<td><code>#64748B</code></td>
+<td>Texto secundário</td>
+<td>Médio</td>
+</tr>
+<tr>
+<td><code>--white</code></td>
+<td><code>#FFFFFF</code></td>
+<td>Cards, documentos</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<p><strong>Regra de uso:</strong> o laranja é reservado para a ação principal de cada tela. Nunca usar laranja em dois botões concorrentes na mesma área. O verde não substitui texto: sempre acompanha rótulo (“Aprovada”, “Pago”) para não depender apenas de cor.</p>
+<h2 id="73-tipografia">7.3 Tipografia</h2>
+<table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>Tamanho</th>
+<th>Peso</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Título de página</td>
+<td>22 px</td>
+<td>700</td>
+<td>Cabeçalho de conteúdo</td>
+</tr>
+<tr>
+<td>Título de seção</td>
+<td>20 px</td>
+<td>700</td>
+<td>Topbar</td>
+</tr>
+<tr>
+<td>Título de card</td>
+<td>14,5 px</td>
+<td>700</td>
+<td>Cabeçalhos de cards</td>
+</tr>
+<tr>
+<td>Corpo</td>
+<td>14 px</td>
+<td>400</td>
+<td>Texto geral</td>
+</tr>
+<tr>
+<td>Texto secundário</td>
+<td>12–13 px</td>
+<td>400/600</td>
+<td>Descrições, metadados</td>
+</tr>
+<tr>
+<td>Rótulo de tabela</td>
+<td>10,5 px</td>
+<td>700</td>
+<td>Cabeçalhos em caixa alta</td>
+</tr>
+<tr>
+<td>Badge</td>
+<td>11 px</td>
+<td>700</td>
+<td>Status</td>
+</tr>
+<tr>
+<td>Número de indicador</td>
+<td>26 px</td>
+<td>700</td>
+<td>Cards de dashboard</td>
+</tr>
+</tbody></table>
+<p>Fonte principal: <strong>Segoe UI</strong> (Windows) com fallback para <strong>Inter</strong>, <strong>Liberation Sans</strong> e <strong>Arial</strong>. Em Linux, a fallback garante renderização consistente. Números monetários usam tabular figures quando disponível.</p>
+<h2 id="74-espaçamento-raio-e-sombra">7.4 Espaçamento, raio e sombra</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Valor</th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>space-1</code></td>
+<td>4 px</td>
+<td>Ajustes finos</td>
+</tr>
+<tr>
+<td><code>space-2</code></td>
+<td>8 px</td>
+<td>Gap entre ícone e texto</td>
+</tr>
+<tr>
+<td><code>space-3</code></td>
+<td>12 px</td>
+<td>Gap entre botões</td>
+</tr>
+<tr>
+<td><code>space-4</code></td>
+<td>16 px</td>
+<td>Gap entre cards</td>
+</tr>
+<tr>
+<td><code>space-5</code></td>
+<td>24 px</td>
+<td>Padding de drawer</td>
+</tr>
+<tr>
+<td><code>space-6</code></td>
+<td>32 px</td>
+<td>Padding de conteúdo</td>
+</tr>
+<tr>
+<td><code>radius-sm</code></td>
+<td>6 px</td>
+<td>Badges e botões pequenos</td>
+</tr>
+<tr>
+<td><code>radius-md</code></td>
+<td>9–10 px</td>
+<td>Botões, inputs, navegação</td>
+</tr>
+<tr>
+<td><code>radius-lg</code></td>
+<td>12 px</td>
+<td>Cards e drawers</td>
+</tr>
+<tr>
+<td><code>shadow-card</code></td>
+<td><code>0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.06)</code></td>
+<td>Cards</td>
+</tr>
+</tbody></table>
+<h2 id="75-componentes">7.5 Componentes</h2>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Especificação</th>
+<th>Onde aparece</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sidebar</td>
+<td>248 px, grafite, item ativo laranja, ícones de 18 px</td>
+<td>Todas as telas</td>
+</tr>
+<tr>
+<td>Topbar</td>
+<td>72 px, branco, título + subtítulo + busca + ação primária</td>
+<td>Todas as telas</td>
+</tr>
+<tr>
+<td>Card</td>
+<td>Branco, borda slate-200, raio 12 px, sombra suave</td>
+<td>Dashboard, listas, formulários</td>
+</tr>
+<tr>
+<td>Botão primário</td>
+<td>Laranja, texto branco, raio 8 px, altura ~36 px</td>
+<td>“Nova OS”, “Salvar”, “Gerar orçamento”</td>
+</tr>
+<tr>
+<td>Botão secundário</td>
+<td>Branco, borda slate-300, texto grafite</td>
+<td>“Exportar”, “Cancelar”, “Voltar”</td>
+</tr>
+<tr>
+<td>Badge de status</td>
+<td>Pílula com ponto + texto, cores semânticas</td>
+<td>Tabelas e timelines</td>
+</tr>
+<tr>
+<td>Tabela</td>
+<td>Cabeçalho slate-50, linhas com hover creme, ações à direita</td>
+<td>Clientes, veículos, OS, relatórios</td>
+</tr>
+<tr>
+<td>Drawer</td>
+<td>430 px, overlay escuro, fecha com ESC/clique fora</td>
+<td>Novo cliente, histórico do veículo</td>
+</tr>
+<tr>
+<td>Timeline</td>
+<td>Círculos concluídos/atuais/pendentes, linha vertical</td>
+<td>Status da OS, histórico do veículo</td>
+</tr>
+<tr>
+<td>Gráfico de barras</td>
+<td>Barras laranja/verde/slate, rótulo de valor</td>
+<td>Dashboard, relatórios</td>
+</tr>
+<tr>
+<td>Donut</td>
+<td>Composição de faturamento</td>
+<td>Relatórios</td>
+</tr>
+<tr>
+<td>Toast</td>
+<td>Fundo grafite, canto inferior direito, 2,4 s</td>
+<td>Simulações do protótipo</td>
+</tr>
+</tbody></table>
+<h2 id="76-layout-e-grid">7.6 Layout e grid</h2>
+<ul>
+<li>Alvo desktop: <strong>1440 × 900 px</strong>.</li>
+<li>Sidebar fixa de 248 px; conteúdo fluido.</li>
+<li>Topbar fixa de 72 px; conteúdo com scroll interno.</li>
+<li>Grid de 4 colunas para indicadores; 2 colunas para gráficos e resumos.</li>
+<li>Breakpoint de 1100 px: indicadores em 2 colunas e grids principais em 1 coluna.</li>
+<li>Em telas menores que 900 px, a sidebar pode ser recolhida e o conteúdo passa a ocupar a largura total.</li>
+<li>A aplicação final em CustomTkinter deve respeitar uma janela mínima de <strong>1200 × 800 px</strong>.</li>
+</ul>
+<h2 id="77-estados-de-interface">7.7 Estados de interface</h2>
+<table>
+<thead>
+<tr>
+<th>Estado</th>
+<th>Comportamento visual</th>
+<th>Exemplo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hover</td>
+<td>Fundo levemente mais escuro/claro, cursor pointer</td>
+<td>Botões e linhas de tabela</td>
+</tr>
+<tr>
+<td>Focus</td>
+<td>Anel laranja de 3 px com transparência</td>
+<td>Inputs e botões</td>
+</tr>
+<tr>
+<td>Disabled</td>
+<td>Opacidade 50%, cursor not-allowed</td>
+<td>“Finalizar” antes de iniciar</td>
+</tr>
+<tr>
+<td>Loading</td>
+<td>Skeleton ou spinner discreto</td>
+<td>Listas e relatórios</td>
+</tr>
+<tr>
+<td>Empty</td>
+<td>Ícone, título e ação sugerida</td>
+<td>“Nenhum cliente encontrado”</td>
+</tr>
+<tr>
+<td>Error</td>
+<td>Faixa vermelha com mensagem clara e ação</td>
+<td>“CPF já cadastrado”</td>
+</tr>
+<tr>
+<td>Success</td>
+<td>Toast verde ou badge</td>
+<td>“Cliente salvo com sucesso”</td>
+</tr>
+<tr>
+<td>Warning</td>
+<td>Faixa âmbar</td>
+<td>“Orçamento expira em 2 dias”</td>
+</tr>
+</tbody></table>
+<h2 id="78-acessibilidade">7.8 Acessibilidade</h2>
+<ul>
+<li>Contraste mínimo de 4,5:1 para texto normal e 3:1 para texto grande.</li>
+<li>Status nunca apenas por cor: usar texto + ponto + posição.</li>
+<li>Todos os inputs com <code>&lt;label&gt;</code> associado e mensagens de erro próximas.</li>
+<li>Navegação por teclado: Tab, Shift+Tab, Enter, Esc e setas no protótipo.</li>
+<li>Foco visível em todos os elementos interativos.</li>
+<li>Ícones decorativos com <code>aria-hidden</code>; ícones de ação com rótulo acessível.</li>
+<li>Textos alternativos nas imagens e nos gráficos.</li>
+<li>Evitar animações intensas; transições de até 200 ms.</li>
+</ul>
+<h2 id="79-uso-da-marca">7.9 Uso da marca</h2>
+<ul>
+<li>O logo horizontal é usado na capa e em documentos; o símbolo quadrado é usado na sidebar.</li>
+<li>Área de respiro mínima: altura do símbolo.</li>
+<li>Tamanho mínimo do símbolo: 32 px.</li>
+<li>Não distorcer, não trocar as cores, não aplicar sombra no logo, não usar sobre fundo de baixo contraste.</li>
+<li>O nome do produto é <strong>OficinaPro</strong> (sem espaço, “P” maiúsculo); a equipe é <strong>DevSolo Studio</strong>.</li>
+</ul>
+<h1 id="8-mapa-de-navegação">8. Mapa de navegação</h1>
+<h2 id="81-fluxo-principal">8.1 Fluxo principal</h2>
+<pre><code class="language-text">Dashboard
+   │
+   ├── Clientes ──► Veículos ──► Ordens de Serviço ──► Editor de OS ──► Orçamento / Recibo
+   │                                                                        │
+   │                                                                        ├── Aprovar
+   │                                                                        ├── Iniciar
+   │                                                                        ├── Finalizar
+   │                                                                        └── Cancelar
+   │
+   ├── Relatórios ──► Comissões por mecânico ──► Exportar PDF/CSV
+   │
+   └── Configurações ──► Dados da oficina • Financeiro • Aparência • Backup • Sobre
+</code></pre>
+<p>O fluxo principal foi desenhado para reduzir cliques: a partir do dashboard, o atendente pode abrir uma nova OS em um clique; a lista de OS permite abrir o editor, gerar PDF ou enviar WhatsApp sem sair da tela. Configurações e relatórios ficam disponíveis na sidebar, mas não interrompem o fluxo operacional.</p>
+<h2 id="82-telas">8.2 Telas</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Tela</th>
+<th>Objetivo</th>
+<th>Entrada</th>
+<th>Ações principais</th>
+<th>Saídas</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T01</td>
+<td>Dashboard</td>
+<td>Visão geral do dia e pendências</td>
+<td>Login / sidebar</td>
+<td>Nova OS, ver OS, abrir relatórios</td>
+<td>T04, T05, T07</td>
+</tr>
+<tr>
+<td>T02</td>
+<td>Clientes</td>
+<td>Cadastrar e consultar clientes</td>
+<td>Sidebar / dashboard</td>
+<td>Novo cliente, buscar, editar, abrir drawer</td>
+<td>T03, T04</td>
+</tr>
+<tr>
+<td>T03</td>
+<td>Veículos</td>
+<td>Consultar frota e histórico</td>
+<td>Sidebar / cliente</td>
+<td>Novo veículo, buscar por placa, histórico</td>
+<td>T05</td>
+</tr>
+<tr>
+<td>T04</td>
+<td>Ordens de Serviço</td>
+<td>Acompanhar a fila por status</td>
+<td>Sidebar / dashboard</td>
+<td>Filtrar, abrir, PDF, WhatsApp</td>
+<td>T05, T06</td>
+</tr>
+<tr>
+<td>T05</td>
+<td>Editor de OS</td>
+<td>Montar a OS e calcular totais</td>
+<td>T04 / T03 / dashboard</td>
+<td>Adicionar item, salvar, gerar orçamento</td>
+<td>T06</td>
+</tr>
+<tr>
+<td>T06</td>
+<td>Orçamento / Recibo</td>
+<td>Emitir documento e acompanhar status</td>
+<td>T05 / T04</td>
+<td>PDF, WhatsApp, imprimir, aprovar, cancelar</td>
+<td>T04, T06</td>
+</tr>
+<tr>
+<td>T07</td>
+<td>Relatórios</td>
+<td>Analisar faturamento e comissões</td>
+<td>Sidebar / dashboard</td>
+<td>Filtrar período/mecânico, exportar</td>
+<td>T06, T04</td>
+</tr>
+<tr>
+<td>T08</td>
+<td>Configurações</td>
+<td>Ajustar dados e preferências</td>
+<td>Sidebar</td>
+<td>Salvar, backup, restaurar, alterar tema</td>
+<td>T01</td>
+</tr>
+</tbody></table>
+<h2 id="83-regras-de-navegação">8.3 Regras de navegação</h2>
+<ol>
+<li>A sidebar é persistente em todas as telas; o item ativo usa fundo laranja.</li>
+<li>O dashboard é a tela inicial; o botão “Nova OS” está sempre visível na topbar.</li>
+<li>A lista de OS mantém o filtro selecionado ao voltar do editor.</li>
+<li>O editor de OS abre com cliente e veículo pré-selecionados quando vier de T02/T03.</li>
+<li>O orçamento abre em uma prévia A4; as ações de PDF/WhatsApp ficam no topo e no painel lateral.</li>
+<li>O drawer de cliente/veículo fecha com <code>Esc</code>, clique no overlay ou botão “Cancelar”.</li>
+<li>Alterações não salvas no editor disparam confirmação antes de sair.</li>
+<li>Relatórios e configurações não bloqueiam o fluxo; o usuário pode voltar com um clique.</li>
+<li>A navegação do protótipo usa as setas <code>←</code> e <code>→</code> para percorrer as oito telas.</li>
+<li>Mensagens de erro ficam próximas ao campo ou no topo do formulário, nunca em modal genérico.</li>
+</ol>
+<h2 id="84-atalhos-previstos">8.4 Atalhos previstos</h2>
+<table>
+<thead>
+<tr>
+<th>Atalho</th>
+<th>Ação</th>
+<th>Contexto</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Ctrl + N</code></td>
+<td>Nova OS</td>
+<td>Global</td>
+</tr>
+<tr>
+<td><code>Ctrl + S</code></td>
+<td>Salvar</td>
+<td>Editor/Configurações</td>
+</tr>
+<tr>
+<td><code>Ctrl + F</code></td>
+<td>Focar busca</td>
+<td>Listas</td>
+</tr>
+<tr>
+<td><code>Ctrl + P</code></td>
+<td>Imprimir / PDF</td>
+<td>Orçamento</td>
+</tr>
+<tr>
+<td><code>Esc</code></td>
+<td>Fechar drawer/modal</td>
+<td>Global</td>
+</tr>
+<tr>
+<td><code>←</code> / <code>→</code></td>
+<td>Tela anterior/próxima</td>
+<td>Protótipo</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>Confirmar formulário</td>
+<td>Formulários</td>
+</tr>
+</tbody></table>
+<h2 id="85-estados-vazios-e-erros-de-navegação">8.5 Estados vazios e erros de navegação</h2>
+<table>
+<thead>
+<tr>
+<th>Situação</th>
+<th>Mensagem</th>
+<th>Ação sugerida</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Nenhum cliente encontrado</td>
+<td>“Nenhum cliente encontrado com esses filtros.”</td>
+<td>Limpar filtros / novo cliente</td>
+</tr>
+<tr>
+<td>Cliente sem veículo</td>
+<td>“Este cliente ainda não tem veículo cadastrado.”</td>
+<td>Cadastrar veículo</td>
+</tr>
+<tr>
+<td>OS sem itens</td>
+<td>“Adicione pelo menos uma peça ou serviço para gerar o orçamento.”</td>
+<td>Adicionar item</td>
+</tr>
+<tr>
+<td>Orçamento expirado</td>
+<td>“Este orçamento expirou em 02/11/2026. Gere uma nova versão.”</td>
+<td>Revalidar</td>
+</tr>
+<tr>
+<td>Transição inválida</td>
+<td>“Não é possível finalizar uma OS que ainda não foi iniciada.”</td>
+<td>Iniciar execução</td>
+</tr>
+<tr>
+<td>Backup inválido</td>
+<td>“O arquivo selecionado não é um backup válido do OficinaPro.”</td>
+<td>Escolher outro arquivo</td>
+</tr>
+<tr>
+<td>Erro de conexão</td>
+<td>“Não foi possível abrir o banco de dados local.”</td>
+<td>Verificar permissões / restaurar backup</td>
+</tr>
+</tbody></table>
+<h1 id="9-wireframes">9. Wireframes</h1>
+<h2 id="91-visão-geral">9.1 Visão geral</h2>
+<p>Os oito wireframes cobrem o fluxo principal do OficinaPro. Eles foram desenhados para <strong>1440 × 900 px</strong>, resolução típica de monitores de balcão, e implementados em HTML/CSS/JS para permitir navegação real e captura em alta resolução. A versão final em CustomTkinter deve reproduzir a mesma hierarquia, os mesmos tokens de cor e os mesmos estados.</p>
+<table>
+<thead>
+<tr>
+<th>Tela</th>
+<th>Nome</th>
+<th>Pergunta que responde</th>
+<th>Ação principal</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T01</td>
+<td>Dashboard</td>
+<td>“Como está a oficina hoje?”</td>
+<td>Abrir nova OS</td>
+</tr>
+<tr>
+<td>T02</td>
+<td>Clientes</td>
+<td>“Quem são meus clientes e como contatá-los?”</td>
+<td>Cadastrar/editar cliente</td>
+</tr>
+<tr>
+<td>T03</td>
+<td>Veículos</td>
+<td>“Qual o histórico deste carro?”</td>
+<td>Abrir histórico / nova OS</td>
+</tr>
+<tr>
+<td>T04</td>
+<td>Ordens de Serviço</td>
+<td>“O que está em orçamento, execução e entrega?”</td>
+<td>Abrir OS</td>
+</tr>
+<tr>
+<td>T05</td>
+<td>Editor de OS</td>
+<td>“O que será cobrado e quanto custa?”</td>
+<td>Gerar orçamento</td>
+</tr>
+<tr>
+<td>T06</td>
+<td>Orçamento / Recibo</td>
+<td>“O cliente pode aprovar e pagar?”</td>
+<td>PDF / WhatsApp</td>
+</tr>
+<tr>
+<td>T07</td>
+<td>Relatórios</td>
+<td>“Quanto faturei e quanto devo de comissão?”</td>
+<td>Exportar relatório</td>
+</tr>
+<tr>
+<td>T08</td>
+<td>Configurações</td>
+<td>“Como a oficina e o sistema estão configurados?”</td>
+<td>Salvar preferências</td>
+</tr>
+</tbody></table>
+<h2 id="92-t01-dashboard">9.2 T01 — Dashboard</h2>
+<figure class="figure-90">
+  <img src="capturas/t01-dashboard.png" alt="Wireframe do dashboard do OficinaPro">
+  <figcaption>Figura 5 — Dashboard: indicadores, ordens recentes, movimento semanal e pendências do dia.</figcaption>
+</figure><p><strong>Objetivo:</strong> dar ao gestor uma leitura rápida do dia, com indicadores financeiros e operacionais, sem exigir navegação.</p>
+<p><strong>Componentes:</strong> quatro cards de indicadores (OS abertas, faturamento do mês, comissões a pagar, veículos atendidos); tabela de ordens recentes com status e total; gráfico de barras de OS finalizadas na semana; card “Atenção hoje” com pendências; busca global; botão “Nova OS”; avatar do usuário.</p>
+<p><strong>Interações:</strong> “Nova OS” abre o editor (T05); “Ver todas” leva à lista de OS (T04); as linhas da tabela podem abrir a OS correspondente; o card de atenção sugere filtrar por “Orçamento” em T04; o checkbox de pendência é apenas visual no protótipo.</p>
+<p><strong>Dados:</strong> 12 OS abertas, faturamento de R$ 18.450,00, comissões de R$ 743,00 e 38 veículos atendidos no mês. A tabela mostra as cinco OS mais recentes; o gráfico usa a semana corrente.</p>
+<p><strong>Estados:</strong> com o banco vazio, os cards mostram “0” e a tabela exibe um estado vazio com CTA “Abrir primeira OS”; se o carregamento falhar, um banner vermelho aparece no topo com “Tentar novamente”.</p>
+<p><strong>Critérios de aceite:</strong> todos os números são derivados do banco, não fixos; a ação “Nova OS” está a um clique; a tabela não quebra em 1440 px; o status é legível sem depender apenas de cor.</p>
+<h2 id="93-t02-clientes">9.3 T02 — Clientes</h2>
+<figure>
+  <img src="capturas/t02-clientes-lista.png" alt="Wireframe da lista de clientes do OficinaPro">
+  <figcaption>Figura 6 — Clientes: busca, filtros, tabela de contatos e ações de edição.</figcaption>
+</figure><p><strong>Objetivo:</strong> permitir que o atendente encontre um cliente rapidamente e acesse seus veículos e histórico.</p>
+<p><strong>Componentes:</strong> busca por nome, telefone ou CPF; filtros “Todos”, “Com veículo”, “Sem OS” e “Recorrentes”; tabela com cliente, telefone, e-mail, veículo, última OS e ação “Editar”; paginação; botão “Novo cliente”; exportação CSV.</p>
+<p><strong>Interações:</strong> “Novo cliente” abre o drawer de cadastro (Figura 17); “Editar” abre o mesmo drawer preenchido; clicar no nome pode abrir o detalhe do cliente; o filtro “Com veículo” remove clientes sem veículo; a busca é incremental e ignora acentos.</p>
+<p><strong>Dados:</strong> 42 clientes, 58 veículos vinculados; a tabela mostra 6 registros por página. O CPF é exibido de forma parcial em contextos de lista, quando a política de privacidade exigir.</p>
+<p><strong>Estados:</strong> “Nenhum cliente encontrado” com ação “Limpar filtros”; erro de CPF duplicado no drawer; loading com skeleton nas linhas; confirmação antes de inativar cliente com OS.</p>
+<p><strong>Critérios de aceite:</strong> buscar por placa também encontra o cliente; o drawer valida nome, telefone e CPF/CNPJ; o cadastro salva e atualiza a lista sem recarregar a página.</p>
+<h2 id="94-t03-veículos">9.4 T03 — Veículos</h2>
+<figure>
+  <img src="capturas/t03-veiculos-lista.png" alt="Wireframe da lista de veículos do OficinaPro">
+  <figcaption>Figura 7 — Veículos: frota atendida, filtros por situação e acesso ao histórico.</figcaption>
+</figure><p><strong>Objetivo:</strong> consultar a frota por placa, modelo ou cliente e abrir o histórico de manutenções.</p>
+<p><strong>Componentes:</strong> busca por placa/modelo/cliente; filtros “Todos”, “Revisão”, “Com OS aberta” e “Sem OS”; tabela com placa, veículo, ano, KM, cliente, última OS e ação “Histórico”; botão “Novo veículo”; importação de planilha.</p>
+<p><strong>Interações:</strong> “Histórico” abre o drawer com dados do veículo e timeline de OS (Figura 18); “Abrir nova OS” no drawer leva ao editor com o veículo pré-selecionado; a placa é validada no cadastro; a busca aceita placa com ou sem hífen.</p>
+<p><strong>Dados:</strong> 58 veículos, 6 com OS aberta; a tabela mostra 6 registros por página. A quilometragem é atualizada ao finalizar uma OS com KM de saída.</p>
+<p><strong>Estados:</strong> veículo sem histórico mostra “Nenhuma manutenção registrada”; placa duplicada exibe erro no formulário; veículo de cliente inativo não pode ser vinculado a nova OS.</p>
+<p><strong>Critérios de aceite:</strong> o histórico é ordenado do mais recente para o mais antigo; a placa é única; o drawer mostra o cliente e o contato; a ação “Abrir nova OS” preserva o veículo.</p>
+<h2 id="95-t04-ordens-de-serviço">9.5 T04 — Ordens de Serviço</h2>
+<figure>
+  <img src="capturas/t04-ordens-servico.png" alt="Wireframe da lista de ordens de serviço do OficinaPro">
+  <figcaption>Figura 8 — Ordens de Serviço: fila de atendimento com filtros por status e ações rápidas.</figcaption>
+</figure><p><strong>Objetivo:</strong> acompanhar a fila de atendimento e agir rapidamente em cada OS.</p>
+<p><strong>Componentes:</strong> filtros por status com contadores; tabela com número, cliente, veículo, status, itens, total, abertura e ações; botões “Abrir”, “PDF”, “WhatsApp” e “Recibo”; paginação; botão “Nova OS”; filtros avançados e exportação.</p>
+<p><strong>Interações:</strong> “Abrir” leva ao editor (T05); “PDF” abre a prévia do orçamento/recibo (T06); “WhatsApp” copia ou abre a mensagem; o filtro de status é persistido ao voltar; a linha em destaque indica a OS recém-criada.</p>
+<p><strong>Dados:</strong> 42 OS no total; 3 em orçamento, 4 aprovadas, 5 em execução, 28 finalizadas e 2 canceladas. A tabela mostra 6 registros por página.</p>
+<p><strong>Estados:</strong> lista vazia com CTA “Nova OS”; OS sem itens mostra “Sem itens” e desabilita PDF; erro de transição exibe toast; loading com skeleton.</p>
+<p><strong>Critérios de aceite:</strong> os contadores refletem os filtros; o status é consistente com o diagrama de estados; as ações não exigem abrir o editor quando o documento já existe.</p>
+<h2 id="96-t05-editor-de-os">9.6 T05 — Editor de OS</h2>
+<figure>
+  <img src="capturas/t05-editor-os.png" alt="Wireframe do editor de ordem de serviço do OficinaPro">
+  <figcaption>Figura 9 — Editor de OS: dados do atendimento, itens de peça e mão de obra, observações e resumo financeiro.</figcaption>
+</figure><p><strong>Objetivo:</strong> montar a OS, calcular o total e preparar o orçamento.</p>
+<p><strong>Componentes:</strong> seleção de cliente, veículo, mecânico e KM de entrada; tabela de itens com tipo, descrição, quantidade/horas, valor unitário, subtotal e remoção; botões “+ Peça” e “+ Mão de obra”; observações; resumo com subtotal, desconto e total; ações “Salvar” e “Orçamento”.</p>
+<p><strong>Interações:</strong> adicionar/remover item recalcula o total imediatamente; o botão “+ Mão de obra” herda a taxa horária padrão e o mecânico selecionado; “Salvar” persiste rascunho; “Orçamento” valida os itens e abre T06; sair com alterações não salvas pede confirmação.</p>
+<p><strong>Dados:</strong> OS #2026-0042, Ana Paula Ribeiro, Honda Civic ABC-1D23, Marcos Silva (12%), 62.480 km; 7 itens; total R$ 1.240,00. O desconto é zero neste exemplo.</p>
+<p><strong>Estados:</strong> cliente sem veículo sugere cadastro; item com valor zero é bloqueado; total negativo é impossível; se o orçamento expirar, o botão “Orçamento” vira “Revalidar”.</p>
+<p><strong>Critérios de aceite:</strong> o total é sempre recalculado pelo domínio; a OS não pode ser salva sem cliente, veículo e mecânico; a interface mostra o subtotal por item; o botão de gerar orçamento fica desabilitado sem itens.</p>
+<h2 id="97-t06-orçamento-recibo">9.7 T06 — Orçamento / Recibo</h2>
+<figure>
+  <img src="capturas/t06-orcamento-recibo.png" alt="Wireframe do orçamento e recibo do OficinaPro">
+  <figcaption>Figura 10 — Orçamento / Recibo: documento A4, status da OS, ações de PDF/WhatsApp e aprovação do cliente.</figcaption>
+</figure><p><strong>Objetivo:</strong> entregar ao cliente um documento claro e permitir que o atendente acompanhe a aprovação.</p>
+<p><strong>Componentes:</strong> prévia A4 com logo, dados da oficina, cliente, veículo, itens, totais, condições e assinaturas; painel de status com timeline; ações “Baixar PDF”, “WhatsApp”, “Imprimir” e “Copiar link”; box de aprovação com “Registrar aprovação” e “Cancelar OS”.</p>
+<p><strong>Interações:</strong> “Baixar PDF” gera o arquivo; “WhatsApp” abre <code>wa.me</code> com mensagem e link; “Imprimir” usa o diálogo do sistema; “Registrar aprovação” muda o status para <code>APROVADA</code> e libera o início; “Cancelar OS” exige motivo.</p>
+<p><strong>Dados:</strong> OS #2026-0042, 7 itens, total R$ 1.240,00, validade 02/11/2026, status <code>ORCAMENTO</code>. A timeline mostra OS aberta (concluída), orçamento enviado (atual) e etapas futuras.</p>
+<p><strong>Estados:</strong> orçamento expirado mostra aviso e bloqueia aprovação; OS finalizada troca o título para “Recibo” e oculta ações de aprovação; erro de PDF mostra toast e mantém o documento na tela.</p>
+<p><strong>Critérios de aceite:</strong> o PDF contém todos os itens e totais; o link do WhatsApp é codificado corretamente; a aprovação é registrada no histórico; o documento não quebra em A4.</p>
+<h2 id="98-t07-relatórios">9.8 T07 — Relatórios</h2>
+<figure>
+  <img src="capturas/t07-relatorios.png" alt="Wireframe de relatórios do OficinaPro">
+  <figcaption>Figura 11 — Relatórios: faturamento, composição por tipo e comissões por mecânico.</figcaption>
+</figure><p><strong>Objetivo:</strong> responder “quanto faturei, quanto é peça, quanto é mão de obra e quanto devo de comissão?”.</p>
+<p><strong>Componentes:</strong> filtros de período e mecânico; cards de faturamento, mão de obra, peças e comissões; gráfico de barras por dia; donut de composição; tabela de comissões com OS, base, taxa, valor e status; botão “Pagar comissões”; exportação CSV/PDF.</p>
+<p><strong>Interações:</strong> trocar o período recalcula cards e tabela; filtrar por mecânico isola a comissão; “Pagar comissões” abre confirmação e registra o pagamento; exportar PDF gera o relatório com o período selecionado.</p>
+<p><strong>Dados:</strong> outubro/2026; faturamento R$ 18.450,00; mão de obra R$ 6.320,00 (34%); peças R$ 12.130,00 (66%); comissões R$ 743,00; 18 OS finalizadas. A tabela soma R$ 6.320,00 de base e R$ 743,00 de comissão.</p>
+<p><strong>Estados:</strong> período sem OS mostra cards zerados e mensagem “Nenhuma OS finalizada no período”; comissão pendente aparece em âmbar; comissão paga aparece em verde; erro de exportação mantém os dados na tela.</p>
+<p><strong>Critérios de aceite:</strong> os totais batem com a soma das OS finalizadas; a comissão usa a taxa do mecânico; o filtro de período inclui a data final; o relatório é exportável.</p>
+<h2 id="99-t08-configurações">9.9 T08 — Configurações</h2>
+<figure>
+  <img src="capturas/t08-configuracoes.png" alt="Wireframe de configurações do OficinaPro">
+  <figcaption>Figura 12 — Configurações: dados da oficina, preferências, backup e informações do sistema.</figcaption>
+</figure><p><strong>Objetivo:</strong> ajustar os dados que aparecem nos documentos e as preferências operacionais.</p>
+<p><strong>Componentes:</strong> abas “Dados da oficina”, “Financeiro”, “Aparência”, “Backup e dados” e “Sobre”; formulário de dados cadastrais; upload de logo; preferências rápidas; tema; backup/restauração; versão e responsável.</p>
+<p><strong>Interações:</strong> “Salvar alterações” valida e persiste; “Alterar logo” abre seletor de arquivo; “Fazer backup” gera um arquivo; “Restaurar” pede confirmação; as abas trocam o conteúdo sem perder o contexto.</p>
+<p><strong>Dados:</strong> DevSolo Studio, OficinaPro, CNPJ 12.345.678/0001-90, telefone (11) 98765-4321, endereço em São Paulo/SP; versão 1.0.0; backup de 25/10/2026.</p>
+<p><strong>Estados:</strong> CNPJ inválido bloqueia o salvamento; backup sem permissão mostra erro; restauração inválida é rejeitada; tema escuro é uma preferência, não uma reimplementação.</p>
+<p><strong>Critérios de aceite:</strong> os dados salvos aparecem no orçamento; o backup pode ser restaurado; as preferências persistem entre sessões; a aba “Sobre” identifica a equipe e a versão.</p>
+<h2 id="910-protótipo-navegável">9.10 Protótipo navegável</h2>
+<figure>
+  <img src="capturas/prototipo.png" alt="Protótipo navegável do OficinaPro">
+  <figcaption>Figura 13 — Protótipo navegável: sidebar com as oito telas, iframe da tela atual e fluxo guiado com botões anterior/próxima.</figcaption>
+</figure><p>O protótipo em <code>docs/etapa2/prototipo/index.html</code> integra as oito telas em um shell com sidebar, título contextual, botão “Abrir em nova aba” e fluxo guiado. Ele foi construído com HTML, CSS e JavaScript puros, sem dependências externas, e pode ser aberto diretamente no navegador.</p>
+<p><strong>Como usar:</strong></p>
+<ol>
+<li>Abra <code>docs/etapa2/prototipo/index.html</code> no Chrome, Firefox ou Edge.</li>
+<li>Clique em qualquer tela na sidebar ou use as setas <code>←</code> e <code>→</code>.</li>
+<li>Use “Próxima tela” para percorrer o fluxo guiado na ordem T01 → T08.</li>
+<li>Clique nos botões internos para ver toasts de simulação (salvar, gerar PDF, WhatsApp etc.).</li>
+<li>Use “Abrir em nova aba” para ver a tela em tamanho real (1440 × 900).</li>
+</ol>
+<p><strong>Limitações:</strong> o protótipo não persiste dados, não gera PDFs reais e não se conecta ao SQLite. Ele é um artefato de design e validação de fluxo; a implementação funcional ocorre na Etapa 3.</p>
+<h2 id="911-checklist-de-usabilidade">9.11 Checklist de usabilidade</h2>
+<table>
+<thead>
+<tr>
+<th>Heurística</th>
+<th>Como foi tratada</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Visibilidade do status</td>
+<td>Badges, timeline, contadores e toasts</td>
+</tr>
+<tr>
+<td>Correspondência com o mundo real</td>
+<td>“OS”, “orçamento”, “mão de obra”, “comissão”, “placa”</td>
+</tr>
+<tr>
+<td>Controle e liberdade</td>
+<td>Cancelar, voltar, fechar drawer, confirmação antes de sair</td>
+</tr>
+<tr>
+<td>Consistência</td>
+<td>Mesmos componentes, cores e posições em todas as telas</td>
+</tr>
+<tr>
+<td>Prevenção de erros</td>
+<td>Validação de CPF/placa, desconto, transições e itens vazios</td>
+</tr>
+<tr>
+<td>Reconhecimento em vez de memorização</td>
+<td>Busca, filtros, sugestões e histórico visível</td>
+</tr>
+<tr>
+<td>Eficiência</td>
+<td>“Nova OS” global, ações rápidas na lista, atalhos</td>
+</tr>
+<tr>
+<td>Estética minimalista</td>
+<td>Cards, hierarquia e apenas a ação primária em laranja</td>
+</tr>
+<tr>
+<td>Recuperação de erros</td>
+<td>Mensagens claras, ação sugerida e preservação dos dados</td>
+</tr>
+<tr>
+<td>Ajuda e documentação</td>
+<td>Dicas contextuais, “Sobre” e este documento</td>
+</tr>
+</tbody></table>
+<h1 id="10-fluxos-de-interação">10. Fluxos de interação</h1>
+<h2 id="101-fluxo-1-abrir-os-e-gerar-orçamento">10.1 Fluxo 1 — Abrir OS e gerar orçamento</h2>
+<figure>
+  <img src="diagramas/seq-abrir-os-simples-1200.png" alt="Sequência de abertura de OS e geração de orçamento">
+  <figcaption>Figura 14 — Sequência: seleção de cliente/veículo, criação da OS, adição de itens, recálculo e geração do orçamento.</figcaption>
+</figure><table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Ator</th>
+<th>Ação</th>
+<th>Sistema</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Atendente</td>
+<td>Seleciona cliente e veículo</td>
+<td>Valida vínculo e dados</td>
+<td>Contexto carregado</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Atendente</td>
+<td>Clica em “Nova OS”</td>
+<td>Cria OS com status <code>ORCAMENTO</code></td>
+<td>Número sequencial gerado</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Atendente</td>
+<td>Adiciona peça ou mão de obra</td>
+<td>Cria <code>Peca</code>/<code>MaoDeObra</code>, adiciona em <code>__itens</code></td>
+<td>Item na tabela</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Sistema</td>
+<td>Recalcula</td>
+<td><code>__recalcular_total()</code></td>
+<td>Subtotal e total atualizados</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Atendente</td>
+<td>Revisa e clica em “Orçamento”</td>
+<td>Valida itens e gera PDF/link</td>
+<td>T06 aberto</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Atendente</td>
+<td>Envia por WhatsApp</td>
+<td>Monta <code>wa.me</code> com texto e link</td>
+<td>Cliente recebe a proposta</td>
+</tr>
+</tbody></table>
+<p><strong>Caminhos de exceção:</strong> cliente sem veículo → sugerir cadastro; item com valor zero → bloquear; desconto maior que subtotal → erro; OS sem itens → desabilitar “Orçamento”.</p>
+<h2 id="102-fluxo-2-aprovar-executar-e-finalizar">10.2 Fluxo 2 — Aprovar, executar e finalizar</h2>
+<figure>
+  <img src="diagramas/seq-aprovar-finalizar-simples-1200.png" alt="Sequência de aprovação, execução e finalização da OS">
+  <figcaption>Figura 15 — Sequência: aprovação do orçamento, início da execução e finalização com recibo.</figcaption>
+</figure><table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Ator</th>
+<th>Ação</th>
+<th>Sistema</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Atendente</td>
+<td>Clica em “Registrar aprovação”</td>
+<td><code>aprovar()</code> valida transição</td>
+<td>Status <code>APROVADA</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Atendente</td>
+<td>Clica em “Iniciar execução”</td>
+<td><code>iniciar()</code> valida responsável</td>
+<td>Status <code>EM_EXECUCAO</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Mecânico</td>
+<td>Executa o serviço</td>
+<td>—</td>
+<td>Itens concluídos</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Atendente</td>
+<td>Clica em “Finalizar”</td>
+<td><code>finalizar()</code> valida itens</td>
+<td>Status <code>FINALIZADA</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Sistema</td>
+<td>Gera recibo</td>
+<td>PDF + histórico</td>
+<td>Recibo disponível</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Sistema</td>
+<td>Calcula comissão</td>
+<td><code>calcularComissao()</code></td>
+<td>Valor no relatório</td>
+</tr>
+</tbody></table>
+<p><strong>Caminhos de exceção:</strong> aprovar OS cancelada → bloqueado; iniciar sem mecânico → bloqueado; finalizar sem itens → bloqueado; cancelar OS finalizada → bloqueado.</p>
+<h2 id="103-fluxo-3-calcular-comissões-e-exportar-relatório">10.3 Fluxo 3 — Calcular comissões e exportar relatório</h2>
+<figure>
+  <img src="diagramas/seq-comissoes-simples-1200.png" alt="Sequência de cálculo de comissões e exportação de relatório">
+  <figcaption>Figura 16 — Sequência: filtro por período/mecânico, agregação de mão de obra e exportação do relatório.</figcaption>
+</figure><table>
+<thead>
+<tr>
+<th>Passo</th>
+<th>Ator</th>
+<th>Ação</th>
+<th>Sistema</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Gestor</td>
+<td>Seleciona período e mecânico</td>
+<td>Valida datas</td>
+<td>Filtro aplicado</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sistema</td>
+<td>Consulta OS finalizadas</td>
+<td><code>SELECT</code> com <code>status = FINALIZADA</code></td>
+<td>Base de cálculo</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Sistema</td>
+<td>Percorre itens de mão de obra</td>
+<td><code>calcularComissao()</code></td>
+<td>Comissão por item</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Sistema</td>
+<td>Agrupa por mecânico</td>
+<td>Soma e arredonda</td>
+<td>Totais</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Gestor</td>
+<td>Exporta PDF/CSV</td>
+<td>Gera arquivo</td>
+<td>Relatório entregue</td>
+</tr>
+</tbody></table>
+<p><strong>Caminhos de exceção:</strong> período invertido → erro; nenhuma OS → cards zerados; mecânico sem comissão → linha zerada; falha de exportação → toast e dados preservados.</p>
+<h2 id="104-drawers-de-cliente-e-veículo">10.4 Drawers de cliente e veículo</h2>
+<div class="figure-row">
+  <figure>
+    <img src="capturas/t02-clientes-drawer-pdf.png" alt="Drawer de novo cliente">
+    <figcaption>Figura 17 — Drawer de novo cliente: formulário, validação e ações.</figcaption>
+  </figure>
+  <figure>
+    <img src="capturas/t03-veiculos-drawer-pdf.png" alt="Drawer de histórico do veículo">
+    <figcaption>Figura 18 — Drawer de histórico do veículo: dados, timeline de OS e ação de nova OS.</figcaption>
+  </figure>
+</div><p><strong>Comportamento:</strong> o drawer abre pela direita, cobre a tela com overlay escuro e mantém o contexto da lista. O foco vai para o primeiro campo; <code>Tab</code> percorre os campos; <code>Esc</code>, clique no overlay ou “Cancelar” fecham. Ao salvar, o drawer fecha, a lista é atualizada e um toast confirma. Se houver erro, o drawer permanece aberto e a mensagem aparece junto ao campo.</p>
+<h2 id="105-matriz-de-estados-de-interface">10.5 Matriz de estados de interface</h2>
+<table>
+<thead>
+<tr>
+<th>Tela</th>
+<th>Loading</th>
+<th>Empty</th>
+<th>Error</th>
+<th>Success</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dashboard</td>
+<td>Skeleton nos cards</td>
+<td>“Sem movimento hoje”</td>
+<td>Banner de conexão</td>
+<td>Toast ao abrir OS</td>
+</tr>
+<tr>
+<td>Clientes</td>
+<td>Skeleton nas linhas</td>
+<td>“Nenhum cliente encontrado”</td>
+<td>CPF duplicado</td>
+<td>“Cliente salvo”</td>
+</tr>
+<tr>
+<td>Veículos</td>
+<td>Skeleton nas linhas</td>
+<td>“Nenhum veículo”</td>
+<td>Placa duplicada</td>
+<td>“Veículo salvo”</td>
+</tr>
+<tr>
+<td>Ordens</td>
+<td>Skeleton na tabela</td>
+<td>“Nenhuma OS no filtro”</td>
+<td>Transição inválida</td>
+<td>“OS atualizada”</td>
+</tr>
+<tr>
+<td>Editor</td>
+<td>Salvando…</td>
+<td>“Adicione o primeiro item”</td>
+<td>Valor inválido</td>
+<td>“Rascunho salvo”</td>
+</tr>
+<tr>
+<td>Orçamento</td>
+<td>Gerando PDF…</td>
+<td>“Orçamento sem itens”</td>
+<td>Falha ao gerar</td>
+<td>“PDF gerado”</td>
+</tr>
+<tr>
+<td>Relatórios</td>
+<td>Skeleton nos cards</td>
+<td>“Sem OS no período”</td>
+<td>Período inválido</td>
+<td>“Relatório exportado”</td>
+</tr>
+<tr>
+<td>Configurações</td>
+<td>Salvando…</td>
+<td>—</td>
+<td>CNPJ inválido</td>
+<td>“Configurações salvas”</td>
+</tr>
+</tbody></table>
+<h2 id="106-acessibilidade-dos-fluxos">10.6 Acessibilidade dos fluxos</h2>
+<ul>
+<li>Todo fluxo pode ser concluído apenas com teclado.</li>
+<li>O foco é visível e não fica preso atrás de drawers.</li>
+<li>Mensagens de erro são anunciadas por <code>aria-live</code>.</li>
+<li>O status da OS é lido como texto, não apenas como cor.</li>
+<li>O protótipo usa contraste alto e áreas de clique de pelo menos 32 px.</li>
+<li>Textos de ação são específicos: “Salvar cliente”, “Gerar orçamento”, “Registrar aprovação”.</li>
+</ul>
+<h1 id="11-plano-de-testes">11. Plano de testes</h1>
+<h2 id="111-estratégia">11.1 Estratégia</h2>
+<p>A validação será feita em quatro níveis:</p>
+<ol>
+<li><strong>Testes unitários de domínio:</strong> fórmulas, validações, transições e encapsulamento.</li>
+<li><strong>Testes de integração:</strong> repositórios SQLite, transações, chaves estrangeiras e backup.</li>
+<li><strong>Testes de contrato dos serviços:</strong> casos de uso de OS, orçamento, relatório e configuração.</li>
+<li><strong>Testes manuais de interface:</strong> navegação, formulários, drawers, estados vazios e acessibilidade.</li>
+</ol>
+<p>Ferramentas previstas: <code>pytest</code> para unidade/integração, <code>pytest-cov</code> para cobertura, SQLite em memória para testes rápidos e o protótipo HTML para validação visual. A meta é <strong>80% de cobertura</strong> nas regras de domínio e <strong>100% dos caminhos críticos</strong> (abrir OS, aprovar, finalizar, calcular comissão, gerar PDF, backup).</p>
+<h2 id="112-casos-de-teste">11.2 Casos de teste</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Cenário</th>
+<th>Pré-condição</th>
+<th>Passos</th>
+<th>Resultado esperado</th>
+<th>Prioridade</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CT01</td>
+<td>Cadastrar cliente válido</td>
+<td>Banco vazio</td>
+<td>Preencher nome, telefone e CPF válidos; salvar</td>
+<td>Cliente persistido; lista atualizada; toast de sucesso</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT02</td>
+<td>Bloquear CPF duplicado</td>
+<td>Cliente com CPF existente</td>
+<td>Tentar cadastrar o mesmo CPF</td>
+<td>Erro “CPF/CNPJ já cadastrado”; nada é persistido</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT03</td>
+<td>Cadastrar veículo</td>
+<td>Cliente ativo</td>
+<td>Informar placa única, marca, modelo, ano e km</td>
+<td>Veículo vinculado ao cliente</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT04</td>
+<td>Bloquear placa duplicada</td>
+<td>Veículo existente</td>
+<td>Cadastrar a mesma placa</td>
+<td>Erro de unicidade; formulário permanece aberto</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT05</td>
+<td>Abrir OS</td>
+<td>Cliente, veículo e mecânico ativos</td>
+<td>Clicar em “Nova OS”; preencher dados</td>
+<td>OS com status <code>ORCAMENTO</code> e número sequencial</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT06</td>
+<td>Adicionar peça e mão de obra</td>
+<td>OS em <code>ORCAMENTO</code></td>
+<td>Adicionar 1 peça e 1,5 h de mão de obra</td>
+<td>Itens na tabela; subtotais corretos</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT07</td>
+<td>Recalcular ao remover item</td>
+<td>OS com 2 itens</td>
+<td>Remover um item</td>
+<td>Total recalculado; item removido</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT08</td>
+<td>Bloquear desconto inválido</td>
+<td>OS com subtotal R$ 100</td>
+<td>Informar desconto R$ 150</td>
+<td>Erro “Desconto não pode ser maior que o subtotal”</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT09</td>
+<td>Aprovar OS</td>
+<td>OS em <code>ORCAMENTO</code> com itens</td>
+<td>Clicar em “Registrar aprovação”</td>
+<td>Status <code>APROVADA</code>; histórico registrado</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT10</td>
+<td>Bloquear finalização prematura</td>
+<td>OS em <code>ORCAMENTO</code></td>
+<td>Tentar finalizar</td>
+<td>Erro de transição; status inalterado</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT11</td>
+<td>Bloquear cancelamento de finalizada</td>
+<td>OS <code>FINALIZADA</code></td>
+<td>Tentar cancelar</td>
+<td>Erro “OS finalizada não pode ser cancelada”</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT12</td>
+<td>Calcular comissão</td>
+<td>OS finalizada com R$ 480 de mão de obra; mecânico 12%</td>
+<td>Abrir relatório do período</td>
+<td>Comissão R$ 57,60</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT13</td>
+<td>Filtrar relatório</td>
+<td>3 mecânicos e 18 OS</td>
+<td>Selecionar outubro e Marcos</td>
+<td>Apenas OS/base/comissão de Marcos</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT14</td>
+<td>Gerar PDF</td>
+<td>OS com 7 itens</td>
+<td>Clicar em “Baixar PDF”</td>
+<td>PDF A4 com todos os itens, totais e validade</td>
+<td>Alta</td>
+</tr>
+<tr>
+<td>CT15</td>
+<td>Backup e restauração</td>
+<td>Banco com dados</td>
+<td>Fazer backup; alterar dados; restaurar</td>
+<td>Dados originais restaurados; integridade OK</td>
+<td>Média</td>
+</tr>
+<tr>
+<td>CT16</td>
+<td>Buscar cliente por placa</td>
+<td>Cliente com veículo</td>
+<td>Digitar a placa na busca de clientes</td>
+<td>Cliente correspondente encontrado</td>
+<td>Média</td>
+</tr>
+<tr>
+<td>CT17</td>
+<td>Fechar drawer com ESC</td>
+<td>Drawer aberto</td>
+<td>Pressionar <code>Esc</code></td>
+<td>Drawer fecha; foco volta ao botão de origem</td>
+<td>Média</td>
+</tr>
+<tr>
+<td>CT18</td>
+<td>Navegar no protótipo</td>
+<td>Protótipo aberto</td>
+<td>Usar <code>←</code> e <code>→</code></td>
+<td>Tela anterior/próxima; título e progresso atualizados</td>
+<td>Média</td>
+</tr>
+<tr>
+<td>CT19</td>
+<td>Validar placa Mercosul</td>
+<td>Formulário de veículo</td>
+<td>Informar <code>ABC1D23</code></td>
+<td>Placa normalizada para <code>ABC-1D23</code> ou aceita no padrão</td>
+<td>Média</td>
+</tr>
+<tr>
+<td>CT20</td>
+<td>Exportar CSV</td>
+<td>Relatório filtrado</td>
+<td>Clicar em “Exportar CSV”</td>
+<td>Arquivo com colunas e linhas do período</td>
+<td>Baixa</td>
+</tr>
+</tbody></table>
+<h2 id="113-matriz-de-rastreabilidade">11.3 Matriz de rastreabilidade</h2>
+<table>
+<thead>
+<tr>
+<th>Requisito</th>
+<th>Casos de teste</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RF01 Clientes</td>
+<td>CT01, CT02, CT16</td>
+</tr>
+<tr>
+<td>RF02 Veículos</td>
+<td>CT03, CT04, CT19</td>
+</tr>
+<tr>
+<td>RF03 Abrir OS</td>
+<td>CT05</td>
+</tr>
+<tr>
+<td>RF04 Itens</td>
+<td>CT06, CT07</td>
+</tr>
+<tr>
+<td>RF05 Totais</td>
+<td>CT07, CT08</td>
+</tr>
+<tr>
+<td>RF06 PDF/WhatsApp</td>
+<td>CT14</td>
+</tr>
+<tr>
+<td>RF07 Transições</td>
+<td>CT09, CT10, CT11</td>
+</tr>
+<tr>
+<td>RF08 Comissões</td>
+<td>CT12</td>
+</tr>
+<tr>
+<td>RF09 Relatórios</td>
+<td>CT13, CT20</td>
+</tr>
+<tr>
+<td>RF10 Busca/filtros</td>
+<td>CT13, CT16</td>
+</tr>
+<tr>
+<td>RF11 Backup</td>
+<td>CT15</td>
+</tr>
+<tr>
+<td>RF12 Configurações</td>
+<td>CT15</td>
+</tr>
+<tr>
+<td>RF13 Histórico</td>
+<td>CT09, CT11</td>
+</tr>
+<tr>
+<td>RF14 Dashboard</td>
+<td>CT05, CT09</td>
+</tr>
+</tbody></table>
+<h2 id="114-massa-de-teste">11.4 Massa de teste</h2>
+<table>
+<thead>
+<tr>
+<th>Entidade</th>
+<th>Dados</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Clientes</td>
+<td>Ana Paula Ribeiro (CPF 123.456.789-00), Carlos Eduardo Lima (234.567.890-11)</td>
+</tr>
+<tr>
+<td>Veículos</td>
+<td>Honda Civic ABC-1D23 (2019, 62.480 km), VW Gol XYZ-9K87 (2015, 118.920 km)</td>
+</tr>
+<tr>
+<td>Mecânicos</td>
+<td>Marcos Silva (12%), Rafael Costa (10%), Diego Almeida (15%)</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>#2026-0042 (orçamento, R$ 1.240,00), #2026-0041 (execução, R$ 860,00), #2026-0040 (finalizada, R$ 1.980,00)</td>
+</tr>
+<tr>
+<td>Itens</td>
+<td>Peças e mão de obra da Seção 3.4; mão de obra total de R$ 480,00 na OS de exemplo</td>
+</tr>
+<tr>
+<td>Relatório</td>
+<td>Outubro/2026: 18 OS, R$ 18.450,00 de faturamento, R$ 6.320,00 de mão de obra, R$ 743,00 de comissão</td>
+</tr>
+</tbody></table>
+<h2 id="115-roteiro-manual-do-protótipo">11.5 Roteiro manual do protótipo</h2>
+<ol>
+<li>Abrir <code>docs/etapa2/prototipo/index.html</code>.</li>
+<li>Verificar se o dashboard é a tela inicial e se o item “Dashboard” está ativo.</li>
+<li>Clicar em “Nova OS” e conferir se o editor abre com cliente/veículo.</li>
+<li>Adicionar um item, remover outro e observar o total.</li>
+<li>Clicar em “Orçamento” e conferir a prévia A4 e a timeline.</li>
+<li>Clicar em “WhatsApp” e verificar o toast de simulação.</li>
+<li>Clicar em “Registrar aprovação” e conferir a mudança de status.</li>
+<li>Voltar à lista de OS e testar os filtros por status.</li>
+<li>Abrir Relatórios, trocar o período e conferir os cards.</li>
+<li>Abrir Configurações, alternar as abas e simular backup.</li>
+<li>Pressionar <code>←</code> e <code>→</code> para percorrer as oito telas.</li>
+<li>Verificar se não há erros no console do navegador.</li>
+</ol>
+<h2 id="116-critérios-de-conclusão">11.6 Critérios de conclusão</h2>
+<ul>
+<li>Todos os casos de prioridade alta passam.</li>
+<li>Nenhum erro crítico de cálculo ou de transição.</li>
+<li>PDF gerado com layout A4 consistente.</li>
+<li>Backup restaurado com integridade verificada.</li>
+<li>Protótipo navegável sem links quebrados.</li>
+<li>Documento revisado e exportado em PDF.</li>
+<li>Checklist do Apêndice E completo.</li>
+</ul>
+<h2 id="117-riscos-de-teste">11.7 Riscos de teste</h2>
+<table>
+<thead>
+<tr>
+<th>Risco</th>
+<th>Impacto</th>
+<th>Mitigação</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PDF depende de fontes do sistema</td>
+<td>Layout diferente em outra máquina</td>
+<td>Embutir fontes ou usar fonte padrão; testar em Linux e Windows</td>
+</tr>
+<tr>
+<td>WhatsApp abre app externo</td>
+<td>Teste automatizado limitado</td>
+<td>Testar a URL gerada e a codificação, não o app</td>
+</tr>
+<tr>
+<td>SQLite em memória difere do arquivo</td>
+<td>Teste não cobre WAL/lock</td>
+<td>Rodar uma suíte de integração com arquivo temporário</td>
+</tr>
+<tr>
+<td>Dados fictícios escondem casos-limite</td>
+<td>Falhas em produção</td>
+<td>Incluir casos com valores zero, negativos, placas antigas e nomes longos</td>
+</tr>
+<tr>
+<td>Protótipo HTML não é a UI final</td>
+<td>Divergência visual</td>
+<td>Usar os mesmos tokens e revisar a paridade na Etapa Final</td>
+</tr>
+</tbody></table>
+<h1 id="12-cronograma-e-riscos">12. Cronograma e riscos</h1>
+<h2 id="121-cronograma-do-projeto">12.1 Cronograma do projeto</h2>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>Prazo</th>
+<th>Frente</th>
+<th>Entregáveis</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Etapa 1</td>
+<td>22/10/2026</td>
+<td>Proposta e escopo</td>
+<td>Problema, público, requisitos, classes iniciais, identidade e cronograma</td>
+<td>Concluída</td>
+</tr>
+<tr>
+<td>Etapa 2</td>
+<td>29/10/2026</td>
+<td>Modelagem e telas</td>
+<td>Diagrama de classes, estados, arquitetura, schema, design system, 8 wireframes, fluxos, protótipo e PDF</td>
+<td>Concluída em 26/10/2026</td>
+</tr>
+<tr>
+<td>Etapa 3</td>
+<td>05/11/2026</td>
+<td>Codificação central</td>
+<td>Classes de domínio, SQLite, repositórios, serviços, cálculos e testes unitários</td>
+<td>Planejada</td>
+</tr>
+<tr>
+<td>Etapa Final</td>
+<td>19/11/2026</td>
+<td>Integração e validação</td>
+<td>CustomTkinter, PDF, WhatsApp, testes integrados, documentação final e apresentação</td>
+<td>Planejada</td>
+</tr>
+</tbody></table>
+<h2 id="122-plano-detalhado-da-etapa-3">12.2 Plano detalhado da Etapa 3</h2>
+<table>
+<thead>
+<tr>
+<th>Período</th>
+<th>Atividade</th>
+<th>Saída verificável</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>30/10–31/10</td>
+<td>Implementar domínio (<code>Pessoa</code>, <code>Cliente</code>, <code>Mecanico</code>, <code>Veiculo</code>, <code>ItemOS</code>, <code>Peca</code>, <code>MaoDeObra</code>, <code>OrdemServico</code>, <code>StatusOS</code>)</td>
+<td>Testes unitários de cálculo e transição</td>
+</tr>
+<tr>
+<td>01/11–02/11</td>
+<td>Criar schema SQLite, migração inicial, repositórios e backup</td>
+<td>Banco criado; CRUD funcionando</td>
+</tr>
+<tr>
+<td>03/11</td>
+<td>Implementar serviços de OS, orçamento e relatório</td>
+<td>Casos de uso cobertos por testes</td>
+</tr>
+<tr>
+<td>04/11</td>
+<td>Integrar uma tela piloto (Dashboard ou OS) e validar o fluxo</td>
+<td>Primeira versão executável</td>
+</tr>
+<tr>
+<td>05/11</td>
+<td>Revisão, correções e entrega da Etapa 3</td>
+<td>Código versionado + testes verdes</td>
+</tr>
+</tbody></table>
+<h2 id="123-plano-da-etapa-final">12.3 Plano da Etapa Final</h2>
+<table>
+<thead>
+<tr>
+<th>Período</th>
+<th>Atividade</th>
+<th>Saída verificável</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>06/11–10/11</td>
+<td>Telas CustomTkinter (dashboard, clientes, veículos, OS)</td>
+<td>Navegação funcional</td>
+</tr>
+<tr>
+<td>11/11–13/11</td>
+<td>Editor, orçamento, relatórios e configurações</td>
+<td>Fluxo completo</td>
+</tr>
+<tr>
+<td>14/11–16/11</td>
+<td>PDF, WhatsApp, backup e testes de integração</td>
+<td>Documentos e relatórios reais</td>
+</tr>
+<tr>
+<td>17/11–18/11</td>
+<td>Testes de aceite, correções e usabilidade</td>
+<td>Checklist de qualidade</td>
+</tr>
+<tr>
+<td>19/11</td>
+<td>Entrega final e apresentação</td>
+<td>PDF final + código + roteiro</td>
+</tr>
+</tbody></table>
+<h2 id="124-riscos">12.4 Riscos</h2>
+<table>
+<thead>
+<tr>
+<th>Risco</th>
+<th>Prob.</th>
+<th>Impacto</th>
+<th>Mitigação</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Escopo crescer além do MVP</td>
+<td>Média</td>
+<td>Alto</td>
+<td>Congelar Must; adiar Should/Could para depois da entrega</td>
+</tr>
+<tr>
+<td>Paridade visual entre HTML e CustomTkinter</td>
+<td>Média</td>
+<td>Alto</td>
+<td>Criar biblioteca de componentes e revisar tela a tela</td>
+</tr>
+<tr>
+<td>Layout do PDF no ReportLab</td>
+<td>Média</td>
+<td>Alto</td>
+<td>Prototipar o PDF na primeira semana da Etapa 3; testar A4</td>
+</tr>
+<tr>
+<td>Erros de arredondamento financeiro</td>
+<td>Média</td>
+<td>Alto</td>
+<td>Usar <code>Decimal</code>; testes com centavos e descontos</td>
+</tr>
+<tr>
+<td>Concorrência/lock do SQLite</td>
+<td>Baixa</td>
+<td>Médio</td>
+<td>WAL, <code>busy_timeout</code>, transações curtas</td>
+</tr>
+<tr>
+<td>Perda de dados</td>
+<td>Baixa</td>
+<td>Alto</td>
+<td>Backup automático, <code>VACUUM INTO</code>, restauração testada</td>
+</tr>
+<tr>
+<td>Prazo apertado da Etapa 3</td>
+<td>Alta</td>
+<td>Alto</td>
+<td>Priorizar domínio + persistência + uma tela piloto; buffer no fim de semana</td>
+</tr>
+<tr>
+<td>Integração com WhatsApp</td>
+<td>Baixa</td>
+<td>Médio</td>
+<td>Usar <code>wa.me</code> com <code>urllib.parse.quote</code>; testar codificação</td>
+</tr>
+<tr>
+<td>Ambiente sem display para testes de UI</td>
+<td>Média</td>
+<td>Médio</td>
+<td>Testar lógica sem UI; usar screenshots e execução local do usuário</td>
+</tr>
+<tr>
+<td>Curva de aprendizado do CustomTkinter</td>
+<td>Média</td>
+<td>Médio</td>
+<td>Começar por componentes simples; reutilizar o design system</td>
+</tr>
+<tr>
+<td>Dados sensíveis (CPF)</td>
+<td>Média</td>
+<td>Alto</td>
+<td>Dados locais, acesso restrito, backup protegido e exclusão lógica</td>
+</tr>
+<tr>
+<td>Mudanças de requisito</td>
+<td>Média</td>
+<td>Médio</td>
+<td>Registrar decisões e manter rastreabilidade</td>
+</tr>
+</tbody></table>
+<h2 id="125-critérios-de-priorização">12.5 Critérios de priorização</h2>
+<ul>
+<li><strong>Must:</strong> RF01–RF08 e RF10. Sem eles, o fluxo principal não fecha.</li>
+<li><strong>Should:</strong> RF09, RF11–RF14. Agregam valor, mas podem entrar após o MVP.</li>
+<li><strong>Could:</strong> exportação CSV avançada, tema escuro, importação de planilha.</li>
+<li><strong>Won’t (v1.0):</strong> multiusuário, nuvem, NF-e, estoque, app móvel.</li>
+</ul>
+<h1 id="13-glossário">13. Glossário</h1>
+<table>
+<thead>
+<tr>
+<th>Termo</th>
+<th>Definição</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>OS (Ordem de Serviço)</strong></td>
+<td>Documento que registra o atendimento de um veículo, seus itens, responsável, status e valores.</td>
+</tr>
+<tr>
+<td><strong>Orçamento</strong></td>
+<td>Proposta de peças e mão de obra enviada ao cliente antes da execução.</td>
+</tr>
+<tr>
+<td><strong>Recibo</strong></td>
+<td>Documento emitido após a finalização, com os valores efetivamente cobrados.</td>
+</tr>
+<tr>
+<td><strong>Peça</strong></td>
+<td>Item físico aplicado ao veículo, com código, fornecedor, quantidade e valor unitário.</td>
+</tr>
+<tr>
+<td><strong>Mão de obra</strong></td>
+<td>Serviço executado por um mecânico, medido em horas e taxa horária.</td>
+</tr>
+<tr>
+<td><strong>Comissão</strong></td>
+<td>Percentual sobre a mão de obra das OS finalizadas, devido ao mecânico.</td>
+</tr>
+<tr>
+<td><strong>Status</strong></td>
+<td>Estado do ciclo de vida da OS: orçamento, aprovada, em execução, finalizada ou cancelada.</td>
+</tr>
+<tr>
+<td><strong>Transição</strong></td>
+<td>Passagem de um status para outro, sujeita a regras e registrada em histórico.</td>
+</tr>
+<tr>
+<td><strong>Agregação/Composição</strong></td>
+<td>Relação em que a OS contém itens; os itens não existem sem a OS.</td>
+</tr>
+<tr>
+<td><strong>Polimorfismo</strong></td>
+<td>Capacidade de tratar <code>Peca</code> e <code>MaoDeObra</code> como <code>ItemOS</code>, chamando <code>calcularSubtotal()</code> de formas diferentes.</td>
+</tr>
+<tr>
+<td><strong>Encapsulamento</strong></td>
+<td>Ocultação de detalhes internos, como <code>__itens</code> e <code>__recalcular_total()</code>.</td>
+</tr>
+<tr>
+<td><strong>Herança</strong></td>
+<td>Reaproveitamento de atributos e contratos entre superclasse e subclasse.</td>
+</tr>
+<tr>
+<td><strong>Wireframe</strong></td>
+<td>Representação visual de baixa/média fidelidade de uma tela.</td>
+</tr>
+<tr>
+<td><strong>Protótipo navegável</strong></td>
+<td>Conjunto de telas HTML interligadas para validar fluxo e usabilidade.</td>
+</tr>
+<tr>
+<td><strong>Drawer</strong></td>
+<td>Painel lateral que abre sobre a tela para cadastro ou detalhe.</td>
+</tr>
+<tr>
+<td><strong>Toast</strong></td>
+<td>Mensagem temporária de feedback no canto da tela.</td>
+</tr>
+<tr>
+<td><strong>SQLite</strong></td>
+<td>Banco de dados relacional embutido, armazenado em arquivo local.</td>
+</tr>
+<tr>
+<td><strong>WAL</strong></td>
+<td>Write-Ahead Logging, modo de journal do SQLite que melhora concorrência.</td>
+</tr>
+<tr>
+<td><strong>Soft delete</strong></td>
+<td>Exclusão lógica, mantendo o registro e marcando <code>ativo = 0</code>.</td>
+</tr>
+<tr>
+<td><strong>UML</strong></td>
+<td>Unified Modeling Language, notação para modelagem de sistemas.</td>
+</tr>
+<tr>
+<td><strong>Mermaid</strong></td>
+<td>Ferramenta de diagramas como código, usada para as fontes editáveis.</td>
+</tr>
+<tr>
+<td><strong>A4</strong></td>
+<td>Formato de papel 210 × 297 mm, usado em orçamentos e recibos.</td>
+</tr>
+<tr>
+<td><strong>BRL</strong></td>
+<td>Real brasileiro, moeda do sistema.</td>
+</tr>
+</tbody></table>
+<h1 id="14-referências">14. Referências</h1>
+<p>ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <strong>NBR 6023</strong>: informação e documentação — referências — elaboração. Rio de Janeiro: ABNT, 2018.</p>
+<p>OBJECT MANAGEMENT GROUP. <strong>OMG Unified Modeling Language (UML)</strong>, version 2.5.1. 2017. Disponível em: <a href="https://www.omg.org/spec/UML/2.5.1/">https://www.omg.org/spec/UML/2.5.1/</a>. Acesso em: 26 out. 2026.</p>
+<p>PYTHON SOFTWARE FOUNDATION. <strong>Python 3.12 Documentation</strong>. Disponível em: <a href="https://docs.python.org/3.12/">https://docs.python.org/3.12/</a>. Acesso em: 26 out. 2026.</p>
+<p>SQLITE CONSORTIUM. <strong>SQLite Documentation</strong>. Disponível em: <a href="https://www.sqlite.org/docs.html">https://www.sqlite.org/docs.html</a>. Acesso em: 26 out. 2026.</p>
+<p>NIELSEN, Jakob. <strong>10 Usability Heuristics for User Interface Design</strong>. Nielsen Norman Group, 1994. Disponível em: <a href="https://www.nngroup.com/articles/ten-usability-heuristics/">https://www.nngroup.com/articles/ten-usability-heuristics/</a>. Acesso em: 26 out. 2026.</p>
+<p>W3C. <strong>Web Content Accessibility Guidelines (WCAG) 2.2</strong>. 2023. Disponível em: <a href="https://www.w3.org/TR/WCAG22/">https://www.w3.org/TR/WCAG22/</a>. Acesso em: 26 out. 2026.</p>
+<p>DEVSOLO STUDIO. <strong>OficinaPro v1.0 — Proposta de Projeto de Software (Etapa 1)</strong>. 2026. Documento interno.</p>
+<p>CUSTOMTKINTER. <strong>CustomTkinter Documentation</strong>. Disponível em: <a href="https://customtkinter.tomschimansky.com/">https://customtkinter.tomschimansky.com/</a>. Acesso em: 26 out. 2026.</p>
+<p>REPORTLAB. <strong>ReportLab User Guide</strong>. Disponível em: <a href="https://www.reportlab.com/docs/reportlab-userguide.pdf">https://www.reportlab.com/docs/reportlab-userguide.pdf</a>. Acesso em: 26 out. 2026.</p>
+<p>MERMAID. <strong>Mermaid Documentation</strong>. Disponível em: <a href="https://mermaid.js.org/">https://mermaid.js.org/</a>. Acesso em: 26 out. 2026.</p>
+<h1 id="15-apêndices">15. Apêndices</h1>
+<h2 id="apêndice-a-diagrama-de-classes-detalhado">Apêndice A — Diagrama de classes detalhado</h2>
+<figure>
+  <img src="diagramas/classes-detalhado.png" alt="Diagrama de classes detalhado em tamanho maior">
+  <figcaption>Figura 19 — Diagrama de classes detalhado, com todos os atributos, métodos e multiplicidades.</figcaption>
+</figure><h2 id="apêndice-b-ddl-do-banco-sqlite">Apêndice B — DDL do banco SQLite</h2>
+<pre><code class="language-sql">PRAGMA foreign_keys = ON;
+PRAGMA journal_mode = WAL;
+PRAGMA busy_timeout = 5000;
+
+CREATE TABLE oficina (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome TEXT NOT NULL,
+  cnpj TEXT NOT NULL UNIQUE,
+  telefone TEXT NOT NULL,
+  endereco TEXT,
+  taxa_horaria_padrao NUMERIC NOT NULL DEFAULT 0 CHECK (taxa_horaria_padrao &gt;= 0),
+  comissao_padrao NUMERIC NOT NULL DEFAULT 0.10 CHECK (comissao_padrao BETWEEN 0 AND 1),
+  criado_em TEXT NOT NULL DEFAULT (datetime(&#39;now&#39;))
+);
+
+CREATE TABLE cliente (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome TEXT NOT NULL,
+  telefone TEXT NOT NULL,
+  email TEXT,
+  cpf_cnpj TEXT NOT NULL UNIQUE,
+  endereco TEXT,
+  data_nascimento TEXT,
+  observacoes TEXT,
+  ativo INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1)),
+  criado_em TEXT NOT NULL DEFAULT (datetime(&#39;now&#39;))
+);
+
+CREATE TABLE mecanico (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  nome TEXT NOT NULL,
+  telefone TEXT NOT NULL,
+  email TEXT,
+  registro TEXT NOT NULL UNIQUE,
+  especialidade TEXT,
+  taxa_comissao NUMERIC NOT NULL DEFAULT 0.10 CHECK (taxa_comissao BETWEEN 0 AND 1),
+  ativo INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1))
+);
+
+CREATE TABLE veiculo (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  cliente_id INTEGER NOT NULL REFERENCES cliente(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+  placa TEXT NOT NULL UNIQUE,
+  marca TEXT NOT NULL,
+  modelo TEXT NOT NULL,
+  ano INTEGER NOT NULL CHECK (ano BETWEEN 1900 AND 2100),
+  km INTEGER NOT NULL DEFAULT 0 CHECK (km &gt;= 0),
+  cor TEXT,
+  combustivel TEXT,
+  observacoes TEXT
+);
+
+CREATE TABLE ordem_servico (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  numero TEXT NOT NULL UNIQUE,
+  cliente_id INTEGER NOT NULL REFERENCES cliente(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+  veiculo_id INTEGER NOT NULL REFERENCES veiculo(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+  mecanico_id INTEGER NOT NULL REFERENCES mecanico(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+  status TEXT NOT NULL DEFAULT &#39;ORCAMENTO&#39;
+    CHECK (status IN (&#39;ORCAMENTO&#39;, &#39;APROVADA&#39;, &#39;EM_EXECUCAO&#39;, &#39;FINALIZADA&#39;, &#39;CANCELADA&#39;)),
+  desconto NUMERIC NOT NULL DEFAULT 0 CHECK (desconto &gt;= 0),
+  data_abertura TEXT NOT NULL DEFAULT (datetime(&#39;now&#39;)),
+  data_aprovacao TEXT,
+  data_inicio TEXT,
+  data_finalizacao TEXT,
+  data_cancelamento TEXT,
+  motivo_cancelamento TEXT,
+  observacoes TEXT,
+  criado_por TEXT
+);
+
+CREATE TABLE item_os (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  ordem_servico_id INTEGER NOT NULL REFERENCES ordem_servico(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  tipo TEXT NOT NULL CHECK (tipo IN (&#39;PECA&#39;, &#39;MAO_DE_OBRA&#39;)),
+  descricao TEXT NOT NULL,
+  quantidade NUMERIC NOT NULL DEFAULT 1 CHECK (quantidade &gt; 0),
+  valor_unitario NUMERIC NOT NULL DEFAULT 0 CHECK (valor_unitario &gt;= 0),
+  horas NUMERIC CHECK (horas IS NULL OR horas &gt; 0),
+  taxa_horaria NUMERIC CHECK (taxa_horaria IS NULL OR taxa_horaria &gt;= 0),
+  mecanico_id INTEGER REFERENCES mecanico(id) ON UPDATE CASCADE ON DELETE SET NULL,
+  codigo_peca TEXT,
+  fornecedor TEXT,
+  CHECK (
+    (tipo = &#39;PECA&#39; AND horas IS NULL AND taxa_horaria IS NULL)
+    OR
+    (tipo = &#39;MAO_DE_OBRA&#39; AND horas IS NOT NULL AND taxa_horaria IS NOT NULL)
+  )
+);
+
+CREATE TABLE status_historico (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  ordem_servico_id INTEGER NOT NULL REFERENCES ordem_servico(id) ON UPDATE CASCADE ON DELETE CASCADE,
+  status_anterior TEXT CHECK (status_anterior IS NULL OR status_anterior IN
+    (&#39;ORCAMENTO&#39;, &#39;APROVADA&#39;, &#39;EM_EXECUCAO&#39;, &#39;FINALIZADA&#39;, &#39;CANCELADA&#39;)),
+  status_novo TEXT NOT NULL CHECK (status_novo IN
+    (&#39;ORCAMENTO&#39;, &#39;APROVADA&#39;, &#39;EM_EXECUCAO&#39;, &#39;FINALIZADA&#39;, &#39;CANCELADA&#39;)),
+  data_hora TEXT NOT NULL DEFAULT (datetime(&#39;now&#39;)),
+  usuario TEXT,
+  motivo TEXT
+);
+
+CREATE TABLE configuracao (
+  chave TEXT PRIMARY KEY,
+  valor TEXT,
+  atualizado_em TEXT NOT NULL DEFAULT (datetime(&#39;now&#39;))
+);
+
+CREATE TABLE comissao_pagamento (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  mecanico_id INTEGER NOT NULL REFERENCES mecanico(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+  periodo_inicio TEXT NOT NULL,
+  periodo_fim TEXT NOT NULL,
+  valor NUMERIC NOT NULL CHECK (valor &gt;= 0),
+  pago_em TEXT NOT NULL DEFAULT (datetime(&#39;now&#39;)),
+  observacoes TEXT
+);
+
+CREATE INDEX idx_cliente_nome ON cliente(nome);
+CREATE INDEX idx_veiculo_placa ON veiculo(placa);
+CREATE INDEX idx_os_status ON ordem_servico(status);
+CREATE INDEX idx_os_data_abertura ON ordem_servico(data_abertura);
+CREATE INDEX idx_item_os_os ON item_os(ordem_servico_id);
+CREATE INDEX idx_item_os_mecanico ON item_os(mecanico_id);
+</code></pre>
+<blockquote>
+<p><strong>Nota:</strong> o <code>CHECK</code> de <code>desconto</code> não compara com a soma dos itens porque esse valor depende de outra tabela. A validação <code>desconto &lt;= subtotal</code> é feita no domínio, em <code>__recalcular_total()</code>.</p>
+</blockquote>
+<h2 id="apêndice-c-programa-principal-mínimo">Apêndice C — Programa principal mínimo</h2>
+<p>A prévia completa está na Seção 4.7. O esqueleto abaixo resume a execução mínima com dois objetos de cada entidade central:</p>
+<pre><code class="language-python">def main() -&gt; None:
+    oficina = Oficina(&quot;DevSolo Studio&quot;, &quot;12.345.678/0001-90&quot;, Decimal(&quot;120.00&quot;))
+    mecanico = Mecanico(&quot;Marcos Silva&quot;, &quot;(11) 98888-0001&quot;, &quot;MEC-001&quot;, Decimal(&quot;0.12&quot;))
+
+    ana = Cliente(&quot;Ana Paula Ribeiro&quot;, &quot;(11) 98765-4321&quot;, &quot;123.456.789-00&quot;)
+    carlos = Cliente(&quot;Carlos Eduardo Lima&quot;, &quot;(11) 97654-3210&quot;, &quot;234.567.890-11&quot;)
+
+    civic = Veiculo(&quot;ABC-1D23&quot;, &quot;Honda&quot;, &quot;Civic&quot;, 2019, 62480, ana)
+    gol = Veiculo(&quot;XYZ-9K87&quot;, &quot;Volkswagen&quot;, &quot;Gol&quot;, 2015, 118920, carlos)
+
+    os1 = oficina.emitir_ordem_servico(ana, civic, mecanico)
+    os1.adicionar_item(Peca(&quot;Filtro de óleo&quot;, 1, Decimal(&quot;45.00&quot;), &quot;FO-1842&quot;, &quot;AutoPeças Central&quot;))
+    os1.adicionar_item(MaoDeObra(&quot;Troca de óleo&quot;, Decimal(&quot;1.5&quot;), Decimal(&quot;120.00&quot;), mecanico))
+
+    os2 = oficina.emitir_ordem_servico(carlos, gol, mecanico)
+    os2.adicionar_item(Peca(&quot;Pastilha de freio&quot;, 1, Decimal(&quot;320.00&quot;), &quot;PF-2210&quot;, &quot;Bosch&quot;))
+    os2.adicionar_item(MaoDeObra(&quot;Substituição de pastilhas&quot;, Decimal(&quot;1.5&quot;), Decimal(&quot;120.00&quot;), mecanico))
+
+    print(os1.resumo())
+    print(os2.resumo())
+</code></pre>
+<h2 id="apêndice-d-fontes-mermaid-e-reprodução">Apêndice D — Fontes Mermaid e reprodução</h2>
+<table>
+<thead>
+<tr>
+<th>Arquivo</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>diagramas/classes-visao-geral.mmd</code></td>
+<td>Visão geral das classes</td>
+</tr>
+<tr>
+<td><code>diagramas/classes-detalhado.mmd</code></td>
+<td>Diagrama detalhado em Mermaid</td>
+</tr>
+<tr>
+<td><code>diagramas/classes-overview-compact.mmd</code></td>
+<td>Visão compacta para anexos</td>
+</tr>
+<tr>
+<td><code>diagramas/estados-os.mmd</code></td>
+<td>Estados da OS em Mermaid</td>
+</tr>
+<tr>
+<td><code>diagramas/estados-os-compacto.mmd</code></td>
+<td>Estados em versão compacta</td>
+</tr>
+<tr>
+<td><code>diagramas/er-sqlite.mmd</code></td>
+<td>Modelo ER em Mermaid</td>
+</tr>
+<tr>
+<td><code>diagramas/er-sqlite-compacto.mmd</code></td>
+<td>ER compacto</td>
+</tr>
+<tr>
+<td><code>diagramas/navegacao.mmd</code></td>
+<td>Mapa de navegação em Mermaid</td>
+</tr>
+<tr>
+<td><code>diagramas/navegacao-compacto.mmd</code></td>
+<td>Navegação compacta</td>
+</tr>
+<tr>
+<td><code>diagramas/seq-abrir-os-simples.mmd</code></td>
+<td>Sequência de abertura de OS</td>
+</tr>
+<tr>
+<td><code>diagramas/seq-aprovar-finalizar-simples.mmd</code></td>
+<td>Sequência de aprovação/finalização</td>
+</tr>
+<tr>
+<td><code>diagramas/seq-comissoes-simples.mmd</code></td>
+<td>Sequência de comissões</td>
+</tr>
+<tr>
+<td><code>diagramas/arquitetura.mmd</code></td>
+<td>Arquitetura em camadas</td>
+</tr>
+</tbody></table>
+<p>Comando de renderização Mermaid usado no projeto:</p>
+<pre><code class="language-bash">mmdc -i diagramas/arquitetura.mmd -o diagramas/arquitetura.png \
+  --size 1200 -s 2 -b white -p diagramas/puppeteer-config.json
+</code></pre>
+<p>O diagrama de classes principal é gerado por script próprio:</p>
+<pre><code class="language-bash">python3 ferramentas/gerar_diagrama_classes.py
+node /tmp/opencode/docgen/svg2png.mjs diagramas/classes-compacto.svg diagramas/classes-compacto.png 2
+</code></pre>
+<h2 id="apêndice-e-checklist-da-etapa-2">Apêndice E — Checklist da Etapa 2</h2>
+<table>
+<thead>
+<tr>
+<th>Exigência</th>
+<th>Evidência</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Documentação em Markdown + Mermaid</td>
+<td>Este arquivo + fontes <code>.mmd</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Pelo menos 5 classes</td>
+<td>9 classes + 1 enum</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Herança</td>
+<td><code>Pessoa → Cliente/Mecanico</code>; <code>ItemOS → Peca/MaoDeObra</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Polimorfismo</td>
+<td><code>ItemOS.calcularSubtotal()</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Associação</td>
+<td><code>Cliente–Veiculo–OrdemServico–ItemOS</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Atributo privado</td>
+<td><code>OrdemServico.__itens</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Método privado</td>
+<td><code>OrdemServico.__recalcular_total()</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Programa principal com 2+ objetos</td>
+<td>Seção 4.7 e Apêndice C</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Diagrama de classes</td>
+<td>Figuras 1, 2 e 19</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Diagrama de estados</td>
+<td>Figura 3</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Wireframes</td>
+<td>8 telas (Figuras 5–12)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Mapa de navegação</td>
+<td>Seção 8</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Fluxos de interação</td>
+<td>Seção 10</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Plano de testes</td>
+<td>Seção 11</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Cronograma e riscos</td>
+<td>Seção 12</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>PDF para submissão</td>
+<td><code>Etapa2_Modelagem_e_Interfaces.pdf</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Protótipo navegável</td>
+<td><code>prototipo/index.html</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Ambiente Linux</td>
+<td>Capturas e PDF gerados em Linux</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Prazo 29/10/2026</td>
+<td>Concluído em 26/10/2026</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<h2 id="apêndice-f-mapa-de-arquivos">Apêndice F — Mapa de arquivos</h2>
+<pre><code class="language-text">oficinapro/
+├── Etapa 1.pdf
+├── assets/
+│   ├── logo.svg
+│   ├── logo.png
+│   ├── logo-horizontal.svg
+│   └── logo-horizontal.png
+└── docs/etapa2/
+    ├── Etapa2_Modelagem_e_Interfaces.md
+    ├── Etapa2_Modelagem_e_Interfaces.html
+    ├── Etapa2_Modelagem_e_Interfaces.pdf
+    ├── README.md
+    ├── diagramas/
+    │   ├── classes-compacto.svg/png
+    │   ├── classes-detalhado.svg/png
+    │   ├── estados-os.svg/png
+    │   ├── arquitetura.png
+    │   ├── seq-*-1200.png
+    │   └── *.mmd
+    ├── capturas/
+    │   ├── t01-dashboard.png
+    │   ├── t02-clientes-lista.png
+    │   ├── t02-clientes-drawer.png
+    │   ├── t02-clientes-drawer-pdf.png
+    │   ├── t03-veiculos-lista.png
+    │   ├── t03-veiculos-drawer.png
+    │   ├── t03-veiculos-drawer-pdf.png
+    │   ├── t04-ordens-servico.png
+    │   ├── t05-editor-os.png
+    │   ├── t06-orcamento-recibo.png
+    │   ├── t07-relatorios.png
+    │   ├── t08-configuracoes.png
+    │   └── prototipo.png
+    ├── wireframes/
+    │   ├── base.css
+    │   ├── app.js
+    │   └── t01..t08.html
+    ├── prototipo/
+    │   └── index.html
+    └── ferramentas/
+        ├── gerar_diagrama_classes.py
+        └── gerar_pdf.mjs
+</code></pre>
+<h2 id="apêndice-g-premissas-e-limitações">Apêndice G — Premissas e limitações</h2>
+<ol>
+<li>Os dados dos wireframes são fictícios e servem para validar layout, não persistência.</li>
+<li>O protótipo HTML não é a interface final; a implementação será em CustomTkinter.</li>
+<li>O PDF do protótipo é uma prévia de design; a aplicação final usará ReportLab.</li>
+<li>A integração com WhatsApp usa link <code>wa.me</code>, sem API oficial.</li>
+<li>O sistema v1.0 é monousuário e local; não há controle de permissões.</li>
+<li>O modelo didático usa <code>float</code>; a implementação deve usar <code>Decimal</code>.</li>
+<li>A validade padrão do orçamento é 7 dias, configurável.</li>
+<li>A comissão considera apenas mão de obra de OS finalizadas.</li>
+<li>O banco pode ser restaurado, mas a restauração exige confirmação e app fechado.</li>
+<li>O cronograma da Etapa 3 é apertado; o escopo Must tem prioridade.</li>
+</ol>
+<div class="closing">
+  <img src="../../assets/logo-horizontal.png" alt="DevSolo Studio" class="closing-logo">
+  <p><strong>DevSolo Studio</strong> • OficinaPro v1.0</p>
+  <p>Documento de modelagem e interfaces • Etapa 2 • 26/10/2026</p>
+  <p class="muted">“Menos papel, mais clareza. Menos retrabalho, mais confiança.”</p>
+</div>
+</body>
+</html>

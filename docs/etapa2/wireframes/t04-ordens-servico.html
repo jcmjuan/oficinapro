@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OficinaPro — Ordens de Serviço</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body data-screen="os">
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Ordens de Serviço</h1>
+          <div class="subtitle">12 OS abertas • 3 orçamentos aguardando aprovação</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            Buscar por nº, cliente ou placa...
+          </div>
+          <a class="btn btn-primary" href="t05-editor-os.html" data-goto>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Nova OS
+          </a>
+          <div class="avatar orange">JM</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h2>Fila de atendimento</h2>
+            <p>Acompanhe orçamentos, execução e entregas em um só lugar.</p>
+          </div>
+          <div class="flex">
+            <button class="btn btn-secondary" data-toast="Filtros avançados (demonstração).">Filtros</button>
+            <button class="btn btn-secondary" data-toast="Exportação da lista de OS (demonstração).">Exportar</button>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <button class="chip active" data-filter="todas">Todas <span class="count">42</span></button>
+          <button class="chip" data-filter="orcamento">Orçamento <span class="count">3</span></button>
+          <button class="chip" data-filter="aprovada">Aprovadas <span class="count">4</span></button>
+          <button class="chip" data-filter="execucao">Em execução <span class="count">5</span></button>
+          <button class="chip" data-filter="finalizada">Finalizadas <span class="count">28</span></button>
+          <button class="chip" data-filter="cancelada">Canceladas <span class="count">2</span></button>
+        </div>
+
+        <div class="card">
+          <table>
+            <thead>
+              <tr><th>Nº</th><th>Cliente</th><th>Veículo</th><th>Status</th><th>Itens</th><th>Total</th><th>Abertura</th><th>Ações</th></tr>
+            </thead>
+            <tbody>
+              <tr style="background:#FFFBF5">
+                <td class="mono">#2026-0042</td>
+                <td><strong>Ana Paula Ribeiro</strong></td>
+                <td>Honda Civic<div class="small muted">ABC-1D23</div></td>
+                <td><span class="badge orcamento">Orçamento</span></td>
+                <td>4</td>
+                <td><strong>R$ 1.240,00</strong></td>
+                <td>26/10/2026</td>
+                <td>
+                  <div class="flex" style="gap:6px">
+                    <a class="btn btn-secondary btn-sm" href="t05-editor-os.html" data-goto>Abrir</a>
+                    <a class="btn btn-secondary btn-sm" href="t06-orcamento-recibo.html" data-goto>PDF</a>
+                    <button class="btn btn-secondary btn-sm" data-toast="Link do WhatsApp copiado (demonstração).">WhatsApp</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="mono">#2026-0041</td>
+                <td><strong>Carlos Eduardo Lima</strong></td>
+                <td>VW Gol<div class="small muted">XYZ-9K87</div></td>
+                <td><span class="badge execucao">Em execução</span></td>
+                <td>3</td>
+                <td><strong>R$ 860,00</strong></td>
+                <td>25/10/2026</td>
+                <td>
+                  <div class="flex" style="gap:6px">
+                    <a class="btn btn-secondary btn-sm" href="t05-editor-os.html" data-goto>Abrir</a>
+                    <button class="btn btn-secondary btn-sm" data-toast="PDF do orçamento (demonstração).">PDF</button>
+                    <button class="btn btn-secondary btn-sm" data-toast="Link do WhatsApp copiado (demonstração).">WhatsApp</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="mono">#2026-0040</td>
+                <td><strong>Fernanda Souza</strong></td>
+                <td>Fiat Argo<div class="small muted">QWE-2A34</div></td>
+                <td><span class="badge finalizada">Finalizada</span></td>
+                <td>6</td>
+                <td><strong>R$ 1.980,00</strong></td>
+                <td>24/10/2026</td>
+                <td>
+                  <div class="flex" style="gap:6px">
+                    <a class="btn btn-secondary btn-sm" href="t06-orcamento-recibo.html" data-goto>Recibo</a>
+                    <button class="btn btn-secondary btn-sm" data-toast="Recibo em PDF (demonstração).">PDF</button>
+                    <button class="btn btn-secondary btn-sm" data-toast="Link do WhatsApp copiado (demonstração).">WhatsApp</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="mono">#2026-0039</td>
+                <td><strong>João Batista</strong></td>
+                <td>Toyota Corolla<div class="small muted">JKL-5M67</div></td>
+                <td><span class="badge aprovada">Aprovada</span></td>
+                <td>5</td>
+                <td><strong>R$ 2.350,00</strong></td>
+                <td>23/10/2026</td>
+                <td>
+                  <div class="flex" style="gap:6px">
+                    <a class="btn btn-secondary btn-sm" href="t05-editor-os.html" data-goto>Abrir</a>
+                    <button class="btn btn-secondary btn-sm" data-toast="PDF do orçamento (demonstração).">PDF</button>
+                    <button class="btn btn-secondary btn-sm" data-toast="Link do WhatsApp copiado (demonstração).">WhatsApp</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="mono">#2026-0038</td>
+                <td><strong>Mariana Alves</strong></td>
+                <td>Chevrolet Onix<div class="small muted">MNO-8P90</div></td>
+                <td><span class="badge cancelada">Cancelada</span></td>
+                <td>2</td>
+                <td><strong>R$ 420,00</strong></td>
+                <td>22/10/2026</td>
+                <td>
+                  <div class="flex" style="gap:6px">
+                    <a class="btn btn-secondary btn-sm" href="t05-editor-os.html" data-goto>Ver</a>
+                    <button class="btn btn-secondary btn-sm" data-toast="PDF do orçamento (demonstração).">PDF</button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="mono">#2026-0037</td>
+                <td><strong>Roberto Nunes</strong></td>
+                <td>Ford Ka<div class="small muted">RST-3V45</div></td>
+                <td><span class="badge finalizada">Finalizada</span></td>
+                <td>3</td>
+                <td><strong>R$ 380,00</strong></td>
+                <td>18/10/2026</td>
+                <td>
+                  <div class="flex" style="gap:6px">
+                    <a class="btn btn-secondary btn-sm" href="t06-orcamento-recibo.html" data-goto>Recibo</a>
+                    <button class="btn btn-secondary btn-sm" data-toast="Recibo em PDF (demonstração).">PDF</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pagination">
+            <span>Mostrando 1–6 de 42 ordens</span>
+            <div class="pages"><span class="page active">1</span><span class="page">2</span><span class="page">3</span><span class="page">…</span><span class="page">7</span></div>
+          </div>
+        </div>
+
+        <div class="footer-note">OficinaPro • Protótipo de interface • Etapa 2</div>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

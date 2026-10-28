@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OficinaPro — Veículos</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body data-screen="veiculos">
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Veículos</h1>
+          <div class="subtitle">58 veículos cadastrados • 6 com OS em aberto</div>
+        </div>
+        <div class="topbar-actions">
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+            Buscar por placa, modelo ou cliente...
+          </div>
+          <button class="btn btn-primary" data-toast="Formulário de novo veículo (demonstração).">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Novo veículo
+          </button>
+          <div class="avatar orange">JM</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="page-head">
+          <div>
+            <h2>Frota atendida</h2>
+            <p>Consulte o histórico de manutenções por placa e cliente.</p>
+          </div>
+          <button class="btn btn-secondary" data-toast="Importação de veículos (demonstração).">Importar planilha</button>
+        </div>
+
+        <div class="toolbar">
+          <button class="chip active" data-filter="todos">Todos <span class="count">58</span></button>
+          <button class="chip" data-filter="revisao">Revisão <span class="count">9</span></button>
+          <button class="chip" data-filter="com-os">Com OS aberta <span class="count">6</span></button>
+          <button class="chip" data-filter="sem-os">Sem OS <span class="count">43</span></button>
+          <div class="spacer"></div>
+          <span class="small muted">Filtro rápido: <strong>Placa</strong></span>
+        </div>
+
+        <div class="card">
+          <table>
+            <thead>
+              <tr><th>Placa</th><th>Veículo</th><th>Ano</th><th>KM</th><th>Cliente</th><th>Última OS</th><th>Ações</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="mono" style="background:#F1F5F9;padding:4px 7px;border-radius:5px;font-weight:700">ABC-1D23</span></td>
+                <td><strong>Honda Civic</strong><div class="small muted">Prata · Flex</div></td>
+                <td>2019</td>
+                <td>62.480</td>
+                <td>Ana Paula Ribeiro</td>
+                <td><span class="badge orcamento">Orçamento</span></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Histórico do Honda Civic (demonstração).">Histórico</button></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="background:#F1F5F9;padding:4px 7px;border-radius:5px;font-weight:700">XYZ-9K87</span></td>
+                <td><strong>VW Gol</strong><div class="small muted">Branco · 1.0</div></td>
+                <td>2015</td>
+                <td>118.920</td>
+                <td>Carlos Eduardo Lima</td>
+                <td><span class="badge execucao">Em execução</span></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Histórico do VW Gol (demonstração).">Histórico</button></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="background:#F1F5F9;padding:4px 7px;border-radius:5px;font-weight:700">QWE-2A34</span></td>
+                <td><strong>Fiat Argo</strong><div class="small muted">Vermelho · 1.3</div></td>
+                <td>2021</td>
+                <td>34.210</td>
+                <td>Fernanda Souza</td>
+                <td><span class="badge finalizada">Finalizada</span></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Histórico do Fiat Argo (demonstração).">Histórico</button></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="background:#F1F5F9;padding:4px 7px;border-radius:5px;font-weight:700">JKL-5M67</span></td>
+                <td><strong>Toyota Corolla</strong><div class="small muted">Preto · 2.0</div></td>
+                <td>2018</td>
+                <td>78.650</td>
+                <td>João Batista</td>
+                <td><span class="badge aprovada">Aprovada</span></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Histórico do Toyota Corolla (demonstração).">Histórico</button></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="background:#F1F5F9;padding:4px 7px;border-radius:5px;font-weight:700">MNO-8P90</span></td>
+                <td><strong>Chevrolet Onix</strong><div class="small muted">Azul · 1.0 Turbo</div></td>
+                <td>2020</td>
+                <td>45.730</td>
+                <td>Mariana Alves</td>
+                <td><span class="badge cancelada">Cancelada</span></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Histórico do Chevrolet Onix (demonstração).">Histórico</button></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="background:#F1F5F9;padding:4px 7px;border-radius:5px;font-weight:700">RST-3V45</span></td>
+                <td><strong>Ford Ka</strong><div class="small muted">Prata · 1.0</div></td>
+                <td>2016</td>
+                <td>96.540</td>
+                <td>Roberto Nunes</td>
+                <td><span class="badge finalizada">Finalizada</span></td>
+                <td><button class="btn btn-secondary btn-sm" data-toast="Histórico do Ford Ka (demonstração).">Histórico</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pagination">
+            <span>Mostrando 1–6 de 58 veículos</span>
+            <div class="pages"><span class="page active">1</span><span class="page">2</span><span class="page">3</span><span class="page">…</span><span class="page">10</span></div>
+          </div>
+        </div>
+
+        <div class="footer-note">OficinaPro • Protótipo de interface • Etapa 2</div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Drawer de histórico (exemplo de interação) -->
+  <div class="drawer-overlay">
+    <aside class="drawer">
+      <div class="flex" style="justify-content:space-between;align-items:flex-start">
+        <div>
+          <h3>Ford Ka · RST-3V45</h3>
+          <div class="drawer-sub">Roberto Nunes • (11) 93210-9876</div>
+        </div>
+        <button class="btn btn-ghost btn-sm" data-toast="Detalhes fechados (demonstração).">✕</button>
+      </div>
+
+      <div class="card" style="box-shadow:none;margin-bottom:18px">
+        <div class="card-body" style="padding:14px">
+          <div class="grid-2" style="grid-template-columns:1fr 1fr;gap:10px 16px;font-size:12px">
+            <div><span class="muted">Marca / modelo</span><br><strong>Ford Ka SE 1.0</strong></div>
+            <div><span class="muted">Ano / combustível</span><br><strong>2016 · Flex</strong></div>
+            <div><span class="muted">Quilometragem</span><br><strong>96.540 km</strong></div>
+            <div><span class="muted">Cor</span><br><strong>Prata</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex" style="justify-content:space-between;margin-bottom:12px">
+        <h3 style="font-size:14px">Histórico de manutenções</h3>
+        <span class="small muted">3 atendimentos</span>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item done">
+          <div class="timeline-dot">✓</div>
+          <div class="timeline-content">
+            <strong>OS #2026-0036 · Finalizada</strong>
+            <span>18/10/2026 • Troca de óleo e filtros • R$ 380,00</span>
+            <span>Mecânico: Marcos Silva</span>
+          </div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item done">
+          <div class="timeline-dot">✓</div>
+          <div class="timeline-content">
+            <strong>OS #2026-0021 · Finalizada</strong>
+            <span>02/08/2026 • Alinhamento e balanceamento • R$ 220,00</span>
+            <span>Mecânico: Rafael Costa</span>
+          </div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-item done">
+          <div class="timeline-dot">✓</div>
+          <div class="timeline-content">
+            <strong>OS #2026-0008 · Finalizada</strong>
+            <span>14/05/2026 • Revisão de 90.000 km • R$ 1.120,00</span>
+            <span>Mecânico: Diego Almeida</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-actions">
+        <button class="btn btn-secondary" data-toast="Edição do veículo (demonstração).">Editar veículo</button>
+        <a class="btn btn-primary" href="t05-editor-os.html" data-goto data-toast="Abrindo nova OS para o Ford Ka (demonstração).">Abrir nova OS</a>
+      </div>
+    </aside>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>OficinaPro — Relatório Final</title>
+  <style>
+@page { size: A4; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "Inter", "Liberation Sans", Arial, sans-serif;
+  font-size: 10.2pt;
+  line-height: 1.55;
+  color: #1E293B;
+  background: #FFFFFF;
+}
+p { margin: 0 0 7px; }
+strong { color: #0F172A; }
+a { color: #EA580C; text-decoration: none; }
+h1, h2, h3, h4, h5, h6 {
+  color: #1E293B;
+  line-height: 1.25;
+  page-break-after: avoid;
+  break-after: avoid;
+}
+h1 {
+  font-size: 20pt;
+  margin: 0 0 14px;
+  padding-bottom: 5px;
+  border-bottom: 2.5px solid #F97316;
+}
+#sumário + ol {
+  columns: 2;
+  column-gap: 26px;
+  margin: 2px 0 10px;
+  padding-left: 22px;
+  font-size: 9.4pt;
+  line-height: 1.4;
+}
+#sumário + ol li { break-inside: avoid; margin: 0 0 1px; }
+h2 {
+  font-size: 14pt;
+  margin: 18px 0 8px;
+}
+h3 {
+  font-size: 11.6pt;
+  margin: 14px 0 6px;
+}
+h4 {
+  font-size: 10.4pt;
+  margin: 12px 0 5px;
+}
+ul { margin: 4px 0 9px 0; padding-left: 20px; }
+ol { margin: 4px 0 9px 0; padding-left: 26px; }
+li { margin: 2px 0; }
+blockquote {
+  margin: 9px 0 12px;
+  padding: 8px 12px;
+  background: #FFF7ED;
+  border-left: 4px solid #F97316;
+  color: #7C2D12;
+  border-radius: 0 5px 5px 0;
+}
+blockquote p { margin: 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 7px 0 12px;
+  font-size: 8.2pt;
+  line-height: 1.4;
+}
+thead { display: table-header-group; }
+tr { page-break-inside: avoid; break-inside: avoid; }
+th {
+  background: #F1F5F9;
+  color: #334155;
+  font-weight: 700;
+  text-align: left;
+  border: 1px solid #CBD5E1;
+  padding: 4px 5px;
+  vertical-align: top;
+}
+td {
+  border: 1px solid #E2E8F0;
+  padding: 4px 5px;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background: #F8FAFC; }
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 8.4pt;
+  background: #F1F5F9;
+  padding: 1px 3px;
+  border-radius: 3px;
+  color: #0F172A;
+}
+pre {
+  background: #0F172A;
+  color: #E2E8F0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 7.7pt;
+  line-height: 1.45;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-break: break-word;
+  page-break-inside: auto;
+  break-inside: auto;
+}
+pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: inherit;
+}
+figure {
+  margin: 10px 0 14px;
+  text-align: center;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #E2E8F0;
+  border-radius: 4px;
+  background: #FFFFFF;
+}
+figcaption {
+  margin-top: 5px;
+  font-size: 8.3pt;
+  color: #64748B;
+  text-align: center;
+}
+.figure-narrow img { width: 55%; }
+.figure-68 img { width: 68%; }
+.figure-70 img { width: 70%; }
+.figure-85 img { width: 85%; }
+.figure-90 img { width: 90%; }
+.figure-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin: 10px 0 14px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.figure-row figure { flex: 1; min-width: 0; margin: 0; }
+.figure-row figure img { width: 100%; }
+.figure-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+  width: 96%;
+  margin: 10px auto 14px;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.figure-grid figure { margin: 0; }
+.figure-grid figure img { width: 100%; }
+.figure-grid figcaption { font-size: 7.8pt; }
+.page-break {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  page-break-after: always;
+  break-after: page;
+}
+.closing {
+  margin-top: 26px;
+  padding-top: 14px;
+  border-top: 1px solid #E2E8F0;
+  text-align: center;
+  page-break-inside: avoid;
+}
+.closing-logo { width: 220px; max-width: 70%; margin-bottom: 8px; }
+.closing p { margin: 2px 0; font-size: 9pt; }
+.muted { color: #64748B; }
+hr { border: 0; border-top: 1px solid #E2E8F0; margin: 14px 0; }
+
+@page { size: A4; margin: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", "Inter", "Liberation Sans", Arial, sans-serif;
+  color: #1E293B;
+  background: #FFFFFF;
+}
+.cover {
+  position: relative;
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  padding: 30mm 24mm 24mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 11mm;
+  background: linear-gradient(90deg, #1E293B 0 72%, #F97316 72% 100%);
+}
+.cover::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4mm;
+  background: #F97316;
+}
+.cover-logo { width: 330px; max-width: 82%; margin-bottom: 30px; }
+.cover-kicker {
+  font-size: 10pt;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #F97316;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.cover-title {
+  font-size: 43pt;
+  line-height: 1.05;
+  font-weight: 800;
+  color: #1E293B;
+  margin: 0 0 10px;
+  border: 0;
+  padding: 0;
+}
+.cover-title span { color: #F97316; font-size: 23pt; font-weight: 700; }
+.cover-subtitle {
+  font-size: 24pt;
+  line-height: 1.15;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 18px;
+}
+.cover-lead {
+  font-size: 12pt;
+  line-height: 1.6;
+  color: #475569;
+  max-width: 150mm;
+  margin: 0 0 28px;
+}
+.cover-meta {
+  display: flex;
+  gap: 12mm;
+  border-top: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 12px 0;
+  margin-bottom: 22px;
+}
+.cover-meta div {
+  font-size: 10pt;
+  color: #475569;
+  line-height: 1.5;
+}
+.cover-meta strong {
+  display: block;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748B;
+  margin-bottom: 2px;
+}
+.cover-footer {
+  font-size: 9pt;
+  color: #64748B;
+  margin-top: auto;
+  padding-top: 18px;
+}
+</style>
+</head>
+<body>
+<div class="cover">
+  <img class="cover-logo" src="../../assets/logo-horizontal.png" alt="DevSolo Studio — OficinaPro">
+  <div class="cover-kicker">AVALIAÇÃO G2 • ETAPA FINAL</div>
+  <h1 class="cover-title">OficinaPro <span>v1.0</span></h1>
+  <div class="cover-subtitle">Interface, Integração e Entrega Final</div>
+  <p class="cover-lead">Aplicação desktop em CustomTkinter integrada ao núcleo da Etapa 3: cadastros, ordens de serviço, orçamento em PDF, WhatsApp, relatórios e backup — com validação de execução e 28 testes automatizados.</p>
+  <div class="cover-meta">
+    <div><strong>Equipe</strong><br>DevSolo Studio</div>
+    <div><strong>Integrante</strong><br>Juan Carlos Matos</div>
+    <div><strong>Entrega</strong><br>19/11/2026</div>
+  </div>
+  <div class="cover-footer">Python 3.12+ • CustomTkinter • SQLite • unittest • Chrome headless</div>
+</div><div class="page-break"></div><h1 id="sumário">Sumário</h1>
+<ol>
+<li><a href="#1-introdu%C3%A7%C3%A3o">Introdução</a></li>
+<li><a href="#2-vis%C3%A3o-geral-da-entrega">Visão geral da entrega</a></li>
+<li><a href="#3-arquitetura-da-interface">Arquitetura da interface</a></li>
+<li><a href="#4-experi%C3%AAncia-do-usu%C3%A1rio">Experiência do usuário</a></li>
+<li><a href="#5-fluxos-principais">Fluxos principais</a></li>
+<li><a href="#6-integra%C3%A7%C3%A3o-com-o-n%C3%BAcleo">Integração com o núcleo</a></li>
+<li><a href="#7-qualidade-e-valida%C3%A7%C3%A3o">Qualidade e validação</a></li>
+<li><a href="#8-dados-demonstrativos-e-resultados">Dados demonstrativos e resultados</a></li>
+<li><a href="#9-instala%C3%A7%C3%A3o-e-execu%C3%A7%C3%A3o">Instalação e execução</a></li>
+<li><a href="#10-limita%C3%A7%C3%B5es-e-pr%C3%B3ximos-passos">Limitações e próximos passos</a></li>
+<li><a href="#11-conclus%C3%A3o">Conclusão</a></li>
+<li><a href="#12-refer%C3%AAncias">Referências</a></li>
+</ol>
+<h1 id="1-introdução">1. Introdução</h1>
+<h2 id="11-contexto">1.1 Contexto</h2>
+<p>O OficinaPro nasceu como um sistema de gestão para uma oficina mecânica de bairro. A Etapa 1 delimitou o problema; a Etapa 2 consolidou a modelagem, os wireframes e o protótipo navegável; a Etapa 3 entregou o núcleo executável, com domínio, persistência SQLite, serviços, PDF, WhatsApp e testes. A Etapa Final fecha o ciclo: transforma o contrato visual da Etapa 2 em uma <strong>interface desktop funcional</strong>, conectada aos mesmos serviços e repositórios já validados.</p>
+<p>O resultado é o <strong>OficinaPro v1.0</strong>, executado por <code>python3 main.py</code>, com interface CustomTkinter como modo padrão e painel CLI como alternativa e fallback.</p>
+<h2 id="12-objetivo-da-etapa-final">1.2 Objetivo da Etapa Final</h2>
+<p>O objetivo é entregar uma aplicação completa, demonstrável e documentada, sem duplicar regras de negócio:</p>
+<table>
+<thead>
+<tr>
+<th>Objetivo</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Interface desktop</td>
+<td>Pacote <code>ui/</code> com tema, componentes, diálogos e sete telas</td>
+</tr>
+<tr>
+<td>Integração real</td>
+<td><code>AppContext</code> injeta banco, repositórios e serviços nos controladores de tela</td>
+</tr>
+<tr>
+<td>Fluxo ponta a ponta</td>
+<td>Cadastros → OS → itens → aprovação → execução → finalização → PDF/WhatsApp</td>
+</tr>
+<tr>
+<td>Relatórios e gestão</td>
+<td>Dashboard, relatórios por período, comissões, backup e configurações</td>
+</tr>
+<tr>
+<td>Entrada unificada</td>
+<td><code>python3 main.py</code> abre a UI; <code>--cli</code> mantém o terminal; <code>--ui</code> força a interface</td>
+</tr>
+<tr>
+<td>Qualidade</td>
+<td>28 testes automatizados, compilação integral e validação de execução da UI</td>
+</tr>
+<tr>
+<td>Documentação</td>
+<td>Relatório final, capturas reais, slides e instruções de execução</td>
+</tr>
+</tbody></table>
+<h2 id="13-escopo-entregue">1.3 Escopo entregue</h2>
+<ul>
+<li><strong>Telas:</strong> Dashboard, Clientes, Veículos, Ordens de Serviço, Editor da OS, Relatórios e Configurações.</li>
+<li><strong>Diálogos:</strong> cliente, veículo, mecânico, nova OS, item de peça, item de mão de obra, prompt de finalização/cancelamento e visualização de orçamento/recibo.</li>
+<li><strong>Ações:</strong> busca, filtros, cadastro, edição, inativação/reativação, transições de status, desconto, PDF, WhatsApp, CSV, backup e restauração.</li>
+<li><strong>Documentos:</strong> orçamento e recibo em PDF com identidade visual do projeto.</li>
+<li><strong>Operação:</strong> seed demonstrativa, banco local, fallback CLI e encerramento seguro da conexão.</li>
+</ul>
+<div class="page-break"></div><h1 id="2-visão-geral-da-entrega">2. Visão geral da entrega</h1>
+<h2 id="21-o-que-mudou-em-relação-à-etapa-3">2.1 O que mudou em relação à Etapa 3</h2>
+<p>A Etapa 3 já possuía o núcleo. A Etapa Final acrescentou a camada de apresentação e o acabamento de produto:</p>
+<table>
+<thead>
+<tr>
+<th>Área</th>
+<th>Etapa 3</th>
+<th>Etapa Final</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Entrada</td>
+<td>Painel CLI</td>
+<td>UI CustomTkinter padrão, CLI preservado</td>
+</tr>
+<tr>
+<td>Cadastros</td>
+<td>Serviços e repositórios</td>
+<td>Telas com busca, formulários e soft delete</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Serviço e regras</td>
+<td>Lista filtrável e editor completo</td>
+</tr>
+<tr>
+<td>Documentos</td>
+<td>PDF via serviço</td>
+<td>Visualização de orçamento/recibo e ações</td>
+</tr>
+<tr>
+<td>Relatórios</td>
+<td>Serviço de relatório</td>
+<td>Dashboard e tela de relatórios com CSV</td>
+</tr>
+<tr>
+<td>Configuração</td>
+<td>Serviço de backup</td>
+<td>Aba de oficina, equipe, backup e sistema</td>
+</tr>
+<tr>
+<td>Validação</td>
+<td>28 testes</td>
+<td>28 testes + execução real da interface</td>
+</tr>
+</tbody></table>
+<h2 id="22-princípio-de-projeto">2.2 Princípio de projeto</h2>
+<p>A interface é uma <strong>camada de composição</strong>. Ela não recalcula totais, não altera status diretamente e não escreve SQL. Toda operação passa por <code>OrdemServicoService</code>, <code>OrcamentoService</code>, <code>RelatorioService</code>, <code>ConfiguracaoService</code> ou pelos repositórios especializados. Isso preserva as invariantes da Etapa 3 e permite que CLI e UI compartilhem o mesmo comportamento.</p>
+<figure>
+  <img src="../etapa2/diagramas/arquitetura.png" alt="Arquitetura em camadas do OficinaPro">
+  <figcaption>Figura 1 — Arquitetura preservada: a interface consome os serviços de aplicação, que orquestram domínio e repositórios.</figcaption>
+</figure><h2 id="23-entrada-e-modos-de-execução">2.3 Entrada e modos de execução</h2>
+<pre><code class="language-text">python3 main.py                 # UI (fallback para CLI se Tkinter/CustomTkinter faltar)
+python3 main.py --ui            # força a UI e falha com diagnóstico se indisponível
+python3 main.py --cli           # painel CLI
+python3 main.py --db outro.db   # banco alternativo
+</code></pre>
+<p>O fluxo padrão cria/abre o banco, executa a seed quando necessário, fecha a conexão de preparação e abre a janela. Se a importação de <code>tkinter</code>/<code>customtkinter</code> falhar, o sistema exibe uma mensagem e cai no painel CLI; com <code>--ui</code>, o erro é explícito. Essa decisão mantém o projeto demonstrável em ambientes headless e em laboratórios sem dependências gráficas.</p>
+<h1 id="3-arquitetura-da-interface">3. Arquitetura da interface</h1>
+<h2 id="31-organização-do-pacote-ui">3.1 Organização do pacote <code>ui/</code></h2>
+<table>
+<thead>
+<tr>
+<th>Arquivo</th>
+<th>Responsabilidade</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ui/app.py</code></td>
+<td>Janela principal, sidebar, navegação, ações globais e notificações</td>
+</tr>
+<tr>
+<td><code>ui/context.py</code></td>
+<td>Montagem do banco, repositórios e serviços usados pela UI</td>
+</tr>
+<tr>
+<td><code>ui/theme.py</code></td>
+<td>Paleta, fontes e estilos de status</td>
+</tr>
+<tr>
+<td><code>ui/components.py</code></td>
+<td>Cards, tabelas, cabeçalhos, badges, indicadores e botões</td>
+</tr>
+<tr>
+<td><code>ui/dialogs.py</code></td>
+<td>Formulários e diálogo de orçamento/recibo</td>
+</tr>
+<tr>
+<td><code>ui/utils.py</code></td>
+<td>Formatação, conversão, abertura de arquivos/URLs e helpers</td>
+</tr>
+<tr>
+<td><code>ui/screens/</code></td>
+<td>Dashboard, clientes, veículos, ordens, editor, relatórios e configurações</td>
+</tr>
+</tbody></table>
+<h2 id="32-composição-e-injeção-de-dependências">3.2 Composição e injeção de dependências</h2>
+<p><code>AppContext</code> é o ponto único de montagem:</p>
+<pre><code class="language-python">self.db = Database(db_path)
+seed_demo(self.db)
+self.clientes = ClienteRepository(self.db)
+self.veiculos = VeiculoRepository(self.db)
+self.mecanicos = MecanicoRepository(self.db)
+self.ordens = OrdemServicoRepository(self.db)
+self.oficinas = OficinaRepository(self.db)
+self.ordem_service = OrdemServicoService(...)
+self.orcamento_service = OrcamentoService(...)
+self.relatorio_service = RelatorioService(...)
+self.configuracao_service = ConfiguracaoService(...)
+</code></pre>
+<p>As telas recebem <code>app</code> no construtor e acessam <code>app.context</code>. Não há singleton global nem criação de repositórios dentro de eventos de botão. O encerramento da janela chama <code>context.fechar()</code>, que fecha a conexão SQLite.</p>
+<h2 id="33-navegação">3.3 Navegação</h2>
+<p>A sidebar mantém a seção ativa em laranja e reutiliza instâncias de tela. <code>show_screen(nome, **kwargs)</code> cria a tela sob demanda, chama <code>on_show()</code> e delega filtros contextuais:</p>
+<ul>
+<li><code>Clientes → Veículos</code> abre a frota filtrada pelo cliente;</li>
+<li><code>Veículos → Histórico</code> abre a lista de OS filtrada pelo veículo;</li>
+<li><code>Nova OS</code> abre o editor da OS recém-criada;</li>
+<li><code>Voltar</code> retorna à fila de ordens.</li>
+</ul>
+<p><code>refresh_screens()</code> atualiza as telas já instanciadas após mutações, sem recriar a janela. Uma falha em uma tela não derruba as demais.</p>
+<h2 id="34-tema-e-componentes">3.4 Tema e componentes</h2>
+<p>O tema reproduz a linguagem visual da Etapa 2: sidebar escura (<code>#0F172A</code>), fundo claro (<code>#F1F5F9</code>), cartões brancos, bordas suaves e laranja (<code>#F97316</code>) como cor de ação. Os status usam badges consistentes:</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Cor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Orçamento</td>
+<td>âmbar</td>
+</tr>
+<tr>
+<td>Aprovada</td>
+<td>verde</td>
+</tr>
+<tr>
+<td>Em execução</td>
+<td>azul</td>
+</tr>
+<tr>
+<td>Finalizada</td>
+<td>cinza</td>
+</tr>
+<tr>
+<td>Cancelada</td>
+<td>vermelho</td>
+</tr>
+</tbody></table>
+<p>Os componentes reutilizáveis (<code>Card</code>, <code>PageHeader</code>, <code>DataTable</code>, <code>StatCard</code>, <code>Badge</code>, <code>SectionHeader</code>, <code>SummaryRow</code>, <code>ProgressLine</code>) evitam repetição e mantêm espaçamento, tipografia e estados visuais uniformes.</p>
+<figure>
+  <img src="capturas/dashboard.png" alt="Dashboard do OficinaPro v1.0">
+  <figcaption>Figura 2 — Dashboard com indicadores do mês, ordens recentes, distribuição por status e resumo rápido.</figcaption>
+</figure><h1 id="4-experiência-do-usuário">4. Experiência do usuário</h1>
+<h2 id="41-dashboard">4.1 Dashboard</h2>
+<p>O dashboard é a primeira tela após a abertura. Ele responde às perguntas centrais do gestor:</p>
+<ul>
+<li>quanto foi faturado no mês;</li>
+<li>quanto é mão de obra e quanto é peça;</li>
+<li>quanto há de comissões;</li>
+<li>quantas OS estão em cada status;</li>
+<li>quais são as ordens mais recentes.</li>
+</ul>
+<p>Os valores são calculados por <code>RelatorioService</code> e <code>OrdemServicoService.resumo_dashboard()</code>, não pela tela. Os cartões usam <code>StatCard</code>; a lista recente usa <code>DataTable</code>; o painel de status usa <code>ProgressLine</code>.</p>
+<h2 id="42-cadastros-e-frota">4.2 Cadastros e frota</h2>
+<p>A tela de <strong>Clientes</strong> oferece busca por nome, telefone, CPF/CNPJ ou e-mail, alternância para mostrar inativos e ações de editar, abrir veículos, inativar ou reativar. O cadastro valida documento e telefone no domínio; a UI apenas coleta e apresenta erros.</p>
+<p>A tela de <strong>Veículos</strong> consulta a frota por placa, marca, modelo ou cliente. Cada linha mostra veículo, ano, quilometragem, cliente, status/data da última OS e ações de edição e histórico. O filtro por cliente é contextual: ao chegar de Clientes, a tela exibe apenas os veículos daquele contato e oferece “Limpar filtro”.</p>
+<h2 id="43-operação">4.3 Operação</h2>
+<p>A <strong>fila de ordens</strong> combina busca textual (número, cliente, placa, marca ou modelo) com segmentação por status. O cabeçalho resume OS abertas e orçamentos aguardando aprovação. Cada linha permite abrir a OS, gerar PDF ou abrir o WhatsApp.</p>
+<p>O <strong>editor da OS</strong> concentra o ciclo operacional:</p>
+<ul>
+<li>resumo do cliente, veículo, responsável, abertura e total;</li>
+<li>itens de peça e mão de obra com tipo, descrição, quantidade/horas, unitário e subtotal;</li>
+<li>remoção de itens e aplicação de desconto enquanto a OS está em orçamento;</li>
+<li>observações editáveis;</li>
+<li>histórico append-only de status;</li>
+<li>ações de PDF, WhatsApp e documento;</li>
+<li>transições de aprovar, iniciar, finalizar e cancelar.</li>
+</ul>
+<p>As ações só aparecem quando permitidas pelo status. A finalização solicita a quilometragem de saída; o cancelamento exige motivo. O histórico é exibido em ordem cronológica e inclui usuário e motivo quando existirem.</p>
+<figure class="figure-row">
+  <figure>
+    <img src="capturas/clientes.png" alt="Tela de clientes">
+    <figcaption>Figura 3 — Clientes com busca, situação ativa/inativa e acesso direto à frota.</figcaption>
+  </figure>
+  <figure>
+    <img src="capturas/veiculos.png" alt="Tela de veículos">
+    <figcaption>Figura 4 — Frota atendida, com última OS, quilometragem e acesso ao histórico.</figcaption>
+  </figure>
+</figure><figure class="figure-row">
+  <figure>
+    <img src="capturas/ordens.png" alt="Lista de ordens de serviço">
+    <figcaption>Figura 5 — Fila de atendimento com busca, filtro por status e ações rápidas.</figcaption>
+  </figure>
+  <figure>
+    <img src="capturas/editor-os.png" alt="Editor da ordem de serviço">
+    <figcaption>Figura 6 — Editor da OS 2026-0042 com itens, totais, status e ações contextuais.</figcaption>
+  </figure>
+</figure><h2 id="44-relatórios">4.4 Relatórios</h2>
+<p>A tela de relatórios permite escolher o período, voltar ao mês atual e exportar comissões em CSV. Ela apresenta faturamento, mão de obra, peças, comissões, ticket médio, quantidade de OS, comissões por mecânico e composição do faturamento. Os dados vêm de <code>RelatorioService.resumo_formatado()</code>; a UI apenas formata e desenha.</p>
+<figure class="figure-70">
+  <img src="capturas/relatorios.png" alt="Tela de relatórios">
+  <figcaption>Figura 7 — Relatórios do período com comissões por mecânico e composição do faturamento.</figcaption>
+</figure><h2 id="45-configurações">4.5 Configurações</h2>
+<p>A tela é dividida em quatro abas:</p>
+<table>
+<thead>
+<tr>
+<th>Aba</th>
+<th>Conteúdo</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Oficina</td>
+<td>nome, CNPJ, telefone, endereço, taxa horária e comissão padrão</td>
+</tr>
+<tr>
+<td>Equipe</td>
+<td>mecânicos, registro, especialidade, taxa, inativação/reativação</td>
+</tr>
+<tr>
+<td>Backup</td>
+<td>backup imediato, restauração e abertura da pasta</td>
+</tr>
+<tr>
+<td>Sistema</td>
+<td>versão, Python, SQLite, schema, banco e pasta do projeto</td>
+</tr>
+</tbody></table>
+<figure class="figure-row">
+  <figure>
+    <img src="capturas/configuracoes-equipe.png" alt="Aba Equipe das configurações">
+    <figcaption>Figura 8 — Equipe técnica com taxa de comissão e soft delete.</figcaption>
+  </figure>
+  <figure>
+    <img src="capturas/configuracoes-backup.png" alt="Aba Backup das configurações">
+    <figcaption>Figura 9 — Backup e restauração com validação de integridade.</figcaption>
+  </figure>
+</figure><h1 id="5-fluxos-principais">5. Fluxos principais</h1>
+<h2 id="51-abertura-de-uma-os">5.1 Abertura de uma OS</h2>
+<ol>
+<li>O usuário clica em “Nova OS”.</li>
+<li>O diálogo lista clientes ativos, veículos do cliente e mecânicos ativos.</li>
+<li>A OS é criada em <code>ORCAMENTO</code> por <code>OrdemServicoService.criar_ordem()</code>.</li>
+<li>O editor é aberto com a OS recém-criada.</li>
+<li>Peças e mão de obra são adicionadas; o total é recalculado pelo domínio.</li>
+</ol>
+<figure class="figure-row">
+  <figure>
+    <img src="capturas/dialogo-nova-os.png" alt="Diálogo de nova OS">
+    <figcaption>Figura 10 — Nova OS com seleção de cliente, veículo e responsável.</figcaption>
+  </figure>
+  <figure>
+    <img src="capturas/dialogo-item-peca.png" alt="Diálogo de item de peça">
+    <figcaption>Figura 11 — Inclusão de peça com quantidade, valor, código e fornecedor.</figcaption>
+  </figure>
+</figure><h2 id="52-aprovação-execução-e-finalização">5.2 Aprovação, execução e finalização</h2>
+<pre><code class="language-text">ORCAMENTO → APROVADA → EM_EXECUCAO → FINALIZADA
+     └──────────────┴──────────────┘
+              CANCELADA (com motivo)
+</code></pre>
+<ul>
+<li>A aprovação exige ao menos um item e total maior que zero.</li>
+<li>O início só é permitido a partir de <code>APROVADA</code>.</li>
+<li>A finalização atualiza a quilometragem do veículo e não permite redução.</li>
+<li>O cancelamento é permitido em orçamento, aprovada ou em execução e exige motivo.</li>
+<li><code>FINALIZADA</code> e <code>CANCELADA</code> são terminais.</li>
+</ul>
+<h2 id="53-orçamento-e-recibo">5.3 Orçamento e recibo</h2>
+<p>O diálogo de documento monta uma prévia com dados da oficina, cliente, veículo, responsável, itens, totais, desconto, observações e histórico. O título muda de “Orçamento” para “Recibo” quando a OS está finalizada. As ações disponíveis são:</p>
+<ul>
+<li><strong>Copiar mensagem</strong> — texto de WhatsApp;</li>
+<li><strong>WhatsApp</strong> — link <code>wa.me</code>;</li>
+<li><strong>Abrir PDF</strong> — gera sob demanda e abre o arquivo;</li>
+<li><strong>Gerar PDF</strong> — grava em <code>orcamentos/OS-&lt;numero&gt;.pdf</code>.</li>
+</ul>
+<figure class="figure-narrow">
+  <img src="capturas/dialogo-documento.png" alt="Visualização do orçamento da OS">
+  <figcaption>Figura 12 — Prévia do orçamento com identidade visual, itens e ações de PDF/WhatsApp.</figcaption>
+</figure><h1 id="6-integração-com-o-núcleo">6. Integração com o núcleo</h1>
+<h2 id="61-regras-preservadas">6.1 Regras preservadas</h2>
+<p>A UI não reimplementa nenhuma regra. Exemplos:</p>
+<table>
+<thead>
+<tr>
+<th>Ação da UI</th>
+<th>Serviço/Repositório</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Criar OS</td>
+<td><code>OrdemServicoService.criar_ordem()</code></td>
+</tr>
+<tr>
+<td>Adicionar peça</td>
+<td><code>OrdemServicoService.adicionar_peca()</code></td>
+</tr>
+<tr>
+<td>Adicionar mão de obra</td>
+<td><code>OrdemServicoService.adicionar_mao_de_obra()</code></td>
+</tr>
+<tr>
+<td>Aplicar desconto</td>
+<td><code>OrdemServicoService.aplicar_desconto()</code></td>
+</tr>
+<tr>
+<td>Aprovar/iniciar/finalizar/cancelar</td>
+<td>métodos de transição do serviço</td>
+</tr>
+<tr>
+<td>Gerar PDF/WhatsApp</td>
+<td><code>OrcamentoService</code></td>
+</tr>
+<tr>
+<td>Relatórios/CSV</td>
+<td><code>RelatorioService</code></td>
+</tr>
+<tr>
+<td>Backup/restauração</td>
+<td><code>ConfiguracaoService</code></td>
+</tr>
+<tr>
+<td>Busca/filtros</td>
+<td>repositórios especializados</td>
+</tr>
+</tbody></table>
+<h2 id="62-persistência-e-seed">6.2 Persistência e seed</h2>
+<p>O banco é criado em <code>infrastructure/migrations.py</code> com <code>PRAGMA user_version = 1</code>. A seed reproduz os totais da Etapa 2 e é carregada automaticamente quando o banco está vazio. As operações da UI usam transações dos repositórios; o histórico de status é append-only.</p>
+<h2 id="63-cli-preservado">6.3 CLI preservado</h2>
+<p>O painel CLI continua disponível em <code>python3 main.py --cli</code> e é usado como fallback. Ele compartilha os mesmos repositórios e serviços, o que permite demonstrar o sistema mesmo sem interface gráfica.</p>
+<h1 id="7-qualidade-e-validação">7. Qualidade e validação</h1>
+<h2 id="71-testes-automatizados">7.1 Testes automatizados</h2>
+<pre><code class="language-bash">python3 -m unittest discover -s tests -v
+</code></pre>
+<p>Resultado: <strong>28 testes OK</strong>, cobrindo domínio, validações, transições, persistência, backup/restauração, relatórios, WhatsApp e PDF.</p>
+<h2 id="72-compilação">7.2 Compilação</h2>
+<pre><code class="language-bash">python3 -m compileall -q ui main.py domain application infrastructure
+</code></pre>
+<p>Resultado: sem erros.</p>
+<h2 id="73-validação-de-execução-da-interface">7.3 Validação de execução da interface</h2>
+<p>A interface foi executada em ambiente com <strong>Python 3.14.4</strong>, <strong>Tk 8.6</strong> e <strong>CustomTkinter 5.2.2</strong>, em janela de 1440 × 900. Foram capturadas as telas e diálogos apresentados neste relatório. Além da inspeção visual, um roteiro de integração exercitou os fluxos reais:</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Fluxo validado</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Cadastro de cliente</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Cadastro de veículo vinculado</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Cadastro de mecânico</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Abertura de OS</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Inclusão de peça e mão de obra</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Desconto e recálculo</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Aprovação, início e finalização</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Geração de PDF e cópia da mensagem</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Abertura do link WhatsApp</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Cancelamento com motivo</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Inativação/reativação de cliente e mecânico</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Exportação CSV</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Backup e restauração</td>
+<td>OK</td>
+</tr>
+<tr>
+<td>14</td>
+<td>PDF/WhatsApp pela janela principal</td>
+<td>OK</td>
+</tr>
+</tbody></table>
+<p>O roteiro criou as OS <code>2026-0043</code> (finalizada) e <code>2026-0044</code> (cancelada) em banco temporário, sem alterar a base demonstrativa do projeto.</p>
+<h2 id="74-evidências-visuais">7.4 Evidências visuais</h2>
+<p>As capturas em <code>docs/final/capturas/</code> foram geradas a partir da aplicação em execução, não de mockups. Elas cobrem dashboard, cadastros, lista e editor de OS, relatórios, abas de configuração e diálogos principais.</p>
+<h1 id="8-dados-demonstrativos-e-resultados">8. Dados demonstrativos e resultados</h1>
+<p>A seed mantém os totais da Etapa 2:</p>
+<table>
+<thead>
+<tr>
+<th>Indicador</th>
+<th align="right">Valor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Faturamento</td>
+<td align="right">R$ 18.450,00</td>
+</tr>
+<tr>
+<td>Mão de obra</td>
+<td align="right">R$ 6.320,00</td>
+</tr>
+<tr>
+<td>Peças</td>
+<td align="right">R$ 12.130,00</td>
+</tr>
+<tr>
+<td>Comissões</td>
+<td align="right">R$ 743,00</td>
+</tr>
+<tr>
+<td>Ticket médio</td>
+<td align="right">R$ 1.025,00</td>
+</tr>
+<tr>
+<td>OS finalizadas</td>
+<td align="right">18</td>
+</tr>
+<tr>
+<td>OS totais</td>
+<td align="right">22</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Mecânico</th>
+<th align="right">OS</th>
+<th align="right">Mão de obra</th>
+<th align="right">Taxa</th>
+<th align="right">Comissão</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Marcos Silva</td>
+<td align="right">8</td>
+<td align="right">R$ 3.000,00</td>
+<td align="right">12%</td>
+<td align="right">R$ 360,00</td>
+</tr>
+<tr>
+<td>Rafael Costa</td>
+<td align="right">6</td>
+<td align="right">R$ 2.300,00</td>
+<td align="right">10%</td>
+<td align="right">R$ 230,00</td>
+</tr>
+<tr>
+<td>Diego Almeida</td>
+<td align="right">4</td>
+<td align="right">R$ 1.020,00</td>
+<td align="right">15%</td>
+<td align="right">R$ 153,00</td>
+</tr>
+</tbody></table>
+<p>A base também contém OS em orçamento, aprovada, em execução e cancelada, permitindo demonstrar todos os estados e ações da interface.</p>
+<h1 id="9-instalação-e-execução">9. Instalação e execução</h1>
+<pre><code class="language-bash"># 1. Ambiente virtual
+python3 -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+
+# 2. Dependência da interface
+pip install -r requirements-ui.txt
+
+# 3. Executar
+python3 main.py
+</code></pre>
+<p>Requisitos:</p>
+<ul>
+<li>Python 3.12+;</li>
+<li>Tkinter disponível na instalação do Python;</li>
+<li><code>customtkinter</code> (instalado por <code>requirements-ui.txt</code>);</li>
+<li>Chrome/Chromium para gerar PDFs.</li>
+</ul>
+<p>Comandos úteis:</p>
+<pre><code class="language-bash">python3 main.py --cli
+python3 main.py --reset
+python3 main.py --report
+python3 main.py --pdf 2026-0042
+python3 main.py --whatsapp 2026-0042
+python3 main.py --backup
+</code></pre>
+<h1 id="10-limitações-e-próximos-passos">10. Limitações e próximos passos</h1>
+<h2 id="101-limitações-atuais">10.1 Limitações atuais</h2>
+<ul>
+<li>A aplicação é desktop e local; não há autenticação, perfis ou sincronização entre máquinas.</li>
+<li>O controle de pagamento de comissões é apenas informativo (“A pagar”); não há baixa financeira.</li>
+<li>O PDF depende de Chrome/Chromium headless; ReportLab não é usado.</li>
+<li>A interface exige Tkinter/CustomTkinter; em ambiente headless o sistema cai no CLI.</li>
+<li>Não há controle de estoque, agenda de oficina ou emissão fiscal.</li>
+<li>Os testes da UI são de integração manual/automatizada local; não há suíte de testes visuais.</li>
+</ul>
+<h2 id="102-próximos-passos">10.2 Próximos passos</h2>
+<ul>
+<li>Registrar pagamentos de comissões e fechar o ciclo financeiro.</li>
+<li>Adicionar estoque de peças e alertas de mínimo.</li>
+<li>Criar agenda de serviços e previsão de entrega.</li>
+<li>Empacotar com PyInstaller para distribuição.</li>
+<li>Avaliar migração do PDF para ReportLab ou WeasyPrint.</li>
+<li>Adicionar autenticação e trilha de auditoria por usuário.</li>
+<li>Ampliar testes automatizados de interface com uma ferramenta dedicada.</li>
+</ul>
+<h1 id="11-conclusão">11. Conclusão</h1>
+<p>O OficinaPro v1.0 cumpre o contrato construído ao longo do semestre. A Etapa 2 definiu a modelagem e a linguagem visual; a Etapa 3 entregou o núcleo executável; a Etapa Final conectou esse núcleo a uma interface desktop completa, sem duplicar regras e sem alterar o contrato original.</p>
+<p>A aplicação permite operar o ciclo completo de uma oficina — do cadastro ao orçamento, da execução ao recibo, do relatório ao backup — com dados demonstrativos consistentes, documentos em PDF, integração com WhatsApp e validação de execução. O resultado é um produto acadêmico coeso, demonstrável e preparado para evoluções futuras.</p>
+<div class="closing">
+  <img class="closing-logo" src="../../assets/logo-horizontal.png" alt="DevSolo Studio">
+  <p><strong>OficinaPro v1.0</strong> • DevSolo Studio</p>
+  <p class="muted">Juan Carlos Matos • Entrega final • 19/11/2026</p>
+</div><h1 id="12-referências">12. Referências</h1>
+<ul>
+<li>OFICINAPRO. <strong>Etapa 2 — Modelagem e Interfaces</strong>. DevSolo Studio, 2026. Disponível em <code>docs/etapa2/</code>.</li>
+<li>OFICINAPRO. <strong>Etapa 3 — Implementação do Núcleo</strong>. DevSolo Studio, 2026. Disponível em <code>docs/etapa3/</code>.</li>
+<li>PYTHON SOFTWARE FOUNDATION. <strong>Python 3.12+ Documentation</strong>. Disponível em <a href="https://docs.python.org/3/">https://docs.python.org/3/</a>.</li>
+<li>SQLITE. <strong>SQLite Documentation</strong>. Disponível em <a href="https://www.sqlite.org/docs.html">https://www.sqlite.org/docs.html</a>.</li>
+<li>CUSTOMTKINTER. <strong>CustomTkinter Documentation</strong>. Disponível em <a href="https://customtkinter.tomschimansky.com/">https://customtkinter.tomschimansky.com/</a>.</li>
+<li>GOOGLE. <strong>Chrome Headless Mode</strong>. Disponível em <a href="https://developer.chrome.com/docs/chromium/headless">https://developer.chrome.com/docs/chromium/headless</a>.</li>
+<li>WHATSAPP. <strong>Click to Chat (wa.me)</strong>. Disponível em <a href="https://faq.whatsapp.com/5913398998672934">https://faq.whatsapp.com/5913398998672934</a>.</li>
+</ul>
+
+</body>
+</html>

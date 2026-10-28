@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OficinaPro — Editor de OS</title>
+  <link rel="stylesheet" href="base.css">
+</head>
+<body data-screen="editor">
+  <div class="app">
+    <aside class="sidebar" id="sidebar"></aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="flex" style="gap:14px">
+          <div>
+            <h1>Nova Ordem de Serviço</h1>
+            <div class="subtitle">OS #2026-0042 • criada em 26/10/2026 às 09:15</div>
+          </div>
+          <span class="badge orcamento">Orçamento</span>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" data-toast="Rascunho salvo localmente (demonstração).">Salvar rascunho</button>
+          <a class="btn btn-primary" href="t06-orcamento-recibo.html" data-goto>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg>
+            Gerar orçamento
+          </a>
+          <div class="avatar orange">JM</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-header">
+            <h3>Dados do atendimento</h3>
+            <span class="small muted">Campos com * são obrigatórios</span>
+          </div>
+          <div class="card-body">
+            <div class="form-grid" style="grid-template-columns:1.4fr 1.4fr 1.2fr .8fr">
+              <div class="field">
+                <label>Cliente *</label>
+                <select>
+                  <option>Ana Paula Ribeiro — (11) 98765-4321</option>
+                  <option>Carlos Eduardo Lima</option>
+                  <option>Fernanda Souza</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Veículo *</label>
+                <select>
+                  <option>Honda Civic · ABC-1D23 · 2019</option>
+                  <option>VW Gol · XYZ-9K87 · 2015</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Mecânico responsável</label>
+                <select>
+                  <option>Marcos Silva — 12%</option>
+                  <option>Rafael Costa — 10%</option>
+                  <option>Diego Almeida — 15%</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>KM de entrada</label>
+                <input value="62.480">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:16px">
+          <div class="card-header">
+            <h3>Itens da OS</h3>
+            <div class="flex" style="gap:8px">
+              <button class="btn btn-secondary btn-sm" data-toast="Adicionar peça (demonstração).">+ Peça</button>
+              <button class="btn btn-secondary btn-sm" data-toast="Adicionar mão de obra (demonstração).">+ Mão de obra</button>
+            </div>
+          </div>
+          <table class="table-compact">
+            <thead>
+              <tr><th style="width:110px">Tipo</th><th>Descrição</th><th style="width:100px">Qtd / Horas</th><th style="width:120px">Valor unit.</th><th style="width:120px">Subtotal</th><th style="width:50px"></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge" style="background:#EDE9FE;color:#5B21B6">Peça</span></td>
+                <td><strong>Filtro de óleo</strong><div class="small muted">Código FO-1842 · Fornecedor: AutoPeças Central</div></td>
+                <td>1</td>
+                <td>R$ 45,00</td>
+                <td><strong>R$ 45,00</strong></td>
+                <td><button class="btn btn-ghost btn-sm" data-toast="Item removido (demonstração).">✕</button></td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background:#EDE9FE;color:#5B21B6">Peça</span></td>
+                <td><strong>Óleo de motor 5W30</strong><div class="small muted">4 litros · Fornecedor: Lubrax</div></td>
+                <td>1</td>
+                <td>R$ 180,00</td>
+                <td><strong>R$ 180,00</strong></td>
+                <td><button class="btn btn-ghost btn-sm" data-toast="Item removido (demonstração).">✕</button></td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background:#FFEDD5;color:#9A3412">Mão de obra</span></td>
+                <td><strong>Troca de óleo e filtros</strong><div class="small muted">Executado por Marcos Silva</div></td>
+                <td>1,5 h</td>
+                <td>R$ 120,00</td>
+                <td><strong>R$ 180,00</strong></td>
+                <td><button class="btn btn-ghost btn-sm" data-toast="Item removido (demonstração).">✕</button></td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background:#FFEDD5;color:#9A3412">Mão de obra</span></td>
+                <td><strong>Alinhamento e balanceamento</strong><div class="small muted">Executado por Rafael Costa</div></td>
+                <td>1,0 h</td>
+                <td>R$ 120,00</td>
+                <td><strong>R$ 120,00</strong></td>
+                <td><button class="btn btn-ghost btn-sm" data-toast="Item removido (demonstração).">✕</button></td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background:#EDE9FE;color:#5B21B6">Peça</span></td>
+                <td><strong>Pastilha de freio dianteira</strong><div class="small muted">Jogo · Fornecedor: Bosch</div></td>
+                <td>1</td>
+                <td>R$ 320,00</td>
+                <td><strong>R$ 320,00</strong></td>
+                <td><button class="btn btn-ghost btn-sm" data-toast="Item removido (demonstração).">✕</button></td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background:#FFEDD5;color:#9A3412">Mão de obra</span></td>
+                <td><strong>Substituição de pastilhas</strong><div class="small muted">Executado por Marcos Silva</div></td>
+                <td>1,5 h</td>
+                <td>R$ 120,00</td>
+                <td><strong>R$ 180,00</strong></td>
+                <td><button class="btn btn-ghost btn-sm" data-toast="Item removido (demonstração).">✕</button></td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background:#EDE9FE;color:#5B21B6">Peça</span></td>
+                <td><strong>Correia dentada</strong><div class="small muted">Kit completo · Fornecedor: Gates</div></td>
+                <td>1</td>
+                <td>R$ 215,00</td>
+                <td><strong>R$ 215,00</strong></td>
+                <td><button class="btn btn-ghost btn-sm" data-toast="Item removido (demonstração).">✕</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid-2" style="grid-template-columns:1.6fr 1fr">
+          <div class="card">
+            <div class="card-header"><h3>Observações</h3></div>
+            <div class="card-body">
+              <div class="field">
+                <textarea rows="4">Cliente relatou ruído ao frear e solicita revisão do sistema de freios. Autorizado por WhatsApp às 09:12. Previsão de entrega: 27/10/2026 às 17h.</textarea>
+              </div>
+              <div class="note" style="margin-top:12px">O total é recalculado automaticamente ao adicionar, editar ou remover itens.</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h3>Resumo financeiro</h3></div>
+            <div class="card-body">
+              <div class="flex" style="justify-content:space-between;padding:2px 0"><span class="muted">Subtotal</span><strong>R$ 1.240,00</strong></div>
+              <div class="flex" style="justify-content:space-between;padding:2px 0"><span class="muted">Desconto</span><strong>R$ 0,00</strong></div>
+              <div class="flex" style="justify-content:space-between;border-top:2px solid #1E293B;margin-top:8px;padding-top:8px">
+                <strong style="font-size:16px">Total</strong>
+                <strong style="font-size:18px;color:#F97316">R$ 1.240,00</strong>
+              </div>
+              <div class="flex" style="margin-top:12px;gap:8px">
+                <button class="btn btn-secondary" style="flex:1" data-toast="Rascunho salvo (demonstração).">Salvar</button>
+                <a class="btn btn-primary" style="flex:1" href="t06-orcamento-recibo.html" data-goto>Orçamento</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-note">OficinaPro • Protótipo de interface • Etapa 2</div>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
