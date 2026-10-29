@@ -117,6 +117,7 @@ class Sidebar(ctk.CTkFrame):
             text_color=COLORS["sidebar_text"],
         )
         botao.pack(fill="x", padx=12, pady=1)
+        botao.bind("<Enter>", lambda _event, destino=chave: self.app.prefetch_screen(destino))
         self.buttons[chave] = botao
 
     def set_active(self, chave: str) -> None:
@@ -137,6 +138,7 @@ class OficinaProApp(ctk.CTk):
         ctk.set_appearance_mode("light")
         ctk.set_default_color_theme("blue")
         super().__init__()
+        self.withdraw()
         self.title("OficinaPro v1.0 — Gestão de Oficina")
         self.geometry("1440x900")
         self.minsize(1180, 720)
@@ -144,10 +146,15 @@ class OficinaProApp(ctk.CTk):
         self.fonts = Fonts()
         self.context = AppContext(db_path)
         self.screens: dict[str, object] = {}
+        self._tela_atual: str | None = None
         self._notify_job = None
         self._build_layout()
-        self.show_screen("dashboard")
         self.protocol("WM_DELETE_WINDOW", self._on_close)
+        # A janela só aparece depois que a moldura (sidebar + barra de status)
+        # está pronta; o conteúdo entra em seguida, já com o layout estável.
+        self.update_idletasks()
+        self.deiconify()
+        self.after(10, lambda: self.show_screen("dashboard"))
 
     def _build_layout(self) -> None:
         self.grid_columnconfigure(1, weight=1)
@@ -185,37 +192,65 @@ class OficinaProApp(ctk.CTk):
         )
         self.status_label.grid(row=0, column=1, sticky="e", padx=12)
 
-    def show_screen(self, nome: str, **kwargs) -> None:
-        classes = {
-            "dashboard": DashboardScreen,
-            "clientes": ClientesScreen,
-            "veiculos": VeiculosScreen,
-            "ordens": OrdensScreen,
-            "editor_os": EditorOSScreen,
-            "relatorios": RelatoriosScreen,
-            "configuracoes": ConfiguracoesScreen,
-        }
-        classe = classes.get(nome)
+    SCREENS = {
+        "dashboard": DashboardScreen,
+        "clientes": ClientesScreen,
+        "veiculos": VeiculosScreen,
+        "ordens": OrdensScreen,
+        "editor_os": EditorOSScreen,
+        "relatorios": RelatoriosScreen,
+        "configuracoes": ConfiguracoesScreen,
+    }
+
+    def _criar_tela(self, nome: str):
+        classe = self.SCREENS.get(nome)
         if classe is None:
+            return None
+        tela = classe(self.screen_host, self)
+        self.screens[nome] = tela
+        return tela
+
+    def prefetch_screen(self, nome: str) -> None:
+        """Cria a estrutura da tela antes do clique, sem carregar dados.
+
+        Chamado no <Enter> dos itens da sidebar: quando o usuário clica, a
+        tela já existe e só precisa receber os dados.
+        """
+        if nome in self.screens:
             return
+        try:
+            self._criar_tela(nome)
+        except Exception:
+            pass
+
+    def show_screen(self, nome: str, **kwargs) -> None:
         tela = self.screens.get(nome)
         if tela is None:
-            tela = classe(self.screen_host, self)
+            tela = self._criar_tela(nome)
+        if tela is None:
+            return
+        if not tela.winfo_manager():
             tela.grid(row=0, column=0, sticky="nsew")
-            self.screens[nome] = tela
         tela.tkraise()
         tela.on_show(**kwargs)
+        self._tela_atual = nome
         self.sidebar.set_active(nome)
 
     def refresh_screens(self, exclude: str | None = None) -> None:
-        for nome, tela in list(self.screens.items()):
-            if nome == exclude:
-                continue
-            try:
-                tela.refresh()
-            except Exception:
-                # Uma tela não deve derrubar as demais durante a atualização.
-                pass
+        """Atualiza apenas a tela visível; as demais recarregam ao serem abertas.
+
+        Reconstruir todas as telas a cada gravação custa caro. Como
+        ``on_show()`` sempre recarrega os dados ao exibir, as telas ocultas
+        podem esperar a próxima navegação.
+        """
+        tela = self.screens.get(self._tela_atual) if self._tela_atual else None
+        if tela is None or self._tela_atual == exclude:
+            return
+        try:
+            tela.refresh()
+        except Exception:
+            # Uma tela não deve derrubar as demais durante a atualização.
+            pass
 
     def notify(self, mensagem: str, kind: str = "success") -> None:
         cores = {

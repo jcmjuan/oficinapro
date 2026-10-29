@@ -416,9 +416,9 @@ body {
 <pre><code class="language-text">python3 main.py                 # UI (fallback para CLI se Tkinter/CustomTkinter faltar)
 python3 main.py --ui            # força a UI e falha com diagnóstico se indisponível
 python3 main.py --cli           # painel CLI
-python3 main.py --db outro.db   # banco alternativo
+python3 main.py --demo          # modelo em memória (2 clientes, 2 veículos e 2 OS)
 </code></pre>
-<p>O fluxo padrão cria/abre o banco, executa a seed quando necessário, fecha a conexão de preparação e abre a janela. Se a importação de <code>tkinter</code>/<code>customtkinter</code> falhar, o sistema exibe uma mensagem e cai no painel CLI; com <code>--ui</code>, o erro é explícito. Essa decisão mantém o projeto demonstrável em ambientes headless e em laboratórios sem dependências gráficas.</p>
+<p>O fluxo padrão cria/abre o banco, executa a seed quando necessário, fecha a conexão de preparação e abre a janela. Se a importação de <code>tkinter</code>/<code>customtkinter</code> falhar, o sistema exibe uma mensagem e cai no painel CLI; com <code>--ui</code>, o erro é explícito. Essa decisão mantém o projeto demonstrável em ambientes headless e em laboratórios sem dependências gráficas. O caminho do banco pode ser trocado com <code>--db</code>.</p>
 <h1 id="3-arquitetura-da-interface">3. Arquitetura da interface</h1>
 <h2 id="31-organização-do-pacote-ui">3.1 Organização do pacote <code>ui/</code></h2>
 <table>
@@ -480,7 +480,7 @@ self.configuracao_service = ConfiguracaoService(...)
 <li><code>Nova OS</code> abre o editor da OS recém-criada;</li>
 <li><code>Voltar</code> retorna à fila de ordens.</li>
 </ul>
-<p><code>refresh_screens()</code> atualiza as telas já instanciadas após mutações, sem recriar a janela. Uma falha em uma tela não derruba as demais.</p>
+<p><code>refresh_screens()</code> atualiza a tela visível após mutações e deixa as demais para a próxima navegação, sem recriar a janela. Uma falha em uma tela não derruba as demais.</p>
 <h2 id="34-tema-e-componentes">3.4 Tema e componentes</h2>
 <p>O tema reproduz a linguagem visual da Etapa 2: sidebar escura (<code>#0F172A</code>), fundo claro (<code>#F1F5F9</code>), cartões brancos, bordas suaves e laranja (<code>#F97316</code>) como cor de ação. Os status usam badges consistentes:</p>
 <table>
@@ -692,6 +692,73 @@ self.configuracao_service = ConfiguracaoService(...)
 <p>O banco é criado em <code>infrastructure/migrations.py</code> com <code>PRAGMA user_version = 1</code>. A seed reproduz os totais da Etapa 2 e é carregada automaticamente quando o banco está vazio. As operações da UI usam transações dos repositórios; o histórico de status é append-only.</p>
 <h2 id="63-cli-preservado">6.3 CLI preservado</h2>
 <p>O painel CLI continua disponível em <code>python3 main.py --cli</code> e é usado como fallback. Ele compartilha os mesmos repositórios e serviços, o que permite demonstrar o sistema mesmo sem interface gráfica.</p>
+<h2 id="64-conformidade-com-os-requisitos-de-poo">6.4 Conformidade com os requisitos de POO</h2>
+<p>A tabela abaixo conecta cada exigência da atividade aos elementos implementados. As referências de linha correspondem ao código entregue; os testes ficam em <code>tests/</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Exigência</th>
+<th>Onde está</th>
+<th>Como foi atendida</th>
+<th>Evidência</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pelo menos 5 classes</td>
+<td><code>domain/</code></td>
+<td>10 classes de domínio + 1 enumeração</td>
+<td><code>Pessoa</code>, <code>Cliente</code>, <code>Mecanico</code>, <code>Veiculo</code>, <code>ItemOS</code>, <code>Peca</code>, <code>MaoDeObra</code>, <code>OrdemServico</code>, <code>Oficina</code>, <code>StatusHistorico</code>, <code>StatusOS</code></td>
+</tr>
+<tr>
+<td>Herança</td>
+<td><code>pessoa.py:10</code>, <code>item_os.py:11</code></td>
+<td><code>Pessoa</code> é superclasse de <code>Cliente</code> e <code>Mecanico</code>; <code>ItemOS</code> é superclasse de <code>Peca</code> e <code>MaoDeObra</code></td>
+<td><code>test_pessoa_abstrata</code>, <code>test_itens_polimorficos</code></td>
+</tr>
+<tr>
+<td>Polimorfismo</td>
+<td><code>item_os.py:48</code></td>
+<td><code>calcular_subtotal()</code> é abstrato; cada subclasse implementa o cálculo e a OS soma os itens sem testar o tipo concreto</td>
+<td><code>test_totais_e_desconto</code></td>
+</tr>
+<tr>
+<td>Associação</td>
+<td><code>veiculo.py</code></td>
+<td><code>Cliente 1 — 0..* Veiculo</code> bidirecional e sincronizada; a OS referencia cliente, veículo e mecânico</td>
+<td><code>test_relacionamento_cliente_veiculo</code></td>
+</tr>
+<tr>
+<td>Atributo privado</td>
+<td><code>ordem_servico.py:92</code></td>
+<td><code>__subtotal</code> e <code>__total</code> com name mangling; acesso somente por propriedades</td>
+<td><code>test_encapsulamento_do_total</code></td>
+</tr>
+<tr>
+<td>Método privado</td>
+<td><code>ordem_servico.py:122</code></td>
+<td><code>__recalcular_total</code>, <code>__validar_datas</code>, <code>__validar_transicao</code>, <code>__registrar_historico</code>; <code>Pessoa.__validar_contato</code></td>
+<td><code>test_ciclo_completo_e_historico</code></td>
+</tr>
+<tr>
+<td>Programa principal com 2+ objetos</td>
+<td><code>main.py</code></td>
+<td><code>python3 main.py --demo</code> instancia 2 clientes, 2 veículos, 1 mecânico e 2 OS, exercitando o ciclo de vida</td>
+<td>saída do comando <code>--demo</code></td>
+</tr>
+<tr>
+<td>Composição</td>
+<td><code>ordem_servico.py:271</code></td>
+<td>A OS é dona dos itens; o item só existe no agregado e a remoção passa por <code>remover_item</code></td>
+<td><code>test_totais_e_desconto</code></td>
+</tr>
+<tr>
+<td>Enumeração</td>
+<td><code>status_os.py:10</code></td>
+<td><code>StatusOS(str, Enum)</code> com cinco estados, <code>from_value</code>, <code>rotulo</code> e <code>terminal</code></td>
+<td><code>test_ciclo_completo_e_historico</code></td>
+</tr>
+</tbody></table>
+<p>A interface reaproveita o mesmo desenho: <code>BaseScreen</code> e <code>FormDialog</code> são classes base com comportamento comum, e as telas e diálogos concretos apenas especializam o conteúdo.</p>
 <h1 id="7-qualidade-e-validação">7. Qualidade e validação</h1>
 <h2 id="71-testes-automatizados">7.1 Testes automatizados</h2>
 <pre><code class="language-bash">python3 -m unittest discover -s tests -v
@@ -702,7 +769,7 @@ self.configuracao_service = ConfiguracaoService(...)
 </code></pre>
 <p>Resultado: sem erros.</p>
 <h2 id="73-validação-de-execução-da-interface">7.3 Validação de execução da interface</h2>
-<p>A interface foi executada em ambiente com <strong>Python 3.14.4</strong>, <strong>Tk 8.6</strong> e <strong>CustomTkinter 5.2.2</strong>, em janela de 1440 × 900. Foram capturadas as telas e diálogos apresentados neste relatório. Além da inspeção visual, um roteiro de integração exercitou os fluxos reais:</p>
+<p>A interface foi executada em ambiente com <strong>Python 3.14.4</strong>, <strong>Tk 8.6</strong> e <strong>CustomTkinter 6.0.0</strong> (versão fixada em <code>requirements-ui.txt</code>), em janela de 1440 × 900. Foram capturadas as telas e diálogos apresentados neste relatório. Além da inspeção visual, um roteiro de integração exercitou os fluxos reais:</p>
 <table>
 <thead>
 <tr>
@@ -887,7 +954,7 @@ python3 main.py --backup
 <ul>
 <li>A aplicação é desktop e local; não há autenticação, perfis ou sincronização entre máquinas.</li>
 <li>O controle de pagamento de comissões é apenas informativo (“A pagar”); não há baixa financeira.</li>
-<li>O PDF depende de Chrome/Chromium headless; ReportLab não é usado.</li>
+<li>O PDF depende de Chrome/Chromium headless instalado no sistema.</li>
 <li>A interface exige Tkinter/CustomTkinter; em ambiente headless o sistema cai no CLI.</li>
 <li>Não há controle de estoque, agenda de oficina ou emissão fiscal.</li>
 <li>Os testes da UI são de integração manual/automatizada local; não há suíte de testes visuais.</li>
@@ -898,7 +965,7 @@ python3 main.py --backup
 <li>Adicionar estoque de peças e alertas de mínimo.</li>
 <li>Criar agenda de serviços e previsão de entrega.</li>
 <li>Empacotar com PyInstaller para distribuição.</li>
-<li>Avaliar migração do PDF para ReportLab ou WeasyPrint.</li>
+<li>Avaliar alternativas de geração de PDF que não dependam de navegador.</li>
 <li>Adicionar autenticação e trilha de auditoria por usuário.</li>
 <li>Ampliar testes automatizados de interface com uma ferramenta dedicada.</li>
 </ul>

@@ -48,7 +48,7 @@ class ClientesScreen(BaseScreen):
             toolbar,
             text="Mostrar inativos",
             variable=self.mostrar_inativos,
-            command=self.refresh,
+            command=self._atualizar_tabela,
             font=self.app.fonts.small,
             text_color=COLORS["muted"],
             progress_color=COLORS["primary"],
@@ -78,21 +78,25 @@ class ClientesScreen(BaseScreen):
                 self.after_cancel(self._search_job)
             except Exception:
                 pass
-        self._search_job = self.after(250, self.refresh)
+        self._search_job = self.after(250, self._atualizar_tabela)
+
+    def _atualizar_tabela(self) -> None:
+        """Atualiza apenas as linhas: a busca não altera os totais do topo."""
+        clientes = self.app.context.clientes.listar(
+            busca=self.search_var.get(),
+            apenas_ativos=not self.mostrar_inativos.get(),
+        )
+        self.table.set_rows(clientes, self._render_row)
 
     def refresh(self, **kwargs) -> None:
         contexto = self.app.context
         todos = contexto.clientes.listar(apenas_ativos=False)
         ativos = [c for c in todos if c.ativo]
-        clientes = contexto.clientes.listar(
-            busca=self.search_var.get(),
-            apenas_ativos=not self.mostrar_inativos.get(),
-        )
         self.header.set_title(
             "Clientes",
             f"{len(ativos)} clientes ativos • {sum(len(c.veiculos) for c in todos)} veículos vinculados",
         )
-        self.table.set_rows(clientes, self._render_row)
+        self._atualizar_tabela()
 
     def _render_row(self, frame, cliente, _indice, pady) -> None:
         pessoa = ctk.CTkFrame(frame, fg_color="transparent")

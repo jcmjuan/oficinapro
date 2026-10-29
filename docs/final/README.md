@@ -4,7 +4,7 @@ Esta pasta reúne a entrega documental do **OficinaPro v1.0**:
 
 | Arquivo | Conteúdo |
 |---|---|
-| `Relatorio_Final.pdf` | Relatório de encerramento, 13 páginas, com capa, sumário, arquitetura, telas, validação, dados e referências. |
+| `Relatorio_Final.pdf` | Relatório de encerramento, 14 páginas, com capa, sumário, arquitetura, telas, validação, dados e referências. |
 | `Relatorio_Final.html` | Versão navegável do relatório, com as mesmas imagens e tabelas. |
 | `Relatorio_Final.md` | Fonte Markdown do relatório. |
 | `Slides_Apresentacao.pdf` | Apresentação final em 16:9, 14 slides, pronta para projeção. |
@@ -20,7 +20,7 @@ Esta pasta reúne a entrega documental do **OficinaPro v1.0**:
 - **Capturas individuais:** use os PNGs em `capturas/` para ampliar detalhes durante a banca.
 
 As imagens do relatório e dos slides são reais, geradas a partir da aplicação em
-execução com Tk 8.6 e CustomTkinter 5.2.2, não são mockups da Etapa 2.
+execução com Tk 8.6 e CustomTkinter 6.0.0, não são mockups da Etapa 2.
 
 ## Como regenerar
 

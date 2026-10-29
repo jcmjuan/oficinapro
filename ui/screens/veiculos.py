@@ -90,7 +90,20 @@ class VeiculosScreen(BaseScreen):
                 self.after_cancel(self._search_job)
             except Exception:
                 pass
-        self._search_job = self.after(250, self.refresh)
+        self._search_job = self.after(250, self._atualizar_tabela)
+
+    def _atualizar_tabela(self) -> None:
+        contexto = self.app.context
+        veiculos = contexto.veiculos.listar(
+            cliente_id=self.cliente_id,
+            busca=self.search_var.get(),
+        )
+        texto_exibidos = "1 exibido" if len(veiculos) == 1 else f"{len(veiculos)} exibidos"
+        self.header.set_title(
+            "Veículos",
+            f"{contexto.veiculos.contar()} veículos cadastrados • {texto_exibidos}",
+        )
+        self.table.set_rows(veiculos, self._render_row)
 
     def on_show(self, **kwargs) -> None:
         self.cliente_id = kwargs.get("cliente_id")
@@ -98,11 +111,6 @@ class VeiculosScreen(BaseScreen):
 
     def refresh(self, **kwargs) -> None:
         contexto = self.app.context
-        veiculos = contexto.veiculos.listar(
-            cliente_id=self.cliente_id,
-            busca=self.search_var.get(),
-        )
-        todos = contexto.veiculos.listar()
         if self.cliente_id:
             try:
                 cliente = contexto.clientes.buscar_por_id(self.cliente_id)
@@ -115,12 +123,7 @@ class VeiculosScreen(BaseScreen):
             self.filter_label.configure(text="")
             self.clear_filter.pack_forget()
             self.filter_frame.grid_remove()
-        texto_exibidos = "1 exibido" if len(veiculos) == 1 else f"{len(veiculos)} exibidos"
-        self.header.set_title(
-            "Veículos",
-            f"{len(todos)} veículos cadastrados • {texto_exibidos}",
-        )
-        self.table.set_rows(veiculos, self._render_row)
+        self._atualizar_tabela()
 
     def _limpar_filtro(self) -> None:
         self.cliente_id = None

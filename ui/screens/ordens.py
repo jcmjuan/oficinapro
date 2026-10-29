@@ -116,7 +116,20 @@ class OrdensScreen(BaseScreen):
                 self.after_cancel(self._search_job)
             except Exception:
                 pass
-        self._search_job = self.after(250, self.refresh)
+        self._search_job = self.after(250, self._atualizar_tabela)
+
+    def _atualizar_tabela(self) -> None:
+        """Atualiza apenas as linhas: a busca não altera os contadores do topo."""
+        contexto = self.app.context
+        status = self._labels_status.get(self.status_seg.get())
+        ordens = contexto.ordens.listar(
+            status=status,
+            cliente_id=self.filtros["cliente_id"],
+            veiculo_id=self.filtros["veiculo_id"],
+            mecanico_id=self.filtros["mecanico_id"],
+            busca=self.search_var.get(),
+        )
+        self.table.set_rows(ordens, self._render_row)
 
     def on_show(self, **kwargs) -> None:
         if any(chave in kwargs for chave in ("status", "cliente_id", "veiculo_id", "mecanico_id")):
@@ -145,14 +158,6 @@ class OrdensScreen(BaseScreen):
 
     def refresh(self, **kwargs) -> None:
         contexto = self.app.context
-        status = self._labels_status.get(self.status_seg.get())
-        ordens = contexto.ordens.listar(
-            status=status,
-            cliente_id=self.filtros["cliente_id"],
-            veiculo_id=self.filtros["veiculo_id"],
-            mecanico_id=self.filtros["mecanico_id"],
-            busca=self.search_var.get(),
-        )
         contagem = contexto.ordens.contar_por_status()
         abertas = (
             contagem.get(StatusOS.ORCAMENTO.value, 0)
@@ -171,7 +176,7 @@ class OrdensScreen(BaseScreen):
             f"{texto_abertas} • {texto_orcamentos}",
         )
         self._atualizar_filtro_label()
-        self.table.set_rows(ordens, self._render_row)
+        self._atualizar_tabela()
 
     def _atualizar_filtro_label(self) -> None:
         partes = []

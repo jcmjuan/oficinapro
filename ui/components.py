@@ -170,7 +170,7 @@ class StatCard(Card):
         )
         self.foot_label.grid(row=2, column=0, sticky="w", padx=16, pady=(2, 14))
 
-    def update(self, value: str, foot: str | None = None) -> None:
+    def set_values(self, value: str, foot: str | None = None) -> None:
         self.value_label.configure(text=value)
         if foot is not None:
             self.foot_label.configure(text=foot)
@@ -397,7 +397,7 @@ class SummaryRow(ctk.CTkFrame):
         )
         self.value.grid(row=0, column=1, sticky="e")
 
-    def update(self, value: str) -> None:
+    def set_value(self, value: str) -> None:
         self.value.configure(text=value)
 
 
@@ -412,22 +412,27 @@ class ProgressLine(ctk.CTkFrame):
             text_color=COLORS["text"],
             anchor="w",
         ).grid(row=0, column=0, sticky="w")
-        ctk.CTkLabel(
+        self.value_label = ctk.CTkLabel(
             self,
             text=str(value),
             font=app.fonts.small_bold,
             text_color=COLORS["muted"],
             anchor="e",
-        ).grid(row=0, column=1, sticky="e")
-        bar = ctk.CTkProgressBar(
+        )
+        self.value_label.grid(row=0, column=1, sticky="e")
+        self.bar = ctk.CTkProgressBar(
             self,
             height=7,
             corner_radius=999,
             progress_color=color,
             fg_color=COLORS["border"],
         )
-        bar.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(3, 0))
-        bar.set(0 if total <= 0 else max(0.0, min(1.0, value / total)))
+        self.bar.grid(row=1, column=0, columnspan=2, sticky="ew", pady=(3, 0))
+        self.set_values(value, total)
+
+    def set_values(self, value: int, total: int) -> None:
+        self.value_label.configure(text=str(value))
+        self.bar.set(0 if total <= 0 else max(0.0, min(1.0, value / total)))
 
 
 def divider(master) -> ctk.CTkFrame:

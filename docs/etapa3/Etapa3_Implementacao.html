@@ -388,7 +388,7 @@ body {
 </tr>
 <tr>
 <td>Ambiente previsto para a interface</td>
-<td>Python 3.12+, CustomTkinter 5.x</td>
+<td>Python 3.12+, CustomTkinter 6.x</td>
 </tr>
 <tr>
 <td>Testes</td>
@@ -412,7 +412,7 @@ body {
 </tr>
 </tbody></table>
 <blockquote>
-<p><strong>Observação sobre o ambiente:</strong> a máquina usada no desenvolvimento não possui <code>pip</code>, <code>tkinter</code>, <code>customtkinter</code>, <code>reportlab</code> nem <code>pytest</code>. Por isso o núcleo usa apenas a biblioteca padrão, os testes usam <code>unittest</code> e o PDF é gerado com Chrome headless. A interface CustomTkinter será implementada e validada na Etapa Final, em ambiente com as dependências instaladas.</p>
+<p><strong>Observação sobre o ambiente:</strong> a máquina usada no desenvolvimento do núcleo não possui <code>pip</code>, <code>tkinter</code>, <code>customtkinter</code> nem <code>pytest</code>. Por isso o núcleo usa apenas a biblioteca padrão, os testes usam <code>unittest</code> e o PDF é gerado com Chrome headless. A interface CustomTkinter foi implementada e validada na Etapa Final, em ambiente com as dependências instaladas (CustomTkinter 6.0.0).</p>
 </blockquote>
 <h1 id="2-visão-geral-da-solução">2. Visão geral da solução</h1>
 <h2 id="21-arquitetura-em-camadas">2.1 Arquitetura em camadas</h2>
@@ -568,11 +568,11 @@ class MaoDeObra(ItemOS):
     def calcular_subtotal(self) -&gt; Decimal:
         return (self.horas * self.taxa_horaria).quantize(Decimal(&quot;0.01&quot;))
 </code></pre>
-<p>A <code>OrdemServico</code> não precisa conhecer o tipo concreto para calcular o total: ela percorre <code>self.__itens</code> e chama <code>calcular_subtotal()</code>. O mesmo vale para <code>subtotal_pecas</code> e <code>subtotal_mao_obra</code>, que usam <code>item.tipo()</code>.</p>
+<p>A <code>OrdemServico</code> não precisa conhecer o tipo concreto para calcular o total: ela percorre <code>self._itens</code> e chama <code>calcular_subtotal()</code>. O mesmo vale para <code>subtotal_pecas</code> e <code>subtotal_mao_obra</code>, que usam <code>item.tipo()</code>.</p>
 <h2 id="33-encapsulamento-e-invariantes">3.3 Encapsulamento e invariantes</h2>
 <p>O agregado <code>OrdemServico</code> mantém:</p>
 <ul>
-<li><code>__itens</code>: lista privada de itens;</li>
+<li><code>_itens</code>: lista de itens protegida (acessada pela propriedade <code>itens</code>, que devolve uma tupla);</li>
 <li><code>__subtotal</code>: soma dos itens;</li>
 <li><code>__total</code>: subtotal menos desconto;</li>
 <li><code>_historico</code>: lista de transições;</li>
@@ -595,7 +595,7 @@ class MaoDeObra(ItemOS):
 <pre><code class="language-python">_CENTAVOS = Decimal(&quot;0.01&quot;)
 
 def __recalcular_total(self) -&gt; None:
-    subtotal = sum((item.calcular_subtotal() for item in self.__itens), Decimal(&quot;0.00&quot;))
+    subtotal = sum((item.calcular_subtotal() for item in self._itens), Decimal(&quot;0.00&quot;))
     subtotal = subtotal.quantize(_CENTAVOS)
     if self._desconto &gt; subtotal:
         raise RegraNegocioError(&quot;Desconto não pode ser maior que o subtotal.&quot;)
@@ -880,12 +880,12 @@ servico.link_whatsapp(&quot;2026-0042&quot;)
 </ul>
 <h1 id="6-geração-de-pdf">6. Geração de PDF</h1>
 <h2 id="61-decisão-chrome-headless">6.1 Decisão: Chrome headless</h2>
-<p>O ambiente da disciplina não possui ReportLab. Para não bloquear a entrega, o gerador monta um HTML com o layout do orçamento e usa o Chrome/Chromium já instalado:</p>
+<p>O gerador monta um HTML com o layout do orçamento e usa o Chrome/Chromium já instalado para produzir o PDF, sem dependência de biblioteca Python:</p>
 <pre><code class="language-text">google-chrome --headless=new --no-sandbox --disable-gpu \
   --no-pdf-header-footer --print-to-pdf=orcamento.pdf \
   file:///tmp/.../orcamento.html
 </code></pre>
-<p>A classe <code>PdfGenerator</code> está isolada em <code>infrastructure/pdf/orcamento_pdf.py</code>. Se o ambiente da Etapa Final tiver ReportLab, basta implementar a mesma interface e injetar o novo gerador no <code>OrcamentoService</code>.</p>
+<p>A classe <code>PdfGenerator</code> está isolada em <code>infrastructure/pdf/orcamento_pdf.py</code>. O motor é acessado por uma interface única, então é possível substituí-lo sem alterar o <code>OrcamentoService</code>.</p>
 <div class="page-break"></div><h2 id="62-layout-do-orçamento">6.2 Layout do orçamento</h2>
 <figure class="figure-85">
   <img src="capturas/orcamento.png" alt="Orçamento da OS 2026-0042 em PDF">
@@ -1118,7 +1118,7 @@ servico.link_whatsapp(&quot;2026-0042&quot;)
 </tr>
 <tr>
 <td>PDF via Chrome headless</td>
-<td>Funciona sem ReportLab</td>
+<td>Sem dependência Python para PDF</td>
 <td>Depende de Chrome instalado</td>
 </tr>
 <tr>

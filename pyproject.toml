@@ -13,8 +13,7 @@ authors = [{ name = "DevSolo Studio" }]
 dependencies = []
 
 [project.optional-dependencies]
-ui = ["customtkinter>=5.2.2"]
-pdf-reportlab = ["reportlab>=4.2"]
+ui = ["customtkinter==6.0.0"]
 dev = ["pytest>=8.0"]
 
 [tool.setuptools]

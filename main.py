@@ -4,6 +4,7 @@ Uso rápido:
     python main.py                 # abre a interface gráfica (fallback: painel CLI)
     python main.py --cli           # força o painel CLI
     python main.py --ui            # força a interface CustomTkinter
+    python main.py --demo          # demonstra o modelo em memória (2+ objetos)
     python main.py --report        # relatório de comissões do mês
     python main.py --pdf 2026-0042 # gera o orçamento em PDF
     python main.py --whatsapp 2026-0042
@@ -52,6 +53,14 @@ def _construir_parser() -> argparse.ArgumentParser:
         "--cli",
         action="store_true",
         help="Executa o painel e os comandos no terminal.",
+    )
+    modo.add_argument(
+        "--demo",
+        action="store_true",
+        help=(
+            "Demonstra o modelo em memória (2 clientes, 2 veículos e 2 OS), "
+            "sem banco de dados."
+        ),
     )
     parser.add_argument(
         "--reset",
@@ -154,7 +163,75 @@ def _relatorio(db: Database) -> None:
         )
 
 
+def _demo() -> None:
+    """Demonstração do modelo em memória, sem banco de dados.
+
+    Cumpre o requisito "programa principal com 2+ objetos": cria duas
+    instâncias das entidades principais e exercita o ciclo de vida da OS.
+    """
+    from decimal import Decimal
+
+    from domain.cliente import Cliente
+    from domain.mao_de_obra import MaoDeObra
+    from domain.mecanico import Mecanico
+    from domain.oficina import Oficina
+    from domain.peca import Peca
+    from domain.veiculo import Veiculo
+
+    oficina = Oficina("Oficina Demonstração", "12.345.678/0001-90")
+    ana = oficina.adicionar_cliente(
+        Cliente("Ana Souza", "(11) 98765-4321", "123.456.789-09", email="ana@exemplo.com")
+    )
+    bruno = oficina.adicionar_cliente(
+        Cliente("Bruno Lima", "(11) 97654-3210", "987.654.321-00")
+    )
+    carlos = oficina.adicionar_mecanico(
+        Mecanico("Carlos Mota", "(11) 96543-2109", "MEC-001", "0.12")
+    )
+    veiculo_ana = oficina.adicionar_veiculo(
+        Veiculo("ABC-1D23", "Fiat", "Argo", 2022, 41000, cliente=ana)
+    )
+    veiculo_bruno = oficina.adicionar_veiculo(
+        Veiculo("XYZ-9K88", "Chevrolet", "Onix", 2020, 78000, cliente=bruno)
+    )
+
+    primeira = oficina.emitir_ordem_servico(ana, veiculo_ana, carlos, criado_por="demo")
+    primeira.adicionar_item(Peca("Filtro de óleo", 1, "45.00"))
+    primeira.adicionar_item(MaoDeObra("Revisão de 40 mil km", "2", "120.00", carlos))
+    primeira.aprovar("demo")
+    primeira.iniciar("demo")
+    primeira.finalizar(km_saida=41200, usuario="demo")
+
+    segunda = oficina.emitir_ordem_servico(bruno, veiculo_bruno, carlos, criado_por="demo")
+    segunda.adicionar_item(Peca("Pastilha de freio", 2, "180.00"))
+    segunda.adicionar_item(MaoDeObra("Troca de pastilhas", "1.5", "120.00", carlos))
+
+    faturamento = sum(
+        (ordem.total for ordem in oficina.ordens if ordem.status is StatusOS.FINALIZADA),
+        Decimal("0.00"),
+    )
+
+    print("=" * 72)
+    print(f"  {oficina.nome} — demonstração do modelo")
+    print("=" * 72)
+    print(
+        f"Clientes: {len(oficina.clientes)}  •  Veículos: {len(oficina.veiculos)}  •  "
+        f"Mecânicos: {len(oficina.mecanicos)}  •  OS: {len(oficina.ordens)}"
+    )
+    for ordem in oficina.ordens:
+        print(
+            f"  {ordem.numero}  {ordem.cliente.nome:<12.12}  {ordem.veiculo.placa:<9}  "
+            f"{ordem.status.rotulo:<12}  {formatar_brl(ordem.total):>12}"
+        )
+    print("-" * 72)
+    print(f"Faturamento finalizado: {formatar_brl(faturamento)}")
+    print("=" * 72)
+
+
 def _executar(args: argparse.Namespace) -> int:
+    if args.demo:
+        _demo()
+        return 0
     db = Database(args.db)
     try:
         if args.reset:

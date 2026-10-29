@@ -9,7 +9,7 @@ import customtkinter as ctk
 
 from domain.validators import formatar_brl, parse_data
 
-from ..components import Badge, Card, DataTable, ProgressLine, SectionHeader, StatCard, SummaryRow, button_style, clear_children
+from ..components import Badge, Card, DataTable, ProgressLine, SectionHeader, StatCard, SummaryRow, button_style
 from ..theme import COLORS
 from ..utils import formatar_data, formatar_percentual, iniciais
 from .base import BaseScreen
@@ -132,6 +132,22 @@ class RelatoriosScreen(BaseScreen):
         SectionHeader(composicao, self.app, "Composição do faturamento", "Peças e mão de obra").pack(fill="x", padx=16, pady=(14, 8))
         self.composicao_body = ctk.CTkFrame(composicao, fg_color="transparent")
         self.composicao_body.pack(fill="x", padx=16, pady=(0, 14))
+        self.composicao_lines = {}
+        for chave, rotulo, cor in (
+            ("pecas", "Peças", COLORS["purple"]),
+            ("mao_obra", "Mão de obra", COLORS["info"]),
+        ):
+            linha = ProgressLine(self.composicao_body, self.app, rotulo, 0, 0, cor)
+            linha.pack(fill="x", pady=4)
+            self.composicao_lines[chave] = linha
+        self.composicao_total = ctk.CTkLabel(
+            self.composicao_body,
+            text="",
+            font=self.app.fonts.small_bold,
+            text_color=COLORS["text"],
+            anchor="w",
+        )
+        self.composicao_total.pack(fill="x", pady=(6, 0))
 
         periodo = Card(right)
         periodo.grid(row=1, column=0, sticky="ew", pady=(14, 0))
@@ -180,44 +196,23 @@ class RelatoriosScreen(BaseScreen):
             "Relatórios",
             f"{formatar_data(dados['inicio'])} a {formatar_data(dados['fim'])} • dados consolidados",
         )
-        self.card_faturamento.update(dados["faturamento_fmt"], f"{dados['quantidade_os']} OS finalizadas")
-        self.card_mao.update(dados["mao_obra_fmt"], self._percentual(dados["mao_obra"], dados["faturamento"]))
-        self.card_pecas.update(dados["pecas_fmt"], self._percentual(dados["pecas"], dados["faturamento"]))
-        self.card_comissoes.update(dados["comissoes_fmt"], f"{len(dados['mecanicos'])} mecânicos")
-        self.card_ticket.update(dados["ticket_medio_fmt"], "média por OS")
-        self.card_os.update(str(dados["quantidade_os"]), "no período")
+        self.card_faturamento.set_values(dados["faturamento_fmt"], f"{dados['quantidade_os']} OS finalizadas")
+        self.card_mao.set_values(dados["mao_obra_fmt"], self._percentual(dados["mao_obra"], dados["faturamento"]))
+        self.card_pecas.set_values(dados["pecas_fmt"], self._percentual(dados["pecas"], dados["faturamento"]))
+        self.card_comissoes.set_values(dados["comissoes_fmt"], f"{len(dados['mecanicos'])} mecânicos")
+        self.card_ticket.set_values(dados["ticket_medio_fmt"], "média por OS")
+        self.card_os.set_values(str(dados["quantidade_os"]), "no período")
 
         self.table.set_rows(dados["mecanicos"], self._render_linha)
-        self.periodo_rows["inicio"].update(formatar_data(dados["inicio"]))
-        self.periodo_rows["fim"].update(formatar_data(dados["fim"]))
-        self.periodo_rows["os"].update(str(dados["quantidade_os"]))
-        self.periodo_rows["comissoes"].update(dados["comissoes_fmt"])
+        self.periodo_rows["inicio"].set_value(formatar_data(dados["inicio"]))
+        self.periodo_rows["fim"].set_value(formatar_data(dados["fim"]))
+        self.periodo_rows["os"].set_value(str(dados["quantidade_os"]))
+        self.periodo_rows["comissoes"].set_value(dados["comissoes_fmt"])
 
-        clear_children(self.composicao_body)
         total = dados["faturamento"]
-        ProgressLine(
-            self.composicao_body,
-            self.app,
-            "Peças",
-            int(dados["pecas"]),
-            int(total),
-            COLORS["purple"],
-        ).pack(fill="x", pady=4)
-        ProgressLine(
-            self.composicao_body,
-            self.app,
-            "Mão de obra",
-            int(dados["mao_obra"]),
-            int(total),
-            COLORS["info"],
-        ).pack(fill="x", pady=4)
-        ctk.CTkLabel(
-            self.composicao_body,
-            text=f"Total: {dados['faturamento_fmt']}",
-            font=self.app.fonts.small_bold,
-            text_color=COLORS["text"],
-            anchor="w",
-        ).pack(fill="x", pady=(6, 0))
+        self.composicao_lines["pecas"].set_values(int(dados["pecas"]), int(total))
+        self.composicao_lines["mao_obra"].set_values(int(dados["mao_obra"]), int(total))
+        self.composicao_total.configure(text=f"Total: {dados['faturamento_fmt']}")
 
     @staticmethod
     def _percentual(parte, total) -> str:

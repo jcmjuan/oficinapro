@@ -41,6 +41,7 @@ class FormDialog(ctk.CTkToplevel):
         height: int = 660,
     ):
         super().__init__(parent)
+        self.withdraw()
         self.app = app
         self.result = None
         self.title(title)
@@ -119,19 +120,27 @@ class FormDialog(ctk.CTkToplevel):
         self.bind("<Escape>", lambda _event: self.cancel())
         self.bind("<Control-Return>", lambda _event: self.save())
         self._center(parent, width, height)
-        self.after(80, self._activate)
+        self.deiconify()
+        self.after_idle(self._activate)
 
     def _center(self, parent, width: int, height: int) -> None:
-        parent.update_idletasks()
         try:
-            x = parent.winfo_rootx() + max(0, (parent.winfo_width() - width) // 2)
-            y = parent.winfo_rooty() + max(0, (parent.winfo_height() - height) // 2)
+            largura, altura = parent.winfo_width(), parent.winfo_height()
+            if largura <= 1 or altura <= 1:
+                x = max(0, (self.winfo_screenwidth() - width) // 2)
+                y = max(0, (self.winfo_screenheight() - height) // 2)
+            else:
+                x = parent.winfo_rootx() + max(0, (largura - width) // 2)
+                y = parent.winfo_rooty() + max(0, (altura - height) // 2)
         except Exception:
             x = y = 80
         self.geometry(f"{width}x{height}+{x}+{y}")
 
     def _activate(self) -> None:
         try:
+            if not self.winfo_viewable():
+                self.after(30, self._activate)
+                return
             self.grab_set()
             self.focus_force()
         except Exception:
@@ -723,6 +732,7 @@ class DocumentoDialog(ctk.CTkToplevel):
 
     def __init__(self, parent, app, ordem: OrdemServico):
         super().__init__(parent)
+        self.withdraw()
         self.app = app
         self.ordem = ordem
         self.pdf_path: Path | None = None
@@ -823,19 +833,27 @@ class DocumentoDialog(ctk.CTkToplevel):
         ).grid(row=0, column=4, padx=(4, 18), pady=12)
 
         self.protocol("WM_DELETE_WINDOW", self.destroy)
-        self.after(80, self._activate)
+        self.deiconify()
+        self.after_idle(self._activate)
 
     def _center(self, parent, width: int, height: int) -> None:
-        parent.update_idletasks()
         try:
-            x = parent.winfo_rootx() + max(0, (parent.winfo_width() - width) // 2)
-            y = parent.winfo_rooty() + max(0, (parent.winfo_height() - height) // 2)
+            largura, altura = parent.winfo_width(), parent.winfo_height()
+            if largura <= 1 or altura <= 1:
+                x = max(0, (self.winfo_screenwidth() - width) // 2)
+                y = max(0, (self.winfo_screenheight() - height) // 2)
+            else:
+                x = parent.winfo_rootx() + max(0, (largura - width) // 2)
+                y = parent.winfo_rooty() + max(0, (altura - height) // 2)
         except Exception:
             x = y = 50
         self.geometry(f"{width}x{height}+{x}+{y}")
 
     def _activate(self) -> None:
         try:
+            if not self.winfo_viewable():
+                self.after(30, self._activate)
+                return
             self.grab_set()
             self.focus_force()
         except Exception:

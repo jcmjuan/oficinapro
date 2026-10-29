@@ -24,10 +24,32 @@ integrada aos mesmos serviços, e a documentação de encerramento.
 - Backup e restauração com verificação de integridade.
 - 28 testes automatizados com `unittest` (biblioteca padrão).
 
+## Conformidade com os requisitos de POO
+
+A tabela abaixo liga cada exigência da atividade aos elementos do código. As
+referências são arquivo e linha; os testes indicados ficam em `tests/`.
+
+| Exigência | Onde está | Evidência |
+|---|---|---|
+| Pelo menos 5 classes | `domain/` | 10 classes de domínio + 1 enumeração (`Pessoa`, `Cliente`, `Mecanico`, `Veiculo`, `ItemOS`, `Peca`, `MaoDeObra`, `OrdemServico`, `Oficina`, `StatusHistorico`, `StatusOS`) |
+| Herança | `pessoa.py:10`, `item_os.py:11` | `Pessoa(ABC)` → `Cliente` (`cliente.py:11`) e `Mecanico` (`mecanico.py:11`); `ItemOS(ABC)` → `Peca` (`peca.py:11`) e `MaoDeObra` (`mao_de_obra.py:15`) |
+| Polimorfismo | `item_os.py:48` | `calcular_subtotal()` é abstrato e implementado em `peca.py:32` e `mao_de_obra.py:47`; `OrdemServico` soma os itens sem testar o tipo concreto (`ordem_servico.py:122`) |
+| Associação | `veiculo.py`, `ordem_servico.py` | `Cliente ↔ Veiculo` bidirecional e sincronizada (`vincular_cliente`); `OrdemServico` referencia cliente, veículo e mecânico |
+| Atributo privado | `ordem_servico.py:92` | `__subtotal` e `__total` com name mangling, expostos apenas por `@property` |
+| Método privado | `ordem_servico.py:122` | `__recalcular_total`, `__validar_datas`, `__validar_transicao` e `__registrar_historico`; `Pessoa.__validar_contato` |
+| Programa principal com 2+ objetos | `main.py` | `python3 main.py --demo` instancia 2 clientes, 2 veículos e 2 ordens de serviço e imprime o resumo |
+| Composição | `ordem_servico.py:271` | `OrdemServico` é dona dos `ItemOS`: o item só existe vinculado à OS, e a remoção passa por `remover_item` |
+| Enumeração | `status_os.py:10` | `StatusOS(str, Enum)` com cinco estados, `from_value`, `rotulo` e `terminal` |
+
+Testes que comprovam os itens acima: `test_pessoa_abstrata` (classe abstrata),
+`test_itens_polimorficos` (subtotais por tipo), `test_totais_e_desconto`
+(polimorfismo através do agregado), `test_encapsulamento_do_total` (total
+somente leitura) e `test_ciclo_completo_e_historico` (transições e histórico).
+
 ## Requisitos
 
 - **Python 3.12+** (o ambiente de desenvolvimento usa Python 3.14).
-- **Chrome ou Chromium** para gerar PDFs (o núcleo não exige ReportLab).
+- **Chrome ou Chromium** para gerar PDFs (o núcleo não exige biblioteca de PDF).
 - Para a interface: **Tkinter** e `customtkinter` (veja `requirements-ui.txt`).
 - Nenhuma dependência externa é necessária para o núcleo, os testes e os
   comandos CLI.
@@ -81,6 +103,7 @@ explícita para facilitar o diagnóstico.
 
 ```bash
 python3 main.py --cli           # painel demonstrativo
+python3 main.py --demo          # modelo em memória (2 clientes, 2 veículos e 2 OS)
 python3 main.py --reset         # recria a base demonstrativa
 python3 main.py --report        # relatório de comissões do mês
 python3 main.py --pdf 2026-0042 # gera o PDF de uma OS
@@ -245,10 +268,10 @@ somente os novos registros de histórico, preservando o caráter append-only.
 ## Geração de PDF
 
 O gerador `infrastructure/pdf/orcamento_pdf.py` monta um HTML com o layout do
-orçamento e usa Chrome/Chromium headless (`--print-to-pdf`). Essa escolha
-permite gerar PDFs de alta qualidade no ambiente da disciplina, que não possui
-ReportLab instalado. A classe é isolada: é possível trocar o motor por
-ReportLab sem alterar os serviços de aplicação.
+orçamento e usa Chrome/Chromium headless (`--print-to-pdf`). É a única
+dependência do projeto para gerar documentos: não há biblioteca Python de PDF
+no núcleo nem na interface. A classe `PdfGenerator` é isolada, então o motor
+pode ser trocado sem alterar os serviços de aplicação.
 
 Para apontar um Chrome específico:
 
@@ -283,7 +306,8 @@ de OS, no editor e na visualização do orçamento/recibo.
 
 A Etapa Final foi validada em execução real, não apenas por compilação:
 
-- **Tk 8.6** e **CustomTkinter 5.2.2** foram usados em uma sessão gráfica local
+- **Tk 8.6** e **CustomTkinter 6.0.0** (versão fixada em
+  `requirements-ui.txt`) foram usados em uma sessão gráfica local
   com janela de **1440 × 900**;
 - as telas, diálogos e fluxos de cadastro, OS, aprovação, finalização, PDF,
   WhatsApp, CSV, backup e restauração foram exercitados;
@@ -292,9 +316,9 @@ A Etapa Final foi validada em execução real, não apenas por compilação:
 - o roteiro criou as OS `2026-0043` e `2026-0044` em banco temporário, sem
   alterar a base demonstrativa do projeto.
 
-O ambiente de automação original não possui `tkinter`, `pip`, `ReportLab` nem
-`pytest`. Por isso, os testes usam `unittest` (stdlib) e os PDFs usam Chrome
-headless. Em uma instalação normal, basta ter Python com Tkinter e executar
+O ambiente de automação original não possui `tkinter` nem `pip`. Por isso, os
+testes usam `unittest` (stdlib) e os PDFs usam Chrome headless. Em uma
+instalação normal, basta ter Python com Tkinter e executar
 `pip install -r requirements-ui.txt` antes de `python3 main.py`.
 
 ---

@@ -1,9 +1,8 @@
 """Geração de orçamentos em PDF via HTML + Chrome headless.
 
-O ambiente da disciplina não possui ReportLab instalado. A solução mantém a
-mesma qualidade visual do material da Etapa 2 usando o Chrome já disponível no
-sistema. A classe é isolada para permitir trocar o motor por ReportLab sem
-alterar a camada de aplicação.
+O gerador monta o HTML com o layout do orçamento e usa o Chrome/Chromium já
+disponível no sistema para produzir o PDF. A classe é isolada para permitir
+trocar o motor sem alterar a camada de aplicação.
 """
 
 from __future__ import annotations

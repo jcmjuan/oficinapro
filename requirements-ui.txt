@@ -1,7 +1,8 @@
 # Dependências da interface final (Etapa Final).
 # O núcleo da Etapa 3 funciona sem elas.
-customtkinter>=5.2.2
+#
+# Versão fixada: a interface foi implementada e validada com CustomTkinter 6.0.0.
+customtkinter==6.0.0
 
-# Alternativa para geração de PDF sem Chrome headless.
-# O núcleo já usa Chrome/Chromium quando disponível.
-reportlab>=4.2
+# O PDF é gerado com Chrome/Chromium headless (veja infrastructure/pdf/).
+# Não há dependência Python para a geração de documentos.

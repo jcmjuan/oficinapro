@@ -8,7 +8,7 @@ import customtkinter as ctk
 
 from domain.status_os import StatusOS
 
-from ..components import Card, DataTable, ProgressLine, SectionHeader, StatCard, SummaryRow, button_style, clear_children, status_badge
+from ..components import Card, DataTable, ProgressLine, SectionHeader, StatCard, SummaryRow, button_style, status_badge
 from ..theme import COLORS, status_style
 from ..utils import formatar_brl, formatar_data
 from .base import BaseScreen
@@ -66,6 +66,20 @@ class DashboardScreen(BaseScreen):
         SectionHeader(self.status_card, app, "Status das OS", "Distribuição atual da fila").pack(fill="x", padx=16, pady=(14, 8))
         self.status_body = ctk.CTkFrame(self.status_card, fg_color="transparent")
         self.status_body.pack(fill="x", padx=16, pady=(0, 14))
+        self.status_lines = {}
+        for status in StatusOS:
+            _, cor = status_style(status)
+            linha = ProgressLine(self.status_body, self.app, status.rotulo, 0, 0, cor)
+            linha.pack(fill="x", pady=3)
+            self.status_lines[status] = linha
+        self.status_total = ctk.CTkLabel(
+            self.status_body,
+            text="",
+            font=app.fonts.tiny,
+            text_color=COLORS["muted"],
+            anchor="w",
+        )
+        self.status_total.pack(fill="x", pady=(6, 0))
 
         self.resumo_card = Card(right)
         self.resumo_card.grid(row=1, column=0, sticky="ew", pady=(14, 0))
@@ -97,40 +111,33 @@ class DashboardScreen(BaseScreen):
             "Dashboard",
             f"Visão geral da oficina • {date.today():%d/%m/%Y}",
         )
-        self.card_faturamento.update(
+        self.card_faturamento.set_values(
             resumo["faturamento_fmt"],
             f"{resumo['quantidade_os']} OS finalizadas no mês",
         )
-        self.card_mao_obra.update(
+        self.card_mao_obra.set_values(
             resumo["mao_obra_fmt"],
             f"{self._percentual(resumo['mao_obra'], resumo['faturamento'])} do faturamento",
         )
-        self.card_pecas.update(
+        self.card_pecas.set_values(
             resumo["pecas_fmt"],
             f"{self._percentual(resumo['pecas'], resumo['faturamento'])} do faturamento",
         )
-        self.card_comissoes.update(
+        self.card_comissoes.set_values(
             resumo["comissoes_fmt"],
             f"{len(resumo['mecanicos'])} mecânicos no período",
         )
 
-        clear_children(self.status_body)
-        for status in StatusOS:
-            quantidade = contagem.get(status.value, 0)
-            _, cor = status_style(status)
-            ProgressLine(self.status_body, self.app, status.rotulo, quantidade, total, cor).pack(fill="x", pady=3)
-        ctk.CTkLabel(
-            self.status_body,
-            text=f"{total} ordens no total • {dashboard['abertas']} em aberto",
-            font=self.app.fonts.tiny,
-            text_color=COLORS["muted"],
-            anchor="w",
-        ).pack(fill="x", pady=(6, 0))
+        for status, linha in self.status_lines.items():
+            linha.set_values(contagem.get(status.value, 0), total)
+        self.status_total.configure(
+            text=f"{total} ordens no total • {dashboard['abertas']} em aberto"
+        )
 
-        self.resumo_rows["ticket"].update(resumo["ticket_medio_fmt"])
-        self.resumo_rows["finalizadas"].update(str(resumo["quantidade_os"]))
-        self.resumo_rows["clientes"].update(str(contexto.clientes.contar()))
-        self.resumo_rows["veiculos"].update(str(contexto.veiculos.contar()))
+        self.resumo_rows["ticket"].set_value(resumo["ticket_medio_fmt"])
+        self.resumo_rows["finalizadas"].set_value(str(resumo["quantidade_os"]))
+        self.resumo_rows["clientes"].set_value(str(contexto.clientes.contar()))
+        self.resumo_rows["veiculos"].set_value(str(contexto.veiculos.contar()))
 
         ultimas = contexto.ordens.ultimas(8)
         self.recent.set_rows(ultimas, self._render_recent)

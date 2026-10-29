@@ -79,14 +79,14 @@ O objetivo é entregar um **núcleo executável, testável e documentado**, pres
 | Equipe | DevSolo Studio |
 | Integrante | Juan Carlos Matos |
 | Ambiente de desenvolvimento | Python 3.14.4, SQLite 3, Chrome 156 headless, Linux |
-| Ambiente previsto para a interface | Python 3.12+, CustomTkinter 5.x |
+| Ambiente previsto para a interface | Python 3.12+, CustomTkinter 6.x |
 | Testes | `unittest` (stdlib), 28 casos |
 | Entrega | 05/11/2026 |
 | Status | Concluído para submissão |
 | Documento | `docs/etapa3/Etapa3_Implementacao.md` |
 | PDF | `docs/etapa3/Etapa3_Implementacao.pdf` |
 
-> **Observação sobre o ambiente:** a máquina usada no desenvolvimento não possui `pip`, `tkinter`, `customtkinter`, `reportlab` nem `pytest`. Por isso o núcleo usa apenas a biblioteca padrão, os testes usam `unittest` e o PDF é gerado com Chrome headless. A interface CustomTkinter será implementada e validada na Etapa Final, em ambiente com as dependências instaladas.
+> **Observação sobre o ambiente:** a máquina usada no desenvolvimento do núcleo não possui `pip`, `tkinter`, `customtkinter` nem `pytest`. Por isso o núcleo usa apenas a biblioteca padrão, os testes usam `unittest` e o PDF é gerado com Chrome headless. A interface CustomTkinter foi implementada e validada na Etapa Final, em ambiente com as dependências instaladas (CustomTkinter 6.0.0).
 
 # 2. Visão geral da solução
 
@@ -223,13 +223,13 @@ class MaoDeObra(ItemOS):
         return (self.horas * self.taxa_horaria).quantize(Decimal("0.01"))
 ```
 
-A `OrdemServico` não precisa conhecer o tipo concreto para calcular o total: ela percorre `self.__itens` e chama `calcular_subtotal()`. O mesmo vale para `subtotal_pecas` e `subtotal_mao_obra`, que usam `item.tipo()`.
+A `OrdemServico` não precisa conhecer o tipo concreto para calcular o total: ela percorre `self._itens` e chama `calcular_subtotal()`. O mesmo vale para `subtotal_pecas` e `subtotal_mao_obra`, que usam `item.tipo()`.
 
 ## 3.3 Encapsulamento e invariantes
 
 O agregado `OrdemServico` mantém:
 
-- `__itens`: lista privada de itens;
+- `_itens`: lista de itens protegida (acessada pela propriedade `itens`, que devolve uma tupla);
 - `__subtotal`: soma dos itens;
 - `__total`: subtotal menos desconto;
 - `_historico`: lista de transições;
@@ -256,7 +256,7 @@ A Etapa 2 recomendava `Decimal` na implementação. A Etapa 3 adota essa recomen
 _CENTAVOS = Decimal("0.01")
 
 def __recalcular_total(self) -> None:
-    subtotal = sum((item.calcular_subtotal() for item in self.__itens), Decimal("0.00"))
+    subtotal = sum((item.calcular_subtotal() for item in self._itens), Decimal("0.00"))
     subtotal = subtotal.quantize(_CENTAVOS)
     if self._desconto > subtotal:
         raise RegraNegocioError("Desconto não pode ser maior que o subtotal.")
@@ -436,7 +436,7 @@ O link é gerado no formato `https://wa.me/55DDDNUMERO?text=...`. A mensagem inc
 
 ## 6.1 Decisão: Chrome headless
 
-O ambiente da disciplina não possui ReportLab. Para não bloquear a entrega, o gerador monta um HTML com o layout do orçamento e usa o Chrome/Chromium já instalado:
+O gerador monta um HTML com o layout do orçamento e usa o Chrome/Chromium já instalado para produzir o PDF, sem dependência de biblioteca Python:
 
 ```text
 google-chrome --headless=new --no-sandbox --disable-gpu \
@@ -444,7 +444,7 @@ google-chrome --headless=new --no-sandbox --disable-gpu \
   file:///tmp/.../orcamento.html
 ```
 
-A classe `PdfGenerator` está isolada em `infrastructure/pdf/orcamento_pdf.py`. Se o ambiente da Etapa Final tiver ReportLab, basta implementar a mesma interface e injetar o novo gerador no `OrcamentoService`.
+A classe `PdfGenerator` está isolada em `infrastructure/pdf/orcamento_pdf.py`. O motor é acessado por uma interface única, então é possível substituí-lo sem alterar o `OrcamentoService`.
 
 <div class="page-break"></div>
 
@@ -562,7 +562,7 @@ python3 -m unittest discover -s tests -v
 | Herança em tabela única para itens | Leitura e histórico simples | Colunas específicas ficam nulas |
 | Histórico append-only | Auditoria e rastreabilidade | Mais linhas no banco |
 | Soft delete | Preserva histórico de OS | Consultas precisam filtrar `ativo` |
-| PDF via Chrome headless | Funciona sem ReportLab | Depende de Chrome instalado |
+| PDF via Chrome headless | Sem dependência Python para PDF | Depende de Chrome instalado |
 | Testes com `unittest` | Sem `pytest` no ambiente | Menos recursos que pytest |
 | Seed com 22 OS | Reproduz os totais da Etapa 2 | Mais dados para manter |
 | Repositórios com SQL explícito | Transparência e controle | Mais código que um ORM |

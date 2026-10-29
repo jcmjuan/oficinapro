@@ -92,10 +92,10 @@ A interface é uma **camada de composição**. Ela não recalcula totais, não a
 python3 main.py                 # UI (fallback para CLI se Tkinter/CustomTkinter faltar)
 python3 main.py --ui            # força a UI e falha com diagnóstico se indisponível
 python3 main.py --cli           # painel CLI
-python3 main.py --db outro.db   # banco alternativo
+python3 main.py --demo          # modelo em memória (2 clientes, 2 veículos e 2 OS)
 ```
 
-O fluxo padrão cria/abre o banco, executa a seed quando necessário, fecha a conexão de preparação e abre a janela. Se a importação de `tkinter`/`customtkinter` falhar, o sistema exibe uma mensagem e cai no painel CLI; com `--ui`, o erro é explícito. Essa decisão mantém o projeto demonstrável em ambientes headless e em laboratórios sem dependências gráficas.
+O fluxo padrão cria/abre o banco, executa a seed quando necessário, fecha a conexão de preparação e abre a janela. Se a importação de `tkinter`/`customtkinter` falhar, o sistema exibe uma mensagem e cai no painel CLI; com `--ui`, o erro é explícito. Essa decisão mantém o projeto demonstrável em ambientes headless e em laboratórios sem dependências gráficas. O caminho do banco pode ser trocado com `--db`.
 
 # 3. Arquitetura da interface
 
@@ -140,7 +140,7 @@ A sidebar mantém a seção ativa em laranja e reutiliza instâncias de tela. `s
 - `Nova OS` abre o editor da OS recém-criada;
 - `Voltar` retorna à fila de ordens.
 
-`refresh_screens()` atualiza as telas já instanciadas após mutações, sem recriar a janela. Uma falha em uma tela não derruba as demais.
+`refresh_screens()` atualiza a tela visível após mutações e deixa as demais para a próxima navegação, sem recriar a janela. Uma falha em uma tela não derruba as demais.
 
 ## 3.4 Tema e componentes
 
@@ -325,6 +325,24 @@ O banco é criado em `infrastructure/migrations.py` com `PRAGMA user_version = 1
 
 O painel CLI continua disponível em `python3 main.py --cli` e é usado como fallback. Ele compartilha os mesmos repositórios e serviços, o que permite demonstrar o sistema mesmo sem interface gráfica.
 
+## 6.4 Conformidade com os requisitos de POO
+
+A tabela abaixo conecta cada exigência da atividade aos elementos implementados. As referências de linha correspondem ao código entregue; os testes ficam em `tests/`.
+
+| Exigência | Onde está | Como foi atendida | Evidência |
+|---|---|---|---|
+| Pelo menos 5 classes | `domain/` | 10 classes de domínio + 1 enumeração | `Pessoa`, `Cliente`, `Mecanico`, `Veiculo`, `ItemOS`, `Peca`, `MaoDeObra`, `OrdemServico`, `Oficina`, `StatusHistorico`, `StatusOS` |
+| Herança | `pessoa.py:10`, `item_os.py:11` | `Pessoa` é superclasse de `Cliente` e `Mecanico`; `ItemOS` é superclasse de `Peca` e `MaoDeObra` | `test_pessoa_abstrata`, `test_itens_polimorficos` |
+| Polimorfismo | `item_os.py:48` | `calcular_subtotal()` é abstrato; cada subclasse implementa o cálculo e a OS soma os itens sem testar o tipo concreto | `test_totais_e_desconto` |
+| Associação | `veiculo.py` | `Cliente 1 — 0..* Veiculo` bidirecional e sincronizada; a OS referencia cliente, veículo e mecânico | `test_relacionamento_cliente_veiculo` |
+| Atributo privado | `ordem_servico.py:92` | `__subtotal` e `__total` com name mangling; acesso somente por propriedades | `test_encapsulamento_do_total` |
+| Método privado | `ordem_servico.py:122` | `__recalcular_total`, `__validar_datas`, `__validar_transicao`, `__registrar_historico`; `Pessoa.__validar_contato` | `test_ciclo_completo_e_historico` |
+| Programa principal com 2+ objetos | `main.py` | `python3 main.py --demo` instancia 2 clientes, 2 veículos, 1 mecânico e 2 OS, exercitando o ciclo de vida | saída do comando `--demo` |
+| Composição | `ordem_servico.py:271` | A OS é dona dos itens; o item só existe no agregado e a remoção passa por `remover_item` | `test_totais_e_desconto` |
+| Enumeração | `status_os.py:10` | `StatusOS(str, Enum)` com cinco estados, `from_value`, `rotulo` e `terminal` | `test_ciclo_completo_e_historico` |
+
+A interface reaproveita o mesmo desenho: `BaseScreen` e `FormDialog` são classes base com comportamento comum, e as telas e diálogos concretos apenas especializam o conteúdo.
+
 # 7. Qualidade e validação
 
 ## 7.1 Testes automatizados
@@ -345,7 +363,7 @@ Resultado: sem erros.
 
 ## 7.3 Validação de execução da interface
 
-A interface foi executada em ambiente com **Python 3.14.4**, **Tk 8.6** e **CustomTkinter 5.2.2**, em janela de 1440 × 900. Foram capturadas as telas e diálogos apresentados neste relatório. Além da inspeção visual, um roteiro de integração exercitou os fluxos reais:
+A interface foi executada em ambiente com **Python 3.14.4**, **Tk 8.6** e **CustomTkinter 6.0.0** (versão fixada em `requirements-ui.txt`), em janela de 1440 × 900. Foram capturadas as telas e diálogos apresentados neste relatório. Além da inspeção visual, um roteiro de integração exercitou os fluxos reais:
 
 | # | Fluxo validado | Resultado |
 |---|---|---|
@@ -430,7 +448,7 @@ python3 main.py --backup
 
 - A aplicação é desktop e local; não há autenticação, perfis ou sincronização entre máquinas.
 - O controle de pagamento de comissões é apenas informativo (“A pagar”); não há baixa financeira.
-- O PDF depende de Chrome/Chromium headless; ReportLab não é usado.
+- O PDF depende de Chrome/Chromium headless instalado no sistema.
 - A interface exige Tkinter/CustomTkinter; em ambiente headless o sistema cai no CLI.
 - Não há controle de estoque, agenda de oficina ou emissão fiscal.
 - Os testes da UI são de integração manual/automatizada local; não há suíte de testes visuais.
@@ -441,7 +459,7 @@ python3 main.py --backup
 - Adicionar estoque de peças e alertas de mínimo.
 - Criar agenda de serviços e previsão de entrega.
 - Empacotar com PyInstaller para distribuição.
-- Avaliar migração do PDF para ReportLab ou WeasyPrint.
+- Avaliar alternativas de geração de PDF que não dependam de navegador.
 - Adicionar autenticação e trilha de auditoria por usuário.
 - Ampliar testes automatizados de interface com uma ferramenta dedicada.
 
