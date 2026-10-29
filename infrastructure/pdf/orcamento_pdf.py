@@ -12,7 +12,6 @@ import os
 import shutil
 import subprocess
 import tempfile
-from decimal import Decimal
 from pathlib import Path
 from string import Template
 
@@ -202,17 +201,11 @@ _TEMPLATE = Template(
 def _linhas_itens(ordem: OrdemServico) -> str:
     linhas = []
     for item in ordem.itens:
-        if item.tipo() == "PECA":
-            tipo = "Peça"
-            quantidade = f"{item.quantidade:.2f}".rstrip("0").rstrip(".")
-        else:
-            tipo = "Mão de obra"
-            quantidade = f"{getattr(item, 'horas', Decimal('0')):.2f}".rstrip("0").rstrip(".") + " h"
         linhas.append(
             "<tr>"
-            f"<td><span class='tipo'>{html.escape(tipo)}</span></td>"
+            f"<td><span class='tipo'>{html.escape(item.rotulo_tipo)}</span></td>"
             f"<td>{html.escape(item.descricao)}</td>"
-            f"<td>{html.escape(quantidade)}</td>"
+            f"<td>{html.escape(item.quantidade_documento)}</td>"
             f"<td>{formatar_brl(item.valor_unitario)}</td>"
             f"<td>{formatar_brl(item.calcular_subtotal())}</td>"
             "</tr>"

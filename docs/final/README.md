@@ -68,7 +68,7 @@ fallback, em `/tmp/opencode/docgen/node_modules`.
 4. Experiência do usuário: dashboard, cadastros, operação, relatórios e configurações.
 5. Fluxos principais: abertura, transições, orçamento/recibo e WhatsApp.
 6. Integração com o núcleo, sem duplicação de regras.
-7. Qualidade e validação: 28 testes, compilação e 14 fluxos de UI.
+7. Qualidade e validação: 29 testes, compilação e 14 fluxos de UI.
 8. Dados demonstrativos e resultados.
 9. Instalação e execução.
 10. Limitações e próximos passos.
@@ -81,7 +81,7 @@ fallback, em `/tmp/opencode/docgen/node_modules`.
 3. Abrir uma OS em orçamento e mostrar itens, desconto e histórico.
 4. Aprovar, iniciar e finalizar; gerar o PDF e abrir o WhatsApp.
 5. Mostrar relatórios, CSV, backup e restauração.
-6. Encerrar com a validação: 28 testes e 14 fluxos reais.
+6. Encerrar com a validação: 29 testes e 14 fluxos reais.
 
 ## Observações
 

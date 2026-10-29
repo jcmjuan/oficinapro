@@ -22,7 +22,7 @@ integrada aos mesmos serviços, e a documentação de encerramento.
 - Orçamento/recibo em PDF com identidade visual do projeto.
 - Link de WhatsApp via `wa.me`.
 - Backup e restauração com verificação de integridade.
-- 28 testes automatizados com `unittest` (biblioteca padrão).
+- 29 testes automatizados com `unittest` (biblioteca padrão).
 
 ## Conformidade com os requisitos de POO
 
@@ -31,15 +31,15 @@ referências são arquivo e linha; os testes indicados ficam em `tests/`.
 
 | Exigência | Onde está | Evidência |
 |---|---|---|
-| Pelo menos 5 classes | `domain/` | 10 classes de domínio + 1 enumeração (`Pessoa`, `Cliente`, `Mecanico`, `Veiculo`, `ItemOS`, `Peca`, `MaoDeObra`, `OrdemServico`, `Oficina`, `StatusHistorico`, `StatusOS`) |
-| Herança | `pessoa.py:10`, `item_os.py:11` | `Pessoa(ABC)` → `Cliente` (`cliente.py:11`) e `Mecanico` (`mecanico.py:11`); `ItemOS(ABC)` → `Peca` (`peca.py:11`) e `MaoDeObra` (`mao_de_obra.py:15`) |
-| Polimorfismo | `item_os.py:48` | `calcular_subtotal()` é abstrato e implementado em `peca.py:32` e `mao_de_obra.py:47`; `OrdemServico` soma os itens sem testar o tipo concreto (`ordem_servico.py:122`) |
+| Pelo menos 5 classes | `domain/` | 10 classes de domínio + 2 enumerações (`Pessoa`, `Cliente`, `Mecanico`, `Veiculo`, `ItemOS`, `Peca`, `MaoDeObra`, `OrdemServico`, `Oficina`, `StatusHistorico`, `StatusOS`, `TipoItem`) |
+| Herança | `pessoa.py:10`, `item_os.py:16` | `Pessoa(ABC)` → `Cliente` (`cliente.py:11`) e `Mecanico` (`mecanico.py:11`); `ItemOS(ABC)` → `Peca` (`peca.py:12`) e `MaoDeObra` (`mao_de_obra.py:16`) |
+| Polimorfismo | `item_os.py:53` | `calcular_subtotal()`, `tipo()` e `quantidade_calculo()` são abstratos e implementados em `peca.py:33` e `mao_de_obra.py:48`; a OS, o PDF e o relatório usam `rotulo_tipo`, `quantidade_formatada` e `base_comissao` sem testar o tipo concreto |
 | Associação | `veiculo.py`, `ordem_servico.py` | `Cliente ↔ Veiculo` bidirecional e sincronizada (`vincular_cliente`); `OrdemServico` referencia cliente, veículo e mecânico |
-| Atributo privado | `ordem_servico.py:92` | `__subtotal` e `__total` com name mangling, expostos apenas por `@property` |
-| Método privado | `ordem_servico.py:122` | `__recalcular_total`, `__validar_datas`, `__validar_transicao` e `__registrar_historico`; `Pessoa.__validar_contato` |
+| Atributo privado | `ordem_servico.py:93` | `__subtotal` e `__total` com name mangling, expostos apenas por `@property` |
+| Método privado | `ordem_servico.py:123` | `__recalcular_total`, `__validar_datas`, `__validar_transicao` e `__registrar_historico`; `Pessoa.__validar_contato` |
 | Programa principal com 2+ objetos | `main.py` | `python3 main.py --demo` instancia 2 clientes, 2 veículos e 2 ordens de serviço e imprime o resumo |
-| Composição | `ordem_servico.py:271` | `OrdemServico` é dona dos `ItemOS`: o item só existe vinculado à OS, e a remoção passa por `remover_item` |
-| Enumeração | `status_os.py:10` | `StatusOS(str, Enum)` com cinco estados, `from_value`, `rotulo` e `terminal` |
+| Composição | `ordem_servico.py:276` | `OrdemServico` é dona dos `ItemOS`: o item só existe vinculado à OS, e a remoção passa por `remover_item` |
+| Enumeração | `status_os.py:10`, `tipo_item.py:10` | `StatusOS(str, Enum)` com cinco estados e `TipoItem(str, Enum)` com os dois tipos de item; ambos têm `from_value` e rótulo legível |
 
 Testes que comprovam os itens acima: `test_pessoa_abstrata` (classe abstrata),
 `test_itens_polimorficos` (subtotais por tipo), `test_totais_e_desconto`
@@ -121,7 +121,7 @@ O PDF é gravado em `orcamentos/OS-<numero>.pdf`. O banco padrão é
 python3 -m unittest discover -s tests -v
 ```
 
-Resultado esperado: **28 testes OK**. Os testes cobrem domínio, validações,
+Resultado esperado: **29 testes OK**. Os testes cobrem domínio, validações,
 transições de status, persistência, backup/restauração, serviços, relatórios,
 WhatsApp e geração de PDF (quando o Chrome está disponível).
 
@@ -172,6 +172,7 @@ oficinapro/
 │   ├── ordem_servico.py            # agregado raiz
 │   ├── oficina.py
 │   ├── status_os.py
+│   ├── tipo_item.py                # enumeração dos tipos de item
 │   ├── status_historico.py
 │   ├── validators.py
 │   └── exceptions.py

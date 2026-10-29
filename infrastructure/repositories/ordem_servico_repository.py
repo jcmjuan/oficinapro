@@ -6,12 +6,13 @@ import sqlite3
 from datetime import date, datetime
 from decimal import Decimal
 
-from domain.exceptions import NaoEncontradoError, RegraNegocioError
+from domain.exceptions import NaoEncontradoError, RegraNegocioError, ValidacaoError
 from domain.item_os import ItemOS
 from domain.mao_de_obra import MaoDeObra
 from domain.ordem_servico import OrdemServico
 from domain.peca import Peca
 from domain.status_os import StatusOS
+from domain.tipo_item import TipoItem
 
 from ..database import Database
 from .mappers import (
@@ -116,10 +117,11 @@ class OrdemServicoRepository:
                         INSERT INTO item_os
                             (ordem_servico_id, tipo, descricao, quantidade,
                              valor_unitario, codigo_peca, fornecedor)
-                        VALUES (?, 'PECA', ?, ?, ?, ?, ?)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
                         """,
                         (
                             ordem.id,
+                            item.tipo().value,
                             item.descricao,
                             str(item.quantidade),
                             str(item.valor_unitario),
@@ -133,10 +135,11 @@ class OrdemServicoRepository:
                         INSERT INTO item_os
                             (ordem_servico_id, tipo, descricao, quantidade,
                              valor_unitario, horas, taxa_horaria, mecanico_id)
-                        VALUES (?, 'MAO_DE_OBRA', ?, '1.00', ?, ?, ?, ?)
+                        VALUES (?, ?, ?, '1.00', ?, ?, ?, ?)
                         """,
                         (
                             ordem.id,
+                            item.tipo().value,
                             item.descricao,
                             str(item.taxa_horaria),
                             str(item.horas),
@@ -182,7 +185,13 @@ class OrdemServicoRepository:
             (ordem_id,),
         )
         for linha in linhas:
-            if linha["tipo"] == "PECA":
+            try:
+                tipo = TipoItem.from_value(linha["tipo"])
+            except ValidacaoError as exc:
+                raise RegraNegocioError(
+                    f"Tipo de item inválido no banco: {linha['tipo']}"
+                ) from exc
+            if tipo is TipoItem.PECA:
                 item: ItemOS = Peca(
                     linha["descricao"],
                     Decimal(str(linha["quantidade"])),
@@ -190,7 +199,7 @@ class OrdemServicoRepository:
                     codigo=linha["codigo_peca"],
                     fornecedor=linha["fornecedor"],
                 )
-            elif linha["tipo"] == "MAO_DE_OBRA":
+            elif tipo is TipoItem.MAO_DE_OBRA:
                 mecanico = mecanico_responsavel
                 if linha["mecanico_id"] and (
                     mecanico is None or mecanico.id != linha["mecanico_id"]
@@ -208,7 +217,9 @@ class OrdemServicoRepository:
                     mecanico,
                 )
             else:
-                raise RegraNegocioError(f"Tipo de item inválido no banco: {linha['tipo']}")
+                raise RegraNegocioError(
+                    f"Tipo de item não suportado: {tipo.value}"
+                )
             item.id = linha["id"]
             itens.append(item)
         return itens

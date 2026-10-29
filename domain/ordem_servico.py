@@ -14,6 +14,7 @@ from .mecanico import Mecanico
 from .peca import Peca
 from .status_historico import StatusHistorico
 from .status_os import StatusOS
+from .tipo_item import TipoItem
 from .validators import (
     decimal_valor,
     formatar_brl,
@@ -243,7 +244,11 @@ class OrdemServico:
     @property
     def subtotal_pecas(self) -> Decimal:
         return sum(
-            (item.calcular_subtotal() for item in self._itens if item.tipo() == "PECA"),
+            (
+                item.calcular_subtotal()
+                for item in self._itens
+                if item.tipo() is TipoItem.PECA
+            ),
             _ZERO,
         ).quantize(_CENTAVOS)
 
@@ -253,7 +258,7 @@ class OrdemServico:
             (
                 item.calcular_subtotal()
                 for item in self._itens
-                if item.tipo() == "MAO_DE_OBRA"
+                if item.tipo() is TipoItem.MAO_DE_OBRA
             ),
             _ZERO,
         ).quantize(_CENTAVOS)

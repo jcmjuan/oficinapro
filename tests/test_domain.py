@@ -8,6 +8,7 @@ from decimal import Decimal
 
 from domain.cliente import Cliente
 from domain.exceptions import RegraNegocioError, TransicaoInvalida, ValidacaoError
+from domain.item_os import ItemOS
 from domain.mao_de_obra import MaoDeObra
 from domain.mecanico import Mecanico
 from domain.oficina import Oficina
@@ -15,6 +16,7 @@ from domain.ordem_servico import OrdemServico
 from domain.peca import Peca
 from domain.pessoa import Pessoa
 from domain.status_os import StatusOS
+from domain.tipo_item import TipoItem
 from domain.validators import (
     formatar_brl,
     formatar_documento,
@@ -104,12 +106,27 @@ class TestEntidades(unittest.TestCase):
         _, mecanico, _ = base()
         peca = Peca("Filtro", 2, 45)
         mao = MaoDeObra("Serviço", Decimal("1.5"), 120, mecanico)
-        self.assertEqual(peca.tipo(), "PECA")
+        self.assertIsInstance(peca, ItemOS)
+        self.assertIsInstance(mao, ItemOS)
+        self.assertIs(peca.tipo(), TipoItem.PECA)
+        self.assertIs(mao.tipo(), TipoItem.MAO_DE_OBRA)
         self.assertEqual(peca.calcular_subtotal(), Decimal("90.00"))
-        self.assertEqual(mao.tipo(), "MAO_DE_OBRA")
         self.assertEqual(mao.calcular_subtotal(), Decimal("180.00"))
-        self.assertIsInstance(mao, object)
+        self.assertEqual(peca.rotulo_tipo, "Peça")
+        self.assertEqual(mao.rotulo_tipo, "Mão de obra")
+        self.assertEqual(peca.quantidade_formatada, "2.00")
+        self.assertEqual(mao.quantidade_formatada, "1.50 h")
+        self.assertEqual(peca.quantidade_documento, "2")
+        self.assertEqual(mao.quantidade_documento, "1.5 h")
+        self.assertIsNone(peca.base_comissao)
+        self.assertEqual(mao.base_comissao, Decimal("180.00"))
+        self.assertIs(mao.executor, mecanico)
         self.assertIn("Filtro", peca.descrever())
+
+    def test_tipo_item_invalido(self):
+        with self.assertRaises(ValidacaoError):
+            TipoItem.from_value("SERVICO")
+        self.assertIs(TipoItem.from_value("peca"), TipoItem.PECA)
 
     def test_quilometragem_nao_diminui(self):
         _, _, veiculo = base()

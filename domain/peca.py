@@ -5,6 +5,7 @@ from __future__ import annotations
 from decimal import Decimal
 
 from .item_os import ItemOS
+from .tipo_item import TipoItem
 from .validators import formatar_brl
 
 
@@ -32,8 +33,20 @@ class Peca(ItemOS):
     def calcular_subtotal(self) -> Decimal:
         return (self.quantidade * self.valor_unitario).quantize(Decimal("0.01"))
 
-    def tipo(self) -> str:
-        return "PECA"
+    def tipo(self) -> TipoItem:
+        return TipoItem.PECA
+
+    @property
+    def quantidade_calculo(self) -> Decimal:
+        return self.quantidade
+
+    @property
+    def unidade(self) -> str:
+        return ""
+
+    @property
+    def detalhe(self) -> str:
+        return " • ".join(parte for parte in (self._codigo, self._fornecedor) if parte)
 
     def descrever(self) -> str:
         return (

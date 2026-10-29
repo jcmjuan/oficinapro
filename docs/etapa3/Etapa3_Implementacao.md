@@ -3,7 +3,7 @@
   <div class="cover-kicker">AVALIAÇÃO G2 • ETAPA 3</div>
   <h1 class="cover-title">OficinaPro <span>v1.0</span></h1>
   <div class="cover-subtitle">Implementação do Núcleo</div>
-  <p class="cover-lead">Domínio orientado a objetos, persistência SQLite, serviços de aplicação, relatórios gerenciais, orçamento em PDF e integração com WhatsApp — com 28 testes automatizados.</p>
+  <p class="cover-lead">Domínio orientado a objetos, persistência SQLite, serviços de aplicação, relatórios gerenciais, orçamento em PDF e integração com WhatsApp — com 29 testes automatizados.</p>
   <div class="cover-meta">
     <div><strong>Equipe</strong><br>DevSolo Studio</div>
     <div><strong>Integrante</strong><br>Juan Carlos Matos</div>
@@ -58,7 +58,7 @@ O objetivo é entregar um **núcleo executável, testável e documentado**, pres
 | Implementar casos de uso | Serviços de OS, orçamento, relatórios, configuração e WhatsApp |
 | Implementar relatórios | Faturamento, mão de obra, peças, ticket médio e comissões por mecânico |
 | Implementar PDF | Orçamento em A4 com identidade visual do projeto |
-| Implementar testes | 28 testes automatizados com `unittest` |
+| Implementar testes | 29 testes automatizados com `unittest` |
 | Preservar a Etapa 2 | Nenhum arquivo da Etapa 2 foi alterado; a Etapa 3 tem documentação própria |
 
 ## 1.3 Escopo entregue
@@ -80,7 +80,7 @@ O objetivo é entregar um **núcleo executável, testável e documentado**, pres
 | Integrante | Juan Carlos Matos |
 | Ambiente de desenvolvimento | Python 3.14.4, SQLite 3, Chrome 156 headless, Linux |
 | Ambiente previsto para a interface | Python 3.12+, CustomTkinter 6.x |
-| Testes | `unittest` (stdlib), 28 casos |
+| Testes | `unittest` (stdlib), 29 casos |
 | Entrega | 05/11/2026 |
 | Status | Concluído para submissão |
 | Documento | `docs/etapa3/Etapa3_Implementacao.md` |
@@ -118,6 +118,7 @@ oficinapro/
 │   ├── exceptions.py
 │   ├── validators.py
 │   ├── status_os.py
+│   ├── tipo_item.py
 │   ├── status_historico.py
 │   ├── pessoa.py
 │   ├── cliente.py
@@ -197,6 +198,7 @@ RelatorioService.resumo() / comissoes_por_mecanico()
 | `OrdemServico` | Agregado raiz, itens, desconto, total, status e histórico |
 | `Oficina` | Configuração e emissão de números de OS |
 | `StatusOS` | Enumeração do ciclo de vida |
+| `TipoItem` | Enumeração dos tipos de item (`PECA` e `MAO_DE_OBRA`) |
 | `StatusHistorico` | Registro imutável de transição |
 
 ## 3.2 Herança e polimorfismo
@@ -223,7 +225,7 @@ class MaoDeObra(ItemOS):
         return (self.horas * self.taxa_horaria).quantize(Decimal("0.01"))
 ```
 
-A `OrdemServico` não precisa conhecer o tipo concreto para calcular o total: ela percorre `self._itens` e chama `calcular_subtotal()`. O mesmo vale para `subtotal_pecas` e `subtotal_mao_obra`, que usam `item.tipo()`.
+A `OrdemServico` não precisa conhecer o tipo concreto para calcular o total: ela percorre `self._itens` e chama `calcular_subtotal()`. Para separar peças e mão de obra, `item.tipo()` devolve a enumeração `TipoItem` (`PECA` ou `MAO_DE_OBRA`). A interface, o PDF e o relatório usam `rotulo_tipo`, `quantidade_formatada` e `base_comissao`, implementados por cada subclasse, sem `isinstance` nas camadas de aplicação e apresentação.
 
 ## 3.3 Encapsulamento e invariantes
 
@@ -506,23 +508,23 @@ Os testes usam `unittest` da biblioteca padrão, pois o ambiente não possui `py
 
 | Arquivo | Foco | Casos |
 |---|---|---:|
-| `tests/test_domain.py` | Validadores, entidades, itens, totais, transições, encapsulamento e Oficina | 16 |
+| `tests/test_domain.py` | Validadores, entidades, itens, totais, transições, encapsulamento e Oficina | 17 |
 | `tests/test_repositories.py` | CRUD, duplicidade, round-trip da OS, histórico append-only e backup/restauração | 5 |
 | `tests/test_services.py` | Criação de OS, ciclo completo, relatórios, CSV, WhatsApp, PDF e configuração | 7 |
-| **Total** | | **28** |
+| **Total** | | **29** |
 
 Cada teste usa banco temporário ou banco em memória, evitando dependência de estado externo. O teste de PDF é pulado automaticamente quando Chrome/Chromium não está disponível.
 
 ## 8.2 Execução
 
 <figure>
-  <img src="capturas/testes.png" alt="Saída dos 28 testes automatizados">
-  <figcaption>Figura 6 — Execução de `python3 -m unittest discover -s tests -v`: 28 testes OK.</figcaption>
+  <img src="capturas/testes.png" alt="Saída dos 29 testes automatizados">
+  <figcaption>Figura 6 — Execução de `python3 -m unittest discover -s tests -v`: 29 testes OK.</figcaption>
 </figure>
 
 ```bash
 python3 -m unittest discover -s tests -v
-# Ran 28 tests in 1.593s
+# Ran 29 tests in 1.6s
 # OK
 ```
 
@@ -548,7 +550,7 @@ python3 -m unittest discover -s tests -v
 
 ## 8.4 Resultados
 
-- **28 testes executados, 28 aprovados, 0 falhas.**
+- **29 testes executados, 29 aprovados, 0 falhas.**
 - Seed reproduz **R$ 18.450,00** de faturamento, **R$ 6.320,00** de mão de obra, **R$ 12.130,00** de peças e **R$ 743,00** de comissões.
 - PDF gerado com sucesso (1 página A4, aproximadamente 130 KB).
 - Backup e restauração validados com `PRAGMA integrity_check`.
@@ -588,7 +590,7 @@ python3 -m unittest discover -s tests -v
 
 # 11. Conclusão
 
-A Etapa 3 entrega o núcleo funcional do OficinaPro. O domínio implementa as regras da Etapa 2 com `Decimal`, herança, polimorfismo, encapsulamento e transições validadas. A persistência SQLite mantém o agregado consistente, com histórico append-only, soft delete e backup. Os serviços de aplicação cobrem o fluxo de OS, orçamento, relatórios e WhatsApp. O PDF reproduz a identidade visual do projeto. Os 28 testes automatizados e a seed com os totais exatos da Etapa 2 fornecem evidência objetiva de que o núcleo está pronto para receber a interface final.
+A Etapa 3 entrega o núcleo funcional do OficinaPro. O domínio implementa as regras da Etapa 2 com `Decimal`, herança, polimorfismo, encapsulamento e transições validadas. A persistência SQLite mantém o agregado consistente, com histórico append-only, soft delete e backup. Os serviços de aplicação cobrem o fluxo de OS, orçamento, relatórios e WhatsApp. O PDF reproduz a identidade visual do projeto. Os 29 testes automatizados e a seed com os totais exatos da Etapa 2 fornecem evidência objetiva de que o núcleo está pronto para receber a interface final.
 
 # 12. Referências
 

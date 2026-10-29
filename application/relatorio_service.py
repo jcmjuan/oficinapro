@@ -7,7 +7,6 @@ from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
 
-from domain.mao_de_obra import MaoDeObra
 from domain.validators import formatar_brl, parse_data
 
 from infrastructure.repositories.ordem_servico_repository import OrdemServicoRepository
@@ -54,9 +53,10 @@ class RelatorioService:
         agregados: dict[object, dict] = {}
         for ordem in ordens:
             for item in ordem.itens:
-                if not isinstance(item, MaoDeObra):
+                base = item.base_comissao
+                if base is None:
                     continue
-                mecanico = item.mecanico or ordem.mecanico
+                mecanico = item.executor or ordem.mecanico
                 chave = mecanico.id or mecanico.registro or mecanico.nome
                 if chave not in agregados:
                     agregados[chave] = {

@@ -4,8 +4,13 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from decimal import Decimal
+from typing import TYPE_CHECKING
 
+from .tipo_item import TipoItem
 from .validators import decimal_valor, formatar_brl, texto_obrigatorio
+
+if TYPE_CHECKING:
+    from .mecanico import Mecanico
 
 
 class ItemOS(ABC):
@@ -49,8 +54,49 @@ class ItemOS(ABC):
         """Calcula o subtotal conforme o tipo concreto."""
 
     @abstractmethod
-    def tipo(self) -> str:
+    def tipo(self) -> TipoItem:
         """Identifica o tipo do item para persistência e exibição."""
+
+    @property
+    @abstractmethod
+    def quantidade_calculo(self) -> Decimal:
+        """Quantidade efetiva do item (unidades ou horas)."""
+
+    @property
+    @abstractmethod
+    def unidade(self) -> str:
+        """Unidade exibida ao lado da quantidade (vazia para peças)."""
+
+    @property
+    def quantidade_formatada(self) -> str:
+        """Quantidade com unidade, como exibida na interface."""
+        return f"{self.quantidade_calculo:g} {self.unidade}".strip()
+
+    @property
+    def quantidade_documento(self) -> str:
+        """Quantidade compacta, sem zeros à direita, usada nos documentos."""
+        texto = f"{self.quantidade_calculo:.2f}".rstrip("0").rstrip(".")
+        return f"{texto} {self.unidade}".strip()
+
+    @property
+    def rotulo_tipo(self) -> str:
+        """Rótulo legível do tipo do item."""
+        return self.tipo().rotulo
+
+    @property
+    def detalhe(self) -> str:
+        """Informação complementar para exibição (código, fornecedor, executor)."""
+        return ""
+
+    @property
+    def executor(self) -> "Mecanico | None":
+        """Mecânico responsável pelo item, quando houver."""
+        return None
+
+    @property
+    def base_comissao(self) -> Decimal | None:
+        """Valor que gera comissão; ``None`` quando o item não gera comissão."""
+        return None
 
     @property
     def subtotal(self) -> Decimal:

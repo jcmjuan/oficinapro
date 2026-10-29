@@ -288,7 +288,7 @@ body {
   <div class="cover-kicker">AVALIAÇÃO G2 • ETAPA FINAL</div>
   <h1 class="cover-title">OficinaPro <span>v1.0</span></h1>
   <div class="cover-subtitle">Interface, Integração e Entrega Final</div>
-  <p class="cover-lead">Aplicação desktop em CustomTkinter integrada ao núcleo da Etapa 3: cadastros, ordens de serviço, orçamento em PDF, WhatsApp, relatórios e backup — com validação de execução e 28 testes automatizados.</p>
+  <p class="cover-lead">Aplicação desktop em CustomTkinter integrada ao núcleo da Etapa 3: cadastros, ordens de serviço, orçamento em PDF, WhatsApp, relatórios e backup — com validação de execução e 29 testes automatizados.</p>
   <div class="cover-meta">
     <div><strong>Equipe</strong><br>DevSolo Studio</div>
     <div><strong>Integrante</strong><br>Juan Carlos Matos</div>
@@ -345,7 +345,7 @@ body {
 </tr>
 <tr>
 <td>Qualidade</td>
-<td>28 testes automatizados, compilação integral e validação de execução da UI</td>
+<td>29 testes automatizados, compilação integral e validação de execução da UI</td>
 </tr>
 <tr>
 <td>Documentação</td>
@@ -403,8 +403,8 @@ body {
 </tr>
 <tr>
 <td>Validação</td>
-<td>28 testes</td>
-<td>28 testes + execução real da interface</td>
+<td>29 testes</td>
+<td>29 testes + execução real da interface</td>
 </tr>
 </tbody></table>
 <h2 id="22-princípio-de-projeto">2.2 Princípio de projeto</h2>
@@ -706,20 +706,20 @@ self.configuracao_service = ConfiguracaoService(...)
 <tbody><tr>
 <td>Pelo menos 5 classes</td>
 <td><code>domain/</code></td>
-<td>10 classes de domínio + 1 enumeração</td>
-<td><code>Pessoa</code>, <code>Cliente</code>, <code>Mecanico</code>, <code>Veiculo</code>, <code>ItemOS</code>, <code>Peca</code>, <code>MaoDeObra</code>, <code>OrdemServico</code>, <code>Oficina</code>, <code>StatusHistorico</code>, <code>StatusOS</code></td>
+<td>10 classes de domínio + 2 enumerações</td>
+<td><code>Pessoa</code>, <code>Cliente</code>, <code>Mecanico</code>, <code>Veiculo</code>, <code>ItemOS</code>, <code>Peca</code>, <code>MaoDeObra</code>, <code>OrdemServico</code>, <code>Oficina</code>, <code>StatusHistorico</code>, <code>StatusOS</code>, <code>TipoItem</code></td>
 </tr>
 <tr>
 <td>Herança</td>
-<td><code>pessoa.py:10</code>, <code>item_os.py:11</code></td>
+<td><code>pessoa.py:10</code>, <code>item_os.py:16</code></td>
 <td><code>Pessoa</code> é superclasse de <code>Cliente</code> e <code>Mecanico</code>; <code>ItemOS</code> é superclasse de <code>Peca</code> e <code>MaoDeObra</code></td>
 <td><code>test_pessoa_abstrata</code>, <code>test_itens_polimorficos</code></td>
 </tr>
 <tr>
 <td>Polimorfismo</td>
-<td><code>item_os.py:48</code></td>
-<td><code>calcular_subtotal()</code> é abstrato; cada subclasse implementa o cálculo e a OS soma os itens sem testar o tipo concreto</td>
-<td><code>test_totais_e_desconto</code></td>
+<td><code>item_os.py:53</code></td>
+<td><code>calcular_subtotal()</code>, <code>tipo()</code> e <code>quantidade_calculo()</code> são abstratos; a OS, o PDF e o relatório usam <code>rotulo_tipo</code>, <code>quantidade_formatada</code> e <code>base_comissao</code> sem testar o tipo concreto</td>
+<td><code>test_itens_polimorficos</code>, <code>test_totais_e_desconto</code></td>
 </tr>
 <tr>
 <td>Associação</td>
@@ -729,13 +729,13 @@ self.configuracao_service = ConfiguracaoService(...)
 </tr>
 <tr>
 <td>Atributo privado</td>
-<td><code>ordem_servico.py:92</code></td>
+<td><code>ordem_servico.py:93</code></td>
 <td><code>__subtotal</code> e <code>__total</code> com name mangling; acesso somente por propriedades</td>
 <td><code>test_encapsulamento_do_total</code></td>
 </tr>
 <tr>
 <td>Método privado</td>
-<td><code>ordem_servico.py:122</code></td>
+<td><code>ordem_servico.py:123</code></td>
 <td><code>__recalcular_total</code>, <code>__validar_datas</code>, <code>__validar_transicao</code>, <code>__registrar_historico</code>; <code>Pessoa.__validar_contato</code></td>
 <td><code>test_ciclo_completo_e_historico</code></td>
 </tr>
@@ -747,15 +747,15 @@ self.configuracao_service = ConfiguracaoService(...)
 </tr>
 <tr>
 <td>Composição</td>
-<td><code>ordem_servico.py:271</code></td>
+<td><code>ordem_servico.py:276</code></td>
 <td>A OS é dona dos itens; o item só existe no agregado e a remoção passa por <code>remover_item</code></td>
 <td><code>test_totais_e_desconto</code></td>
 </tr>
 <tr>
 <td>Enumeração</td>
-<td><code>status_os.py:10</code></td>
-<td><code>StatusOS(str, Enum)</code> com cinco estados, <code>from_value</code>, <code>rotulo</code> e <code>terminal</code></td>
-<td><code>test_ciclo_completo_e_historico</code></td>
+<td><code>status_os.py:10</code>, <code>tipo_item.py:10</code></td>
+<td><code>StatusOS(str, Enum)</code> com cinco estados e <code>TipoItem(str, Enum)</code> com os dois tipos de item; ambos têm <code>from_value</code> e rótulo legível</td>
+<td><code>test_ciclo_completo_e_historico</code>, <code>test_tipo_item_invalido</code></td>
 </tr>
 </tbody></table>
 <p>A interface reaproveita o mesmo desenho: <code>BaseScreen</code> e <code>FormDialog</code> são classes base com comportamento comum, e as telas e diálogos concretos apenas especializam o conteúdo.</p>
@@ -763,7 +763,7 @@ self.configuracao_service = ConfiguracaoService(...)
 <h2 id="71-testes-automatizados">7.1 Testes automatizados</h2>
 <pre><code class="language-bash">python3 -m unittest discover -s tests -v
 </code></pre>
-<p>Resultado: <strong>28 testes OK</strong>, cobrindo domínio, validações, transições, persistência, backup/restauração, relatórios, WhatsApp e PDF.</p>
+<p>Resultado: <strong>29 testes OK</strong>, cobrindo domínio, validações, transições, persistência, backup/restauração, relatórios, WhatsApp e PDF.</p>
 <h2 id="72-compilação">7.2 Compilação</h2>
 <pre><code class="language-bash">python3 -m compileall -q ui main.py domain application infrastructure
 </code></pre>

@@ -68,7 +68,7 @@ do terminal em uma página HTML com o mesmo tema escuro.
 - [x] Orçamento em PDF
 - [x] Integração com WhatsApp
 - [x] Backup e restauração
-- [x] 28 testes automatizados
+- [x] 29 testes automatizados
 - [x] Relatório e PDF da Etapa 3
 - [x] Interface CustomTkinter implementada (Etapa Final)
 - [x] Validação visual em ambiente com Tkinter (Etapa Final)

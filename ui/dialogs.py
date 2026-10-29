@@ -11,7 +11,6 @@ import customtkinter as ctk
 from domain.cliente import Cliente
 from domain.mecanico import Mecanico
 from domain.ordem_servico import OrdemServico
-from domain.peca import Peca
 from domain.validators import formatar_brl
 from domain.veiculo import Veiculo
 
@@ -935,8 +934,8 @@ class DocumentoDialog(ctk.CTkToplevel):
             linha.pack(fill="x", padx=18)
             for col, weight in enumerate([1, 4, 1, 1, 1]):
                 linha.grid_columnconfigure(col, weight=weight)
-            tipo = "Peça" if isinstance(item, Peca) else "Mão de obra"
-            qtd = f"{item.quantidade:g}" if isinstance(item, Peca) else f"{item.horas:g} h"
+            tipo = item.rotulo_tipo
+            qtd = item.quantidade_formatada
             ctk.CTkLabel(linha, text=tipo, font=self.app.fonts.small, text_color=COLORS["muted"], anchor="w").grid(row=0, column=0, sticky="w", padx=8, pady=6)
             ctk.CTkLabel(linha, text=item.descricao, font=self.app.fonts.small, text_color=COLORS["text"], anchor="w").grid(row=0, column=1, sticky="w", padx=8, pady=6)
             ctk.CTkLabel(linha, text=qtd, font=self.app.fonts.small, text_color=COLORS["text"], anchor="w").grid(row=0, column=2, sticky="w", padx=8, pady=6)

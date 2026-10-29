@@ -6,9 +6,8 @@ from tkinter import messagebox
 
 import customtkinter as ctk
 
-from domain.mao_de_obra import MaoDeObra
-from domain.peca import Peca
 from domain.status_os import StatusOS
+from domain.tipo_item import TipoItem
 from domain.validators import formatar_brl
 
 from ..components import Badge, Card, SectionHeader, SummaryRow, button_style, clear_children, divider, status_badge
@@ -217,9 +216,13 @@ class EditorOSScreen(BaseScreen):
             linha.pack(fill="x", padx=16)
             for col, weight in enumerate([1, 4, 1, 1, 1, 0]):
                 linha.grid_columnconfigure(col, weight=weight)
-            tipo = "Peça" if isinstance(item, Peca) else "Mão de obra"
-            bg, fg = (COLORS["purple_bg"], COLORS["purple"]) if isinstance(item, Peca) else (COLORS["warning_bg"], COLORS["warning"])
-            Badge(linha, tipo, bg, fg, self.app).grid(row=0, column=0, sticky="w", padx=8, pady=8)
+            eh_peca = item.tipo() is TipoItem.PECA
+            bg, fg = (
+                (COLORS["purple_bg"], COLORS["purple"])
+                if eh_peca
+                else (COLORS["warning_bg"], COLORS["warning"])
+            )
+            Badge(linha, item.rotulo_tipo, bg, fg, self.app).grid(row=0, column=0, sticky="w", padx=8, pady=8)
             descricao = ctk.CTkFrame(linha, fg_color="transparent")
             descricao.grid(row=0, column=1, sticky="w", padx=8, pady=8)
             ctk.CTkLabel(
@@ -229,11 +232,7 @@ class EditorOSScreen(BaseScreen):
                 text_color=COLORS["text"],
                 anchor="w",
             ).pack(anchor="w")
-            detalhe = ""
-            if isinstance(item, Peca):
-                detalhe = " • ".join(parte for parte in (item.codigo, item.fornecedor) if parte)
-            else:
-                detalhe = f"Executado por {item.mecanico.nome}" if item.mecanico else "Sem executor definido"
+            detalhe = item.detalhe
             if detalhe:
                 ctk.CTkLabel(
                     descricao,
@@ -242,7 +241,7 @@ class EditorOSScreen(BaseScreen):
                     text_color=COLORS["muted"],
                     anchor="w",
                 ).pack(anchor="w")
-            qtd = f"{item.quantidade:g}" if isinstance(item, Peca) else f"{item.horas:g} h"
+            qtd = item.quantidade_formatada
             ctk.CTkLabel(linha, text=qtd, font=self.app.fonts.small, text_color=COLORS["text"], anchor="w").grid(row=0, column=2, sticky="w", padx=8, pady=8)
             ctk.CTkLabel(linha, text=formatar_brl(item.valor_unitario), font=self.app.fonts.small, text_color=COLORS["text"], anchor="w").grid(row=0, column=3, sticky="w", padx=8, pady=8)
             ctk.CTkLabel(linha, text=formatar_brl(item.subtotal), font=self.app.fonts.small_bold, text_color=COLORS["text"], anchor="w").grid(row=0, column=4, sticky="w", padx=8, pady=8)

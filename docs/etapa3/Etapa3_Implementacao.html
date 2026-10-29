@@ -274,7 +274,7 @@ body {
   <div class="cover-kicker">AVALIAÇÃO G2 • ETAPA 3</div>
   <h1 class="cover-title">OficinaPro <span>v1.0</span></h1>
   <div class="cover-subtitle">Implementação do Núcleo</div>
-  <p class="cover-lead">Domínio orientado a objetos, persistência SQLite, serviços de aplicação, relatórios gerenciais, orçamento em PDF e integração com WhatsApp — com 28 testes automatizados.</p>
+  <p class="cover-lead">Domínio orientado a objetos, persistência SQLite, serviços de aplicação, relatórios gerenciais, orçamento em PDF e integração com WhatsApp — com 29 testes automatizados.</p>
   <div class="cover-meta">
     <div><strong>Equipe</strong><br>DevSolo Studio</div>
     <div><strong>Integrante</strong><br>Juan Carlos Matos</div>
@@ -342,7 +342,7 @@ body {
 </tr>
 <tr>
 <td>Implementar testes</td>
-<td>28 testes automatizados com <code>unittest</code></td>
+<td>29 testes automatizados com <code>unittest</code></td>
 </tr>
 <tr>
 <td>Preservar a Etapa 2</td>
@@ -392,7 +392,7 @@ body {
 </tr>
 <tr>
 <td>Testes</td>
-<td><code>unittest</code> (stdlib), 28 casos</td>
+<td><code>unittest</code> (stdlib), 29 casos</td>
 </tr>
 <tr>
 <td>Entrega</td>
@@ -437,6 +437,7 @@ body {
 │   ├── exceptions.py
 │   ├── validators.py
 │   ├── status_os.py
+│   ├── tipo_item.py
 │   ├── status_historico.py
 │   ├── pessoa.py
 │   ├── cliente.py
@@ -544,6 +545,10 @@ RelatorioService.resumo() / comissoes_por_mecanico()
 <td>Enumeração do ciclo de vida</td>
 </tr>
 <tr>
+<td><code>TipoItem</code></td>
+<td>Enumeração dos tipos de item (<code>PECA</code> e <code>MAO_DE_OBRA</code>)</td>
+</tr>
+<tr>
 <td><code>StatusHistorico</code></td>
 <td>Registro imutável de transição</td>
 </tr>
@@ -568,7 +573,7 @@ class MaoDeObra(ItemOS):
     def calcular_subtotal(self) -&gt; Decimal:
         return (self.horas * self.taxa_horaria).quantize(Decimal(&quot;0.01&quot;))
 </code></pre>
-<p>A <code>OrdemServico</code> não precisa conhecer o tipo concreto para calcular o total: ela percorre <code>self._itens</code> e chama <code>calcular_subtotal()</code>. O mesmo vale para <code>subtotal_pecas</code> e <code>subtotal_mao_obra</code>, que usam <code>item.tipo()</code>.</p>
+<p>A <code>OrdemServico</code> não precisa conhecer o tipo concreto para calcular o total: ela percorre <code>self._itens</code> e chama <code>calcular_subtotal()</code>. Para separar peças e mão de obra, <code>item.tipo()</code> devolve a enumeração <code>TipoItem</code> (<code>PECA</code> ou <code>MAO_DE_OBRA</code>). A interface, o PDF e o relatório usam <code>rotulo_tipo</code>, <code>quantidade_formatada</code> e <code>base_comissao</code>, implementados por cada subclasse, sem <code>isinstance</code> nas camadas de aplicação e apresentação.</p>
 <h2 id="33-encapsulamento-e-invariantes">3.3 Encapsulamento e invariantes</h2>
 <p>O agregado <code>OrdemServico</code> mantém:</p>
 <ul>
@@ -967,7 +972,7 @@ servico.link_whatsapp(&quot;2026-0042&quot;)
 <tbody><tr>
 <td><code>tests/test_domain.py</code></td>
 <td>Validadores, entidades, itens, totais, transições, encapsulamento e Oficina</td>
-<td align="right">16</td>
+<td align="right">17</td>
 </tr>
 <tr>
 <td><code>tests/test_repositories.py</code></td>
@@ -982,16 +987,16 @@ servico.link_whatsapp(&quot;2026-0042&quot;)
 <tr>
 <td><strong>Total</strong></td>
 <td></td>
-<td align="right"><strong>28</strong></td>
+<td align="right"><strong>29</strong></td>
 </tr>
 </tbody></table>
 <p>Cada teste usa banco temporário ou banco em memória, evitando dependência de estado externo. O teste de PDF é pulado automaticamente quando Chrome/Chromium não está disponível.</p>
 <h2 id="82-execução">8.2 Execução</h2>
 <figure>
-  <img src="capturas/testes.png" alt="Saída dos 28 testes automatizados">
-  <figcaption>Figura 6 — Execução de `python3 -m unittest discover -s tests -v`: 28 testes OK.</figcaption>
+  <img src="capturas/testes.png" alt="Saída dos 29 testes automatizados">
+  <figcaption>Figura 6 — Execução de `python3 -m unittest discover -s tests -v`: 29 testes OK.</figcaption>
 </figure><pre><code class="language-bash">python3 -m unittest discover -s tests -v
-# Ran 28 tests in 1.593s
+# Ran 29 tests in 1.6s
 # OK
 </code></pre>
 <h2 id="83-matriz-de-rastreabilidade">8.3 Matriz de rastreabilidade</h2>
@@ -1081,7 +1086,7 @@ servico.link_whatsapp(&quot;2026-0042&quot;)
 </tbody></table>
 <h2 id="84-resultados">8.4 Resultados</h2>
 <ul>
-<li><strong>28 testes executados, 28 aprovados, 0 falhas.</strong></li>
+<li><strong>29 testes executados, 29 aprovados, 0 falhas.</strong></li>
 <li>Seed reproduz <strong>R$ 18.450,00</strong> de faturamento, <strong>R$ 6.320,00</strong> de mão de obra, <strong>R$ 12.130,00</strong> de peças e <strong>R$ 743,00</strong> de comissões.</li>
 <li>PDF gerado com sucesso (1 página A4, aproximadamente 130 KB).</li>
 <li>Backup e restauração validados com <code>PRAGMA integrity_check</code>.</li>
@@ -1156,7 +1161,7 @@ servico.link_whatsapp(&quot;2026-0042&quot;)
 <li>Apresentar em <strong>19/11/2026</strong>.</li>
 </ol>
 <h1 id="11-conclusão">11. Conclusão</h1>
-<p>A Etapa 3 entrega o núcleo funcional do OficinaPro. O domínio implementa as regras da Etapa 2 com <code>Decimal</code>, herança, polimorfismo, encapsulamento e transições validadas. A persistência SQLite mantém o agregado consistente, com histórico append-only, soft delete e backup. Os serviços de aplicação cobrem o fluxo de OS, orçamento, relatórios e WhatsApp. O PDF reproduz a identidade visual do projeto. Os 28 testes automatizados e a seed com os totais exatos da Etapa 2 fornecem evidência objetiva de que o núcleo está pronto para receber a interface final.</p>
+<p>A Etapa 3 entrega o núcleo funcional do OficinaPro. O domínio implementa as regras da Etapa 2 com <code>Decimal</code>, herança, polimorfismo, encapsulamento e transições validadas. A persistência SQLite mantém o agregado consistente, com histórico append-only, soft delete e backup. Os serviços de aplicação cobrem o fluxo de OS, orçamento, relatórios e WhatsApp. O PDF reproduz a identidade visual do projeto. Os 29 testes automatizados e a seed com os totais exatos da Etapa 2 fornecem evidência objetiva de que o núcleo está pronto para receber a interface final.</p>
 <h1 id="12-referências">12. Referências</h1>
 <ul>
 <li>OFICINAPRO. <strong>Etapa 2 — Modelagem e Interfaces</strong>. Documento técnico, 2026. <code>docs/etapa2/Etapa2_Modelagem_e_Interfaces.pdf</code>.</li>

@@ -57,17 +57,17 @@
   <div class="metric-grid">
     <div class="metric"><strong>7</strong><span>telas</span></div>
     <div class="metric"><strong>9</strong><span>diálogos</span></div>
-    <div class="metric"><strong>28</strong><span>testes</span></div>
+    <div class="metric"><strong>29</strong><span>testes</span></div>
     <div class="metric"><strong>14</strong><span>fluxos validados</span></div>
     <div class="metric"><strong>20</strong><span>capturas reais</span></div>
-    <div class="metric"><strong>13</strong><span>páginas de relatório</span></div>
+    <div class="metric"><strong>14</strong><span>páginas de relatório</span></div>
   </div>
   <div class="grid-3">
     <div class="mini-card"><h3>Núcleo preservado</h3><p>Domínio, SQLite, serviços, PDF e WhatsApp da Etapa 3.</p></div>
     <div class="mini-card"><h3>Interface integrada</h3><p>CustomTkinter consumindo os mesmos serviços, sem regra duplicada.</p></div>
     <div class="mini-card"><h3>Entrega completa</h3><p>Relatório, capturas, slides, seed e instruções de execução.</p></div>
   </div>
-  <div class="quote">Uma entrega verificável: 28 testes automatizados e 14 fluxos de interface exercitados.</div>
+  <div class="quote">Uma entrega verificável: 29 testes automatizados e 14 fluxos de interface exercitados.</div>
   <div class="slide-footer"><span>OficinaPro v1.0</span><span>DevSolo Studio</span></div>
 </div>
 
@@ -222,7 +222,7 @@ python3 main.py --ui   # força UI</pre></div>
   <div class="slide-head"><span class="kicker">Qualidade</span><span class="slide-no">11</span></div>
   <h2 class="slide-title">Validado, não só compilado.</h2>
   <div class="metric-grid small-metrics">
-    <div class="metric"><strong>28</strong><span>testes OK</span></div>
+    <div class="metric"><strong>29</strong><span>testes OK</span></div>
     <div class="metric"><strong>14</strong><span>fluxos de UI</span></div>
     <div class="metric"><strong>0</strong><span>erros de compilação</span></div>
     <div class="metric"><strong>7</strong><span>telas exercitadas</span></div>

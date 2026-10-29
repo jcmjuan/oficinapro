@@ -3,7 +3,7 @@
   <div class="cover-kicker">AVALIAÇÃO G2 • ETAPA FINAL</div>
   <h1 class="cover-title">OficinaPro <span>v1.0</span></h1>
   <div class="cover-subtitle">Interface, Integração e Entrega Final</div>
-  <p class="cover-lead">Aplicação desktop em CustomTkinter integrada ao núcleo da Etapa 3: cadastros, ordens de serviço, orçamento em PDF, WhatsApp, relatórios e backup — com validação de execução e 28 testes automatizados.</p>
+  <p class="cover-lead">Aplicação desktop em CustomTkinter integrada ao núcleo da Etapa 3: cadastros, ordens de serviço, orçamento em PDF, WhatsApp, relatórios e backup — com validação de execução e 29 testes automatizados.</p>
   <div class="cover-meta">
     <div><strong>Equipe</strong><br>DevSolo Studio</div>
     <div><strong>Integrante</strong><br>Juan Carlos Matos</div>
@@ -48,7 +48,7 @@ O objetivo é entregar uma aplicação completa, demonstrável e documentada, se
 | Fluxo ponta a ponta | Cadastros → OS → itens → aprovação → execução → finalização → PDF/WhatsApp |
 | Relatórios e gestão | Dashboard, relatórios por período, comissões, backup e configurações |
 | Entrada unificada | `python3 main.py` abre a UI; `--cli` mantém o terminal; `--ui` força a interface |
-| Qualidade | 28 testes automatizados, compilação integral e validação de execução da UI |
+| Qualidade | 29 testes automatizados, compilação integral e validação de execução da UI |
 | Documentação | Relatório final, capturas reais, slides e instruções de execução |
 
 ## 1.3 Escopo entregue
@@ -75,7 +75,7 @@ A Etapa 3 já possuía o núcleo. A Etapa Final acrescentou a camada de apresent
 | Documentos | PDF via serviço | Visualização de orçamento/recibo e ações |
 | Relatórios | Serviço de relatório | Dashboard e tela de relatórios com CSV |
 | Configuração | Serviço de backup | Aba de oficina, equipe, backup e sistema |
-| Validação | 28 testes | 28 testes + execução real da interface |
+| Validação | 29 testes | 29 testes + execução real da interface |
 
 ## 2.2 Princípio de projeto
 
@@ -331,15 +331,15 @@ A tabela abaixo conecta cada exigência da atividade aos elementos implementados
 
 | Exigência | Onde está | Como foi atendida | Evidência |
 |---|---|---|---|
-| Pelo menos 5 classes | `domain/` | 10 classes de domínio + 1 enumeração | `Pessoa`, `Cliente`, `Mecanico`, `Veiculo`, `ItemOS`, `Peca`, `MaoDeObra`, `OrdemServico`, `Oficina`, `StatusHistorico`, `StatusOS` |
-| Herança | `pessoa.py:10`, `item_os.py:11` | `Pessoa` é superclasse de `Cliente` e `Mecanico`; `ItemOS` é superclasse de `Peca` e `MaoDeObra` | `test_pessoa_abstrata`, `test_itens_polimorficos` |
-| Polimorfismo | `item_os.py:48` | `calcular_subtotal()` é abstrato; cada subclasse implementa o cálculo e a OS soma os itens sem testar o tipo concreto | `test_totais_e_desconto` |
+| Pelo menos 5 classes | `domain/` | 10 classes de domínio + 2 enumerações | `Pessoa`, `Cliente`, `Mecanico`, `Veiculo`, `ItemOS`, `Peca`, `MaoDeObra`, `OrdemServico`, `Oficina`, `StatusHistorico`, `StatusOS`, `TipoItem` |
+| Herança | `pessoa.py:10`, `item_os.py:16` | `Pessoa` é superclasse de `Cliente` e `Mecanico`; `ItemOS` é superclasse de `Peca` e `MaoDeObra` | `test_pessoa_abstrata`, `test_itens_polimorficos` |
+| Polimorfismo | `item_os.py:53` | `calcular_subtotal()`, `tipo()` e `quantidade_calculo()` são abstratos; a OS, o PDF e o relatório usam `rotulo_tipo`, `quantidade_formatada` e `base_comissao` sem testar o tipo concreto | `test_itens_polimorficos`, `test_totais_e_desconto` |
 | Associação | `veiculo.py` | `Cliente 1 — 0..* Veiculo` bidirecional e sincronizada; a OS referencia cliente, veículo e mecânico | `test_relacionamento_cliente_veiculo` |
-| Atributo privado | `ordem_servico.py:92` | `__subtotal` e `__total` com name mangling; acesso somente por propriedades | `test_encapsulamento_do_total` |
-| Método privado | `ordem_servico.py:122` | `__recalcular_total`, `__validar_datas`, `__validar_transicao`, `__registrar_historico`; `Pessoa.__validar_contato` | `test_ciclo_completo_e_historico` |
+| Atributo privado | `ordem_servico.py:93` | `__subtotal` e `__total` com name mangling; acesso somente por propriedades | `test_encapsulamento_do_total` |
+| Método privado | `ordem_servico.py:123` | `__recalcular_total`, `__validar_datas`, `__validar_transicao`, `__registrar_historico`; `Pessoa.__validar_contato` | `test_ciclo_completo_e_historico` |
 | Programa principal com 2+ objetos | `main.py` | `python3 main.py --demo` instancia 2 clientes, 2 veículos, 1 mecânico e 2 OS, exercitando o ciclo de vida | saída do comando `--demo` |
-| Composição | `ordem_servico.py:271` | A OS é dona dos itens; o item só existe no agregado e a remoção passa por `remover_item` | `test_totais_e_desconto` |
-| Enumeração | `status_os.py:10` | `StatusOS(str, Enum)` com cinco estados, `from_value`, `rotulo` e `terminal` | `test_ciclo_completo_e_historico` |
+| Composição | `ordem_servico.py:276` | A OS é dona dos itens; o item só existe no agregado e a remoção passa por `remover_item` | `test_totais_e_desconto` |
+| Enumeração | `status_os.py:10`, `tipo_item.py:10` | `StatusOS(str, Enum)` com cinco estados e `TipoItem(str, Enum)` com os dois tipos de item; ambos têm `from_value` e rótulo legível | `test_ciclo_completo_e_historico`, `test_tipo_item_invalido` |
 
 A interface reaproveita o mesmo desenho: `BaseScreen` e `FormDialog` são classes base com comportamento comum, e as telas e diálogos concretos apenas especializam o conteúdo.
 
@@ -351,7 +351,7 @@ A interface reaproveita o mesmo desenho: `BaseScreen` e `FormDialog` são classe
 python3 -m unittest discover -s tests -v
 ```
 
-Resultado: **28 testes OK**, cobrindo domínio, validações, transições, persistência, backup/restauração, relatórios, WhatsApp e PDF.
+Resultado: **29 testes OK**, cobrindo domínio, validações, transições, persistência, backup/restauração, relatórios, WhatsApp e PDF.
 
 ## 7.2 Compilação
 

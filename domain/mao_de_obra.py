@@ -6,6 +6,7 @@ from decimal import Decimal
 from typing import TYPE_CHECKING
 
 from .item_os import ItemOS
+from .tipo_item import TipoItem
 from .validators import decimal_valor, formatar_brl
 
 if TYPE_CHECKING:
@@ -47,8 +48,26 @@ class MaoDeObra(ItemOS):
     def calcular_subtotal(self) -> Decimal:
         return (self._horas * self._taxa_horaria).quantize(Decimal("0.01"))
 
-    def tipo(self) -> str:
-        return "MAO_DE_OBRA"
+    def tipo(self) -> TipoItem:
+        return TipoItem.MAO_DE_OBRA
+
+    @property
+    def quantidade_calculo(self) -> Decimal:
+        return self.horas
+
+    @property
+    def unidade(self) -> str:
+        return "h"
+
+    @property
+    def detalhe(self) -> str:
+        if self._mecanico:
+            return f"Executado por {self._mecanico.nome}"
+        return "Sem executor definido"
+
+    @property
+    def base_comissao(self) -> Decimal:
+        return self.calcular_subtotal()
 
     def descrever(self) -> str:
         executor = f" • {self._mecanico.nome}" if self._mecanico else ""
